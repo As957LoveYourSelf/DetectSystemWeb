@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "element-ui": "^2.15.12"
+  },
+  "devDependencies": {
+    "babel-plugin-component": "^1.1.1"
+  }
+}

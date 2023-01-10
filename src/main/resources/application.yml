@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: detect_system
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc://mysql://localhost:3306/detectsystemdata?serverTimezone=GMT%2b8
+    username: root
+    password: 123456
