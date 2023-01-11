@@ -19,6 +19,7 @@ import java.util.Date;
 public class User {
     @TableId(type = IdType.ASSIGN_UUID)
     private int id;
+    private String uno;
     private String uname;
     private String email;
     private String password;
