@@ -97,7 +97,13 @@ public class RegisterServiceImpl extends ServiceImpl<UserMapper, User> implement
         user.setPassword(psd);
         user.setOnline((byte) 0);
         user.setEmail(email);
+        user.setRegisterTime(currentDate2str());
         return user;
+    }
+
+    private String currentDate2str(){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return formatter.format(new Date());
     }
 
     private Date strToDateLong(String strDate) {
