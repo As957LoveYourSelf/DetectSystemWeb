@@ -3,6 +3,23 @@ spring:
     name: detect_system
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc://mysql://localhost:3306/detectsystemdata?serverTimezone=GMT%2b8
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/detectsystemdata?serverTimezone=Asia/Shanghai&useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowPublicKeyRetrieval=true
     username: root
     password: 123456
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+      exclude: WEB-INF/**
+    freemarker:
+      cache: false
+
+
+mybatis-plus:
+  type-aliases-package: com.postdesign.dectersystem.entity
+  #开启驼峰映射
+  configuration:
+    map-underscore-to-camel-case: false
+server:
+  port: 8080
