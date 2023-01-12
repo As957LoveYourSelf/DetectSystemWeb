@@ -18,10 +18,9 @@ import java.util.Date;
 @Validated
 @TableName("users")
 @Accessors(chain = true)
-@Component
 public class User {
     @TableId(type = IdType.ASSIGN_UUID)
-    private int id;
+    private Integer id;
     private String uno;
     private String uname;
     private String email;
@@ -30,4 +29,7 @@ public class User {
     private String uphone;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date registerTime;
+    private Byte state;
+    private String rcode;
+    private Byte online;
 }
