@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.postdesign.dectersystem.entity.User;
 import com.postdesign.dectersystem.mapper.UserMapper;
-import com.postdesign.dectersystem.service.ALoginService;
+import com.postdesign.dectersystem.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import java.util.Map;
  * 实现登录业务
  */
 @Service
-public class ALoginServiceImpl extends ServiceImpl<UserMapper, User> implements ALoginService {
+public class LoginServiceImpl extends ServiceImpl<UserMapper, User> implements LoginService {
 
     @Autowired(required = false)
     private UserMapper userMapper;

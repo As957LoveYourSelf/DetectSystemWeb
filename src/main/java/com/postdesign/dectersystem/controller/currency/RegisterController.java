@@ -1,7 +1,7 @@
 package com.postdesign.dectersystem.controller.currency;
 
 
-import com.postdesign.dectersystem.service.ARegisterService;
+import com.postdesign.dectersystem.service.RegisterService;
 import com.postdesign.dectersystem.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ import java.util.Map;
 public class RegisterController {
 
     @Autowired
-    private ARegisterService registerService;
+    private RegisterService registerService;
 
     @RequestMapping("/register")
     @ResponseBody

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.postdesign.dectersystem.entity.User;
 import com.postdesign.dectersystem.mapper.UserMapper;
-import com.postdesign.dectersystem.service.ARegisterService;
+import com.postdesign.dectersystem.service.RegisterService;
 import com.postdesign.dectersystem.utils.CodeUtil;
 import com.postdesign.dectersystem.utils.MailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ import java.util.Map;
 
 
 @Service
-public class ARegisterServiceImpl extends ServiceImpl<UserMapper, User> implements ARegisterService {
+public class RegisterServiceImpl extends ServiceImpl<UserMapper, User> implements RegisterService {
 
     @Autowired(required = false)
     private UserMapper userMapper;
