@@ -28,8 +28,9 @@ public class User {
     private int uage;
     private String uphone;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date registerTime;
+    private Date birthday;
     private Byte state;
     private String rcode;
     private Byte online;
+    private String registerTime;
 }
