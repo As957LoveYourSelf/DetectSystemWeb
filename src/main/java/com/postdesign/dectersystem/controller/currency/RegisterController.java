@@ -1,4 +1,4 @@
-package com.postdesign.dectersystem.controller.android;
+package com.postdesign.dectersystem.controller.currency;
 
 
 import com.postdesign.dectersystem.service.ARegisterService;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/registerPage")
-public class AndroidRegisterController {
+public class RegisterController {
 
     @Autowired
     private ARegisterService registerService;

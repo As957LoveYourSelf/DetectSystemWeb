@@ -77,6 +77,7 @@ public class ARegisterServiceImpl extends ServiceImpl<UserMapper, User> implemen
     }
 
     private void insertInfo(User user) {
+        saveOrUpdate(user);
     }
 
     private boolean postCheckContext2Email(User user) {
@@ -97,10 +98,6 @@ public class ARegisterServiceImpl extends ServiceImpl<UserMapper, User> implemen
         user.setOnline((byte) 0);
         user.setEmail(email);
         return user;
-    }
-
-    private int getUserState(User user){
-        return user.getState();
     }
 
     private Date strToDateLong(String strDate) {

@@ -1,4 +1,4 @@
-package com.postdesign.dectersystem.controller.android;
+package com.postdesign.dectersystem.controller.currency;
 
 
 import com.postdesign.dectersystem.service.ALoginService;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/loginPage")
-public class AndroidLoginController {
+public class LoginController {
 
     @Autowired
     private ALoginService loginService;
