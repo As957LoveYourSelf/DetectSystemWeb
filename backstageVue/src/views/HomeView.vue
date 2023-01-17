@@ -1,9 +1,10 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+import BasePage from "@/components/BasePage.vue";
+import StudentManageContext from "@/components/StudentManageContext.vue";
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+      <BasePage>
+        <StudentManageContext/>
+      </BasePage>
 </template>
