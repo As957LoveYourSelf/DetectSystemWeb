@@ -1,10 +1,10 @@
 <script setup>
 import BasePage from "@/components/BasePage.vue";
-import StudentManageContext from "@/components/StudentManageContext.vue";
+import HomeContext from "@/components/HomeContext.vue";
 </script>
 
 <template>
       <BasePage>
-        <StudentManageContext/>
+        <HomeContext/>
       </BasePage>
 </template>

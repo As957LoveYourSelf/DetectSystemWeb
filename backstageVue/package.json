@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
+    "axios": "^1.2.3",
+    "blueimp-md5": "^2.19.0",
     "element-plus": "^2.2.28",
     "pinia": "^2.0.28",
     "vue": "^3.2.45",
@@ -16,6 +18,8 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
+    "unplugin-auto-import": "^0.12.1",
+    "unplugin-vue-components": "^0.22.12",
     "vite": "^4.0.0"
   }
 }

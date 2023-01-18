@@ -2,12 +2,7 @@
 
 </template>
 
-<script>
-export default {
-  name: "SettingContext"
-}
+<script setup>
+
 </script>
 
-<style scoped>
-
-</style>

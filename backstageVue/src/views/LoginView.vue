@@ -1,0 +1,46 @@
+<template >
+  <div style="height: 100vh; overflow: hidden; background-image: linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%);">
+    <div style="width: 400px; height: 300px; border-radius: 20px;
+                margin: 150px auto; padding: 30px;
+                background-image: linear-gradient(to right, #ff8177 0%,#b12a5b 100%,#ff867a 0%, #ff8c7f 21%, #f99185 52%,#cf556c 78%); ">
+      <el-form
+          ref="form"
+          :model="sizeForm"
+          label-width="auto"
+          :label-position="labelPosition"
+          :size="size"
+      >
+        <div>
+          <el-form-item label="用户名">
+            <el-input v-model="sizeForm.name"/>
+          </el-form-item>
+        </div>
+
+        <div>
+          <el-form-item label="密码">
+            <el-input v-model="sizeForm.password" type="password"/>
+          </el-form-item>
+        </div>
+        <div style="flex: 1;">
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">登录</el-button>
+            <el-button type="warning">重置</el-button>
+          </el-form-item>
+        </div>
+      </el-form>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { reactive, ref } from 'vue'
+const size = ref('large')
+const labelPosition = ref('left')
+const sizeForm = reactive({
+  name: '',
+  password: '',
+})
+function onSubmit() {
+  console.log('submit!')
+}
+</script>
