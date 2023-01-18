@@ -1,12 +1,11 @@
-package com.postdesign.dectersystem.service.Impl;
+package com.postdesign.detectsystem.service.serviceImpl.currencyImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.postdesign.dectersystem.entity.User;
-import com.postdesign.dectersystem.mapper.UserMapper;
-import com.postdesign.dectersystem.service.RegisterService;
-import com.postdesign.dectersystem.utils.CodeUtil;
-import com.postdesign.dectersystem.utils.MailUtil;
+import com.postdesign.detectsystem.entity.User;
+import com.postdesign.detectsystem.mapper.UserMapper;
+import com.postdesign.detectsystem.service.currencyService.RegisterService;
+import com.postdesign.detectsystem.utils.CodeUtil;
+import com.postdesign.detectsystem.utils.MailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,13 +28,13 @@ import java.util.Map;
 
 
 @Service
-public class RegisterServiceImpl extends ServiceImpl<UserMapper, User> implements RegisterService {
+public class RegisterServiceImpl implements RegisterService {
 
     @Autowired(required = false)
     private UserMapper userMapper;
 
     @Override
-    public Map<String, Object> register(String uno, String uname, String psd, String email) {
+    public Map<String, Object> register(String uno, String uname, String psd, String email, String type) {
         User user = findUser(uname);
         Map<String, Object> msgMap = new HashMap<>();
         if (existEmail(email)){
@@ -51,7 +50,7 @@ public class RegisterServiceImpl extends ServiceImpl<UserMapper, User> implement
             }
         }
         else {
-            User userN = createInfo(uno, uname, psd, email);
+            User userN = createInfo(uno, uname, psd, email, type);
             if (postCheckContext2Email(userN)){
                 msgMap.put("registerState", "waitCheckEmail");
             }
@@ -77,7 +76,7 @@ public class RegisterServiceImpl extends ServiceImpl<UserMapper, User> implement
     }
 
     private void insertInfo(User user) {
-        saveOrUpdate(user);
+        userMapper.insert(user);
     }
 
     private boolean postCheckContext2Email(User user) {
@@ -90,13 +89,14 @@ public class RegisterServiceImpl extends ServiceImpl<UserMapper, User> implement
         return MailUtil.sendMail(user.getEmail(), text, "注册邮箱激活");
     }
 
-    private User createInfo(String uno, String uname, String psd, String email){
+    private User createInfo(String uno, String uname, String psd, String email, String type){
         User user = new User();
-        user.setUno(uno);
+        user.setUid(uno);
         user.setUname(uname);
         user.setPassword(psd);
         user.setOnline((byte) 0);
         user.setEmail(email);
+        user.setUtype(type);
         user.setRegisterTime(currentDate2str());
         return user;
     }

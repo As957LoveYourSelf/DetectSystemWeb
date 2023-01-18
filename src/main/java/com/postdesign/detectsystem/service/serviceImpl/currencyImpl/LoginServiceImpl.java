@@ -1,10 +1,10 @@
-package com.postdesign.dectersystem.service.Impl;
+package com.postdesign.detectsystem.service.serviceImpl.currencyImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.postdesign.dectersystem.entity.User;
-import com.postdesign.dectersystem.mapper.UserMapper;
-import com.postdesign.dectersystem.service.LoginService;
+import com.postdesign.detectsystem.entity.User;
+import com.postdesign.detectsystem.mapper.UserMapper;
+import com.postdesign.detectsystem.service.currencyService.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

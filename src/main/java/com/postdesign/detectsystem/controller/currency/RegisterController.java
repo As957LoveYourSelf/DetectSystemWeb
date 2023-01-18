@@ -1,8 +1,8 @@
-package com.postdesign.dectersystem.controller.currency;
+package com.postdesign.detectsystem.controller.currency;
 
 
-import com.postdesign.dectersystem.service.RegisterService;
-import com.postdesign.dectersystem.utils.JsonUtil;
+import com.postdesign.detectsystem.service.currencyService.RegisterService;
+import com.postdesign.detectsystem.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +19,8 @@ public class RegisterController {
 
     @RequestMapping("/register")
     @ResponseBody
-    public String register(String uno, String uname, String psd, String email){
-        Map<String, Object> msgMap = registerService.register(uno, uname, psd, email);
+    public String register(String uno, String uname, String psd, String email, String type){
+        Map<String, Object> msgMap = registerService.register(uno, uname, psd, email, type);
         JsonUtil<Map<String, Object>> jsonUtil = new JsonUtil<>();
         return jsonUtil.ObjToJson(msgMap);
     }

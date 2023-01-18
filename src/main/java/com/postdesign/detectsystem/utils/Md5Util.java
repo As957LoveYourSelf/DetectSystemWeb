@@ -1,4 +1,4 @@
-package com.postdesign.dectersystem.utils;
+package com.postdesign.detectsystem.utils;
 
 import java.security.MessageDigest;
 

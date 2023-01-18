@@ -1,7 +1,7 @@
-package com.postdesign.dectersystem.service;
+package com.postdesign.detectsystem.service.currencyService;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.postdesign.dectersystem.entity.User;
+import com.postdesign.detectsystem.entity.User;
 
 import java.util.Map;
 

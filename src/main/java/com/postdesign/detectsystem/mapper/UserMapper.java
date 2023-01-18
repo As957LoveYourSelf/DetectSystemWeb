@@ -1,9 +1,8 @@
-package com.postdesign.dectersystem.mapper;
+package com.postdesign.detectsystem.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.postdesign.dectersystem.entity.User;
+import com.postdesign.detectsystem.entity.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Component;
 
 @Mapper
 public interface UserMapper extends BaseMapper<User> {

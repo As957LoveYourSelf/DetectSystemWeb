@@ -1,8 +1,8 @@
-package com.postdesign.dectersystem.controller.currency;
+package com.postdesign.detectsystem.controller.currency;
 
 
-import com.postdesign.dectersystem.service.LoginService;
-import com.postdesign.dectersystem.utils.JsonUtil;
+import com.postdesign.detectsystem.service.currencyService.LoginService;
+import com.postdesign.detectsystem.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

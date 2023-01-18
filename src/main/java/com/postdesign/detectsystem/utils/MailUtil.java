@@ -1,4 +1,4 @@
-package com.postdesign.dectersystem.utils;
+package com.postdesign.detectsystem.utils;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
