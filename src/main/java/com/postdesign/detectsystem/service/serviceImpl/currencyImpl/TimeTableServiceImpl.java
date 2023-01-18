@@ -6,4 +6,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class TimeTableServiceImpl implements TimeTableService {
 
+    @Override
+    public String searchPersonTable(String uid) {
+        return null;
+    }
+
+    @Override
+    public String searchClassTable(String clsid) {
+        return null;
+    }
+
+    @Override
+    public String loadTable() {
+        return null;
+    }
 }
