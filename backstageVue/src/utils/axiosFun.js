@@ -1,0 +1,44 @@
+import axios from 'axios';
+axios.interceptors.request.use((config)=>{
+  console.log("进入请求拦截器")
+  return config
+},(error)=>{
+  return Promise.reject(error)
+})
+
+axios.interceptors.response.use((config)=>{
+  console.log("响应拦截器")
+  console.log(config.data.code)
+  if(config.data.code === 401){
+    setTimeout(() => {
+        console.log('false')
+    }, 500)
+  }
+  return config
+},(error)=>{
+  return Promise.reject(error)
+})
+
+// 登录请求方法
+const loginreq = (method, url, params) => {
+    return axios({
+        method: method,
+        url: url,
+        headers: {
+            'Content-Type': 'application/json;charset:utf-8;',
+        },
+        data: params,
+        transformRequest: [(data) => {
+            let ret = "";
+            for (let it in data) {
+                ret += encodeURIComponent(it) + "=" + encodeURIComponent(data[it]) + "&";
+            }
+            return ret;
+        }]
+    }).then(res => res.data);
+};
+
+
+export {
+    loginreq,
+}

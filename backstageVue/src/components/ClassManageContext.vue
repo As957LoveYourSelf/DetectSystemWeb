@@ -27,11 +27,11 @@
     <!-- 信息栏 -->
     <div style="min-height:87%; padding: 10px ">
       <el-table :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)" stripe border>
-        <el-table-column prop="class" label="学院" />
-        <el-table-column prop="name" label="专业"/>
-        <el-table-column prop="address" label="年级" />
-        <el-table-column prop="address" label="班级" />
-        <el-table-column prop="address" label="班主任" />
+        <el-table-column prop="collage" label="学院" />
+        <el-table-column prop="major" label="专业"/>
+        <el-table-column prop="grade" label="年级" />
+        <el-table-column prop="class" label="班级名称" />
+        <el-table-column prop="headmaster" label="班主任" />
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
             <el-button type="success" plain>查看</el-button>
@@ -75,153 +75,16 @@ const handleCurrentChange = (val)=> {
 // 可选的年级数据
 const level = ref('请选择年级')
 const level_ops = [
-  {
-    value: '2019',
-  },
-  {
-    value: '2020',
-  },
-  {
-    value: '2021',
-  },
-  {
-    value: '2022',
-  },
-  {
-    value: '2023',
-  },
+
 ]
 // 可选的学院数据
 const college = ref('请选择学院')
 const college_ops = [
-  {
-    value: '人工智能学院',
-  },
-  {
-    value: '信息工程学院',
-  },
-  {
-    value: '电子电气学院',
-  },
-  {
-    value: '教育科学学院',
-  },
-  {
-    value: '体育科学学院',
-  },
-  {
-    value: '美术学院',
-  },
-  {
-    value: '音乐与舞蹈学院',
-  },
+
 ]
 // 表格数据
 const tableData = [
-  {
-    class: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-02',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  }, {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    class: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
+
 ]
 </script>
 
