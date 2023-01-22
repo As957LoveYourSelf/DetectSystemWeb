@@ -15,7 +15,7 @@ import java.util.Map;
 
 
 @Service
-public class ObjectDetectionServiceImpl extends ServiceImpl<FaceMapper, Faces> implements ObjectDetectionService {
+public class ObjectDetectionServiceImpl implements ObjectDetectionService {
 
 
     @Override

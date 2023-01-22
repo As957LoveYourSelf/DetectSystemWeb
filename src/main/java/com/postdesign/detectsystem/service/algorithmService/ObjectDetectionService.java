@@ -15,7 +15,7 @@ import java.util.Map;
  * 4. 后期可以通过添加摄像头数据统计课室人数
  */
 
-public interface ObjectDetectionService extends IService<Faces> {
+public interface ObjectDetectionService{
     public Map<String, Object> faceIdentify(byte[] imageByte);
 
 }

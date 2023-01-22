@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * 定义需要实现的业务
  */
-public interface LoginService extends IService<User> {
+public interface LoginService{
     Map<String, Object> login(String uname, String password);
 
 }

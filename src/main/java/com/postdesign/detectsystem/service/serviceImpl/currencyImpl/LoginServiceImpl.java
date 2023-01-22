@@ -7,6 +7,7 @@ import com.postdesign.detectsystem.mapper.UserMapper;
 import com.postdesign.detectsystem.service.currencyService.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,8 +16,7 @@ import java.util.Map;
  * 实现登录业务
  */
 @Service
-public class LoginServiceImpl extends ServiceImpl<UserMapper, User> implements LoginService {
-
+public class LoginServiceImpl implements LoginService {
     @Autowired(required = false)
     private UserMapper userMapper;
     @Override
@@ -44,6 +44,6 @@ public class LoginServiceImpl extends ServiceImpl<UserMapper, User> implements L
     private User checkUser(String uname){
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("uname", uname);
-        return userMapper.selectOne(queryWrapper);
+        return this.userMapper.selectOne(queryWrapper);
     }
 }
