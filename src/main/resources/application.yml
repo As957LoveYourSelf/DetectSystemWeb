@@ -17,9 +17,10 @@ spring:
 
 
 mybatis-plus:
-  type-aliases-package: com.postdesign.dectersystem.entity
+  type-aliases-package: com.postdesign.detectsystem.entity
   #开启驼峰映射
   configuration:
     map-underscore-to-camel-case: false
 server:
   port: 8080
+  address: 127.0.0.1
