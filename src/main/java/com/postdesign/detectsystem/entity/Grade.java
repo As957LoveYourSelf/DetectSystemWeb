@@ -15,5 +15,5 @@ import org.springframework.validation.annotation.Validated;
 @Accessors(chain = true)
 public class Grade {
     @TableId(type = IdType.INPUT)
-    String gno;
+    Integer grade;
 }

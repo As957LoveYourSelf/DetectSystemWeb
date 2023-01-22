@@ -11,13 +11,13 @@ import org.springframework.validation.annotation.Validated;
 @Data
 @NoArgsConstructor
 @Validated
-@TableName("building")
+@TableName("course")
 @Accessors(chain = true)
-public class Building {
-
-    private String bname;
-    private Integer floors;
-    @TableId(type = IdType.INPUT)
-    private String clsNo;
-    private Byte isUsing;
+public class Course {
+    private String cname;
+    @TableId(type = IdType.ASSIGN_UUID)
+    private String cno;
+    private String teacher;
+    private String major;
+    private String collage;
 }

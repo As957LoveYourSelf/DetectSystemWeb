@@ -11,10 +11,11 @@ import org.springframework.validation.annotation.Validated;
 @Data
 @NoArgsConstructor
 @Validated
-@TableName("teachers")
+@TableName("majors")
 @Accessors(chain = true)
-public class Teachers {
+public class Major {
+
     @TableId(type = IdType.INPUT)
-    private String tno;
-    private String tname;
+    private String majorName;
+    private String collage;
 }

@@ -15,5 +15,7 @@ import org.springframework.validation.annotation.Validated;
 @Accessors(chain = true)
 public class Collage {
     @TableId(type = IdType.INPUT)
-    String name;
+    private String name;
+
+
 }
