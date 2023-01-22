@@ -19,8 +19,8 @@ public class StudentManageController {
 
     @RequestMapping("selectBysno")
     @ResponseBody
-    JSONResult<Map<String, Object>> selectBySno(String sno){
-        Map<String, Object> msg = studentManageService.selectBySno(sno);
+    JSONResult<List<Map<String, Object>>> selectBySno(String sno){
+        List<Map<String, Object>> msg = studentManageService.selectBySno(sno);
         return new JSONResult<>(msg);
     }
     @RequestMapping("selectBysname")
@@ -31,8 +31,8 @@ public class StudentManageController {
     }
     @RequestMapping("selectBysnoAndsname")
     @ResponseBody
-    JSONResult<Map<String, Object>> selectBySNoAndSName(String sno, String sname){
-        Map<String, Object> msg = studentManageService.selectBySNoAndSName(sno,sname);
+    JSONResult<List<Map<String, Object>>> selectBySNoAndSName(String sno, String sname){
+        List<Map<String, Object>> msg = studentManageService.selectBySNoAndSName(sno,sname);
         return new JSONResult<>(msg);
     }
 }

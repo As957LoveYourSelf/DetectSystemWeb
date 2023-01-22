@@ -80,7 +80,7 @@ public class ClassMangerServiceImpl implements ClassMangerService {
     }
 
     /**
-     *
+     * 通过学院名称查找班级
      **/
     @Override
     public List<Map<String, Object>> selectByCollage(String collage) {
@@ -115,9 +115,9 @@ public class ClassMangerServiceImpl implements ClassMangerService {
             for (Cls c:clsList){
                 Map<String, Object> objectMap = new HashMap<>();
                 objectMap.put("class_name", c.getClassName());
-                QueryWrapper<Teacher> queryWrapper1 = new QueryWrapper<>();
-                queryWrapper1.eq("leadclass",c.getClassName());
-                Teacher teacher = teacherMapper.selectOne(queryWrapper1);
+                QueryWrapper<Teacher> queryWrapper = new QueryWrapper<>();
+                queryWrapper.eq("leadclass",c.getClassName());
+                Teacher teacher = teacherMapper.selectOne(queryWrapper);
                 objectMap.put("headmaster", teacher.getTname());
                 objectMap.put("major", c.getMajor());
                 objectMap.put("collage", c.getCollage());

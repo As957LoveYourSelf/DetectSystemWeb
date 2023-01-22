@@ -34,9 +34,12 @@
     <!-- 信息栏 -->
     <div style="min-height:87%; padding: 10px ">
       <el-table :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)" stripe border>
-        <el-table-column prop="class" label="班级" />
-        <el-table-column prop="name" label="姓名"/>
-        <el-table-column prop="address" label="学院" />
+
+        <el-table-column prop="no" label="教工号"/> <!-- tno -->
+        <el-table-column prop="title" label="职位" /> <!-- title -->
+        <el-table-column prop="name" label="教师姓名"/> <!-- tname -->
+        <el-table-column prop="collage" label="所属学院" /> <!-- collage -->
+        <el-table-column prop="teachCourse" label="所教课程" /> <!-- teachCourse -->
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
             <el-button type="success" plain>查看</el-button>

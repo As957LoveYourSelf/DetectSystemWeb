@@ -20,11 +20,10 @@ public class StudentManageServiceImpl implements StudentManageService {
      * 学号选择器内容获取
      * */
     @Override
-    public Map<String, Object> selectBySno(String sno) {
+    public List<Map<String, Object>> selectBySno(String sno) {
         QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("sno", sno);
-        Student student = studentMapper.selectOne(queryWrapper);
-        return putInfoMap(student);
+        return putInfoMap(queryWrapper);
     }
 
     /**
@@ -33,16 +32,8 @@ public class StudentManageServiceImpl implements StudentManageService {
     @Override
     public List<Map<String, Object>> selectBySname(String sname) {
         QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("DISTINCT sname", sname);
-        List<Student> students = studentMapper.selectList(queryWrapper);
-        List<Map<String, Object>> infoList = new ArrayList<>();
-        if (!students.isEmpty()){
-            for (Student student: students){
-                infoList.add(putInfoMap(student));
-            }
-            return infoList;
-        }
-        return null;
+        queryWrapper.eq("sname", sname);
+        return putInfoMap(queryWrapper);
     }
 
 
@@ -50,23 +41,34 @@ public class StudentManageServiceImpl implements StudentManageService {
      * 通过学号和姓名搜索学生信息（可能搜索成功，或者结果唯一）
      * */
     @Override
-    public Map<String, Object> selectBySNoAndSName(String sno, String sname) {
-        Student student = new Student();
-        student.setSno(sno);
-        student.setSname(sname);
-        Student stu = studentMapper.selectByMultiId(student);
-        return putInfoMap(stu);
+    public List<Map<String, Object>> selectBySNoAndSName(String sno, String sname) {
+        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("sno", sno).eq("sname", sname);
+        return putInfoMap(queryWrapper);
     }
 
     /**
-     * 包装单个学生信息
+     * 包装学生信息
+     *  <el-table-column prop="class" label="所属班级" />
+     *  <el-table-column prop="name" label="姓名"/>
+     *  <el-table-column prop="sno" label="学号"/>
+     *  <el-table-column prop="major" label="专业"/>
+     *  <el-table-column prop="collage" label="学院" />
      * */
-    private Map<String, Object> putInfoMap(Student student) {
-        if (student != null){
-            Map<String, Object> objectMap = new HashMap<>();
-            objectMap.put("sno", student.getSno());
-            objectMap.put("sname", student.getSname());
-            return objectMap;
+    private List<Map<String, Object>> putInfoMap(QueryWrapper<Student> queryWrapper) {
+        List<Student> students = studentMapper.selectList(queryWrapper);
+        List<Map<String, Object>> infoList = new ArrayList<>();
+        if (!students.isEmpty()){
+            for (Student student: students){
+                Map<String, Object> msg = new HashMap<>();
+                msg.put("class", student.getCls());
+                msg.put("sname", student.getSname());
+                msg.put("sno", student.getSno());
+                msg.put("major", student.getMajor());
+                msg.put("collage", student.getCollage());
+                infoList.add(msg);
+            }
+            return infoList;
         }
         return null;
     }
