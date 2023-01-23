@@ -101,7 +101,11 @@ public class ClassMangerServiceImpl implements ClassMangerService {
 
 
     /**
-     * 获取班级具体信息（人数、成员）
+     *         <el-table-column prop="collage" label="学院" />
+     *         <el-table-column prop="major" label="专业"/>
+     *         <el-table-column prop="grade" label="年级" />
+     *         <el-table-column prop="class" label="班级名称" />
+     *         <el-table-column prop="headmaster" label="班主任" />
      * */
     @Override
     public List<Map<String, Object>> getClassInfo(String className) {
