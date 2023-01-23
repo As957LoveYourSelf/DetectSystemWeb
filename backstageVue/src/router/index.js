@@ -10,38 +10,53 @@ const router = createRouter({
     },
     {
       path: '/home',
-      name: 'home',
+      name: 'Home',
       component: () => import('../views/HomeView.vue')
     },
     {
       path: '/student',
-      name: 'student',
+      name: 'Student',
       component:() => import('../views/StudentManageView.vue')
     },
     {
       path: '/teacher',
-      name: 'teacher',
+      name: 'Teacher',
       component:() => import('../views/TeacherManageView.vue')
     },
     {
       path: '/class',
-      name: 'class',
+      name: 'Class',
       component:() => import('../views/ClassManageView.vue')
     },
     {
       path: '/classroom',
-      name: 'classroom',
+      name: 'Classroom',
       component:() => import('../views/ClassroomManageView.vue')
     },
     {
       path: '/setting',
-      name: 'setting',
+      name: 'Setting',
       component:() => import('../views/SettingView.vue')
     },
     {
       path: '/todo',
-      name: 'todo',
+      name: 'ToDo',
       component:() => import('../views/TODOView.vue')
+    },
+    {
+      path: '/classdetail',
+      name: 'ClassDetail',
+      component:() => import('../views/ClassDetailView.vue')
+    },
+    {
+      path: '/studentdetail',
+      name: 'StudentDetail',
+      component:() => import('../views/StudentDetailView.vue')
+    },
+    {
+      path: '/teacherdetail',
+      name: 'TeacherDetail',
+      component:() => import('../views/TeacherDetailView.vue')
     }
   ]
 })

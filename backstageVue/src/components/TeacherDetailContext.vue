@@ -2,12 +2,6 @@
 
 </template>
 
-<script>
-export default {
-  name: "TeacherDetailContext"
-}
+<script setup>
+
 </script>
-
-<style scoped>
-
-</style>
