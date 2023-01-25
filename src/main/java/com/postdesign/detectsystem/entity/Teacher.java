@@ -21,4 +21,5 @@ public class Teacher {
     private String title;
     private String leadclass;
     private String teachCourse;
+    private String teachClass;
 }

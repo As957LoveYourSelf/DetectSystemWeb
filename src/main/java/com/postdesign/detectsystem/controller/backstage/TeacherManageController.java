@@ -66,4 +66,12 @@ public class TeacherManageController {
         List<Map<String, Object>> maps = teacherManageService.selectByTnoAndTNameAndCollage(tno, tname, collage);
         return new JSONResult<>(maps);
     }
+
+    @RequestMapping("/getTeacherDetail")
+    @ResponseBody
+    JSONResult<Map<String, Object>> getTeacherDetail(String tno){
+        Map<String, Object> teacherDetail = teacherManageService.getTeacherDetail(tno);
+        return new JSONResult<>(teacherDetail);
+    }
+
 }

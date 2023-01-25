@@ -3,8 +3,10 @@ package com.postdesign.detectsystem.service.serviceImpl.backstageImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.postdesign.detectsystem.entity.Collage;
 import com.postdesign.detectsystem.entity.Teacher;
+import com.postdesign.detectsystem.entity.User;
 import com.postdesign.detectsystem.mapper.CollageMapper;
 import com.postdesign.detectsystem.mapper.TeacherMapper;
+import com.postdesign.detectsystem.mapper.UserMapper;
 import com.postdesign.detectsystem.service.backstageService.TeacherManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +21,10 @@ public class TeacherManageServiceImpl implements TeacherManageService {
 
     @Autowired(required = false)
     CollageMapper collageMapper;
-
     @Autowired(required = false)
     TeacherMapper teacherMapper;
+    @Autowired(required = false)
+    UserMapper userMapper;
     /**
      * 获取教师管理页面教师所属学院选择器内容
      * */
@@ -106,6 +109,50 @@ public class TeacherManageServiceImpl implements TeacherManageService {
         return getInfoByQueryWrapper(queryWrapper);
     }
 
+    /**
+     *         <el-descriptions-item label="教师姓名" v-model="data.name"></el-descriptions-item>
+     *         <el-descriptions-item label="所属学院" v-model="data.collage"></el-descriptions-item>
+     *         <el-descriptions-item label="年龄" v-model="data.age" :span="2"></el-descriptions-item>
+     *         <el-descriptions-item label="教学班级" v-model="data.classes" :span="2"></el-descriptions-item>
+     *         <el-descriptions-item label="教学课程" v-model="data.courses" :span="2"></el-descriptions-item>
+     *         <el-descriptions-item label="邮箱" v-model="data.email" :span="2"></el-descriptions-item>
+     *         <el-descriptions-item label="教工号" v-model="data.no" :span="2"></el-descriptions-item>
+     *         <el-descriptions-item label="电话" v-model="data.phone" ></el-descriptions-item>
+     * */
+    @Override
+    public Map<String, Object> getTeacherDetail(String tno) {
+        QueryWrapper<Teacher> teacherQueryWrapper = new QueryWrapper<>();
+        teacherQueryWrapper.eq("tno", tno);
+        List<Teacher> teachers = teacherMapper.selectList(teacherQueryWrapper);
+        String classes = "";
+        String currentCls = "";
+        String courses = "";
+        String currentCourses = "";
+        Map<String, Object> data = new HashMap<>();
+        for (Teacher t:teachers){
+            if (!currentCls.equals(t.getTeachClass())){
+                classes += (t.getTeachClass()+" ");
+                currentCls = t.getTeachClass();
+            }
+            if (!currentCourses.equals(t.getTeachCourse())){
+                courses += (t.getTeachCourse()+" ");
+                currentCourses = t.getTeachCourse();
+            }
+        }
+        Teacher teacher = teachers.get(0);
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq("uno", tno);
+        User user = userMapper.selectOne(userQueryWrapper);
+        data.put("name", teacher.getTname());
+        data.put("collage", teacher.getCollage());
+        data.put("age", user.getUage());
+        data.put("classes", classes);
+        data.put("courses", courses);
+        data.put("email", user.getEmail());
+        data.put("no", teacher.getTno());
+        data.put("phone", user.getUphone());
+        return data;
+    }
 
     /**
      *         <el-table-column prop="no" label="教工号"/>

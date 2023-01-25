@@ -12,4 +12,6 @@ public interface TeacherManageService {
     List<Map<String, Object>> selectByCollageAndTname(String collage, String tname);
     List<Map<String, Object>> selectByTnoAndTName(String tno, String tname);
     List<Map<String, Object>> selectByTnoAndTNameAndCollage(String tno, String tname, String collage);
+    Map<String, Object> getTeacherDetail(String tno);
+
 }
