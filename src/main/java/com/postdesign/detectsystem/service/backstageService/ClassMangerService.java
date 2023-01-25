@@ -13,5 +13,5 @@ public interface ClassMangerService {
 
     List<Map<String, Object>> selectByGradeAndCollage(Integer grade, String collage);
 
-    List<Map<String, Object>> getClassInfo(String className);
+    Map<String, Object> getClassDetail(String clsName);
 }

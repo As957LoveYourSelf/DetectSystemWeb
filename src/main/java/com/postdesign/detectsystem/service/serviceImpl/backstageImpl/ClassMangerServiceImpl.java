@@ -1,14 +1,8 @@
 package com.postdesign.detectsystem.service.serviceImpl.backstageImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.postdesign.detectsystem.entity.Cls;
-import com.postdesign.detectsystem.entity.Collage;
-import com.postdesign.detectsystem.entity.Grade;
-import com.postdesign.detectsystem.entity.Teacher;
-import com.postdesign.detectsystem.mapper.ClassMapper;
-import com.postdesign.detectsystem.mapper.CollageMapper;
-import com.postdesign.detectsystem.mapper.GradeMapper;
-import com.postdesign.detectsystem.mapper.TeacherMapper;
+import com.postdesign.detectsystem.entity.*;
+import com.postdesign.detectsystem.mapper.*;
 import com.postdesign.detectsystem.service.backstageService.ClassMangerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,15 +17,14 @@ public class ClassMangerServiceImpl implements ClassMangerService {
 
     @Autowired(required = false)
     GradeMapper gradeMapper;
-
     @Autowired(required = false)
     CollageMapper collageMapper;
-
     @Autowired(required = false)
     ClassMapper classMapper;
-
     @Autowired(required = false)
     TeacherMapper teacherMapper;
+    @Autowired(required = false)
+    StudentMapper studentMapper;
 
     /**
      * 获取年级选择器内容
@@ -99,16 +92,54 @@ public class ClassMangerServiceImpl implements ClassMangerService {
         return getClassInfoByQueryWrapper(queryWrapper);
     }
 
-
     /**
-     *         <el-table-column prop="collage" label="学院" />
+     *         班级信息
+     *         <el-descriptions-item label="班级名称" v-model="data.name"></el-descriptions-item>
+     *         <el-descriptions-item label="所属学院" v-model="data.collage"></el-descriptions-item>
+     *         <el-descriptions-item label="所属专业" v-model="data.major"></el-descriptions-item>
+     *         <el-descriptions-item label="班级人数" v-model="data.peoplenum" ></el-descriptions-item>
+     *         <el-descriptions-item label="班主任" v-model="data.headmaster"></el-descriptions-item>
+     *         班级成员
+     *         data.people
+     *         <el-table-column prop="class" label="所属班级" />
+     *         <el-table-column prop="name" label="姓名"/>
+     *         <el-table-column prop="sno" label="学号"/>
      *         <el-table-column prop="major" label="专业"/>
-     *         <el-table-column prop="grade" label="年级" />
-     *         <el-table-column prop="class" label="班级名称" />
-     *         <el-table-column prop="headmaster" label="班主任" />
+     *         <el-table-column prop="collage" label="学院" />
      * */
     @Override
-    public List<Map<String, Object>> getClassInfo(String className) {
+    public Map<String, Object> getClassDetail(String clsName) {
+        QueryWrapper<Cls> clsQueryWrapper = new QueryWrapper<>();
+        clsQueryWrapper.eq("className", clsName);
+        QueryWrapper<Teacher> teacherQueryWrapper = new QueryWrapper<>();
+        teacherQueryWrapper.eq("leadClass", clsName);
+        QueryWrapper<Student> studentQueryWrapper = new QueryWrapper<>();
+        studentQueryWrapper.eq("cls", clsName);
+
+        Cls cls = classMapper.selectOne(clsQueryWrapper);
+        Teacher teacher = teacherMapper.selectOne(teacherQueryWrapper);
+        List<Student> students = studentMapper.selectList(studentQueryWrapper);
+
+        if (cls != null && teacher != null && students != null){
+            Map<String, Object> data = new HashMap<>();
+            data.put("name", cls.getClassName());
+            data.put("collage", cls.getCollage());
+            data.put("major", cls.getMajor());
+            data.put("headmaster", teacher.getTname());
+            List<Map<String, Object>> peopledata = new ArrayList<>();
+            for(Student s:students){
+                Map<String, Object> info = new HashMap<>();
+                info.put("class", s.getCls());
+                info.put("name", s.getSname());
+                info.put("sno", s.getSno());
+                info.put("major",s.getMajor());
+                info.put("collage",s.getCollage());
+                peopledata.add(info);
+            }
+            data.put("people", peopledata);
+            return data;
+        }
+
         return null;
     }
 
@@ -117,11 +148,12 @@ public class ClassMangerServiceImpl implements ClassMangerService {
         if (!clsList.isEmpty()){
             List<Map<String, Object>> infoList = new ArrayList<>();
             for (Cls c:clsList){
-                Map<String, Object> objectMap = new HashMap<>();
-                objectMap.put("class_name", c.getClassName());
                 QueryWrapper<Teacher> queryWrapper = new QueryWrapper<>();
                 queryWrapper.eq("leadclass",c.getClassName());
                 Teacher teacher = teacherMapper.selectOne(queryWrapper);
+                Map<String, Object> objectMap = new HashMap<>();
+
+                objectMap.put("class_name", c.getClassName());
                 objectMap.put("headmaster", teacher.getTname());
                 objectMap.put("major", c.getMajor());
                 objectMap.put("collage", c.getCollage());

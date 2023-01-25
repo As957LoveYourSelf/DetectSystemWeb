@@ -15,15 +15,11 @@ import org.springframework.validation.annotation.Validated;
 @TableName("classes")
 @Accessors(chain = true)
 public class Cls {
-    @MppMultiId
+    @TableId(type = IdType.INPUT)
     private String className;
-    private String teacherNo;
-    private String studentNo;
-    @MppMultiId
+    private Integer teacherCount;
+    private Integer studentCount;
     private String collage;
-    @MppMultiId
     private Integer grade;
-    @MppMultiId
     private String major;
-    private String useClassName;
 }
