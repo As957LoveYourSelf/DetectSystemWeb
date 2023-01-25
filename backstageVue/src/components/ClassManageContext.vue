@@ -21,8 +21,8 @@
         />
       </el-select>
       <!-- 按钮 -->
-      <el-button class="ml-8" type="success" :icon="Search" round>搜索</el-button>
-      <el-button class="ml-8" type="warning" :icon="Delete" round>重置</el-button>
+      <el-button class="ml-8" type="success" :icon="Search" @click="search(level, college)" round>搜索</el-button>
+      <el-button class="ml-8" type="warning" :icon="Delete" @click="reset" round>重置</el-button>
     </div>
     <!-- 信息栏 -->
     <div style="min-height:87%; padding: 10px ">
@@ -34,7 +34,7 @@
         <el-table-column prop="headmaster" label="班主任" />
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
-            <el-button type="success" plain>查看</el-button>
+            <el-button type="success" @click="" plain>查看</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -60,31 +60,101 @@ import {
   Search,
 } from '@element-plus/icons-vue'
 import { ref, reactive } from 'vue'
-const unoInput = ref('')
-const unameInput = ref('')
-const changePage = reactive({
-  currentPage:1, //默认当前页面为1
-  pageSize:14,
-  total:20, //总共有多少数据
-  pageSizes: [10, 14]
-})
+import {
+  getCollageSelector,
+  getGradeSelector,
+  selectByCollage,
+  selectByGrade,
+  selectByGradeAndCollage
+} from "@/utils/classManage";
 //这里是获取当前页数
 const handleCurrentChange = (val)=> {
   changePage.currentPage = val
 }
 // 可选的年级数据
-const level = ref('请选择年级')
-const level_ops = [
+let level = ref('请选择年级')
+let level_ops  = null
+getGradeSelector().then(res => {
+  console.log(res)
+  level_ops = res
+}).catch(err => {
+  console.log(err)
+})
 
-]
 // 可选的学院数据
-const college = ref('请选择学院')
-const college_ops = [
+let college = ref('请选择学院')
+let college_ops = null
+getCollageSelector().then(res => {
+  console.log(res)
+  college_ops = res
+}).catch(err => {
+  console.log(err)
+})
 
-]
 // 表格数据
-const tableData = [
+let tableData = []
+// 搜索函数
+function search(grade, collage) {
+  console.log(grade, collage)
+  let params = {
+    grade: "",
+    collage: ""
+  }
+  if (grade === '请选择年级' && collage === '请选择学院'){
+    tableData = []
+  }
+  else if (grade !== '请选择年级' && collage === '请选择学院'){
+    params.grade = grade.toInteger
+    params.collage = ""
+    selectByGrade(params).then(res => {
+      console.log(res)
+      tableData = res
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+  else if (grade === '请选择年级' && collage !== '请选择学院'){
+    params.grade = ""
+    params.collage = collage
+    selectByCollage(params).then(res => {
+      console.log(res)
+      tableData = res
+    })
+        .catch(err => {
+          console.log(err)
+        })
+  }
+  else if (grade !== '请选择年级' && collage !== '请选择学院'){
+    params.grade = grade.toInteger
+    params.collage = collage
+    selectByGradeAndCollage(params).then(res => {
+      console.log(res)
+      tableData = res
+    })
+        .catch(err => {
+          console.log(err)
+        })
+  }else {
+    console.log("nodata")
+  }
+}
+// 重置函数
+function reset() {
+  console.log("reset")
+  level = ref('请选择年级')
+  college = ref('请选择学院')
+  tableData = []
+}
+// 查看详情
+function getClassDetail(){
 
-]
+}
+const changePage = reactive({
+  currentPage:1, //默认当前页面为1
+  pageSize:14,
+  total: tableData.length, //总共有多少数据
+  pageSizes: [10, 14]
+})
+
 </script>
 

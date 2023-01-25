@@ -38,7 +38,29 @@ const loginreq = (method, url, params) => {
     }).then(res => res.data);
 };
 
+//  班级管理数据请求
+const getClassData = (method, url, params) => {
+    return axios({
+        method: method,
+        url: url,
+        headers: {
+            'Content-Type': 'application/json;charset:utf-8;',
+        },
+        data: params,
+        transformRequest: [
+            (data) => {
+            let ret = "";
+            for (let it in data) {
+                ret += encodeURIComponent(it) + "=" + encodeURIComponent(data[it]) + "&";
+            }
+            return ret;
+        }]
+    }).then(res => res.data);
+};
+
+//
 
 export {
     loginreq,
+    getClassData,
 }
