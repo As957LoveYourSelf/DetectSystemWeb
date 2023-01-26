@@ -30,11 +30,11 @@
         <el-table-column prop="collage" label="学院" />
         <el-table-column prop="major" label="专业"/>
         <el-table-column prop="grade" label="年级" />
-        <el-table-column prop="class" label="班级名称" />
+        <el-table-column prop="classname" label="班级名称" />
         <el-table-column prop="headmaster" label="班主任" />
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
-            <el-button type="success" @click="" plain>查看</el-button>
+            <el-button type="success" @click="getClassDetailInfo(scope.row.classname)" plain>查看</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -65,7 +65,8 @@ import {
   getGradeSelector,
   selectByCollage,
   selectByGrade,
-  selectByGradeAndCollage
+  selectByGradeAndCollage,
+  getClassDetail
 } from "@/utils/classManage";
 //这里是获取当前页数
 const handleCurrentChange = (val)=> {
@@ -92,13 +93,21 @@ getCollageSelector().then(res => {
 })
 
 // 表格数据
-let tableData = []
+let tableData = [
+  // {
+  //   collage:"1",
+  //   major: "2",
+  //   grade:2019,
+  //   classname:"1",
+  //   headmaster:"zzz"
+  // }
+]
 // 搜索函数
 function search(grade, collage) {
   console.log(grade, collage)
   let params = {
     grade: "",
-    collage: ""
+    collage: "",
   }
   if (grade === '请选择年级' && collage === '请选择学院'){
     tableData = []
@@ -146,8 +155,15 @@ function reset() {
   tableData = []
 }
 // 查看详情
-function getClassDetail(){
-
+function getClassDetailInfo(classname){
+  let data = {
+    className: classname
+  }
+  getClassDetail(data).then(res => {
+    console.log(res)
+  }).catch(err => {
+    console.log(err)
+  })
 }
 const changePage = reactive({
   currentPage:1, //默认当前页面为1

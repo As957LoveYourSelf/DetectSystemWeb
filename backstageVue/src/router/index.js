@@ -5,58 +5,99 @@ const router = createRouter({
   routes: [
     {
       path : '/',
-      name: 'Login',
-      component: () => import('../views/LoginView.vue')
+      name: 'Login1',
+      component: () => import('../views/LoginView.vue'),
+      meta: {
+        requireAuth: false
+      }
+    },
+    {
+      path : '/login',
+      name: 'Login2',
+      component: () => import('../views/LoginView.vue'),
+      meta: {
+        requireAuth: false
+      }
     },
     {
       path: '/home',
       name: 'Home',
-      component: () => import('../views/HomeView.vue')
+      component: () => import('../views/HomeView.vue'),
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/student',
       name: 'Student',
-      component:() => import('../views/StudentManageView.vue')
+      component:() => import('../views/StudentManageView.vue'),
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/teacher',
       name: 'Teacher',
-      component:() => import('../views/TeacherManageView.vue')
+      component:() => import('../views/TeacherManageView.vue'),
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/class',
       name: 'Class',
-      component:() => import('../views/ClassManageView.vue')
+      component:() => import('../views/ClassManageView.vue'),
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/classroom',
       name: 'Classroom',
-      component:() => import('../views/ClassroomManageView.vue')
+      component:() => import('../views/ClassroomManageView.vue'),
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/setting',
       name: 'Setting',
-      component:() => import('../views/SettingView.vue')
+      component:() => import('../views/SettingView.vue'),
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/todo',
       name: 'ToDo',
-      component:() => import('../views/TODOView.vue')
+      component:() => import('../views/TODOView.vue'),
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/classdetail',
       name: 'ClassDetail',
-      component:() => import('../views/ClassDetailView.vue')
+      component:() => import('../views/ClassDetailView.vue'),
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/studentdetail',
       name: 'StudentDetail',
-      component:() => import('../views/StudentDetailView.vue')
+      component:() => import('../views/StudentDetailView.vue'),
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/teacherdetail',
       name: 'TeacherDetail',
-      component:() => import('../views/TeacherDetailView.vue')
+      component:() => import('../views/TeacherDetailView.vue'),
+      meta: {
+        requireAuth: true
+      }
     }
   ]
 })
