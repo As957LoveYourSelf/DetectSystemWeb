@@ -36,6 +36,8 @@ public class StudentManageController {
         return new JSONResult<>(msg);
     }
 
+    @RequestMapping("/getStudentDetail")
+    @ResponseBody
     JSONResult<Map<String, Object>> getStudentDetail(String sno){
         Map<String, Object> msg = studentManageService.getStudentDetail(sno);
         return new JSONResult<>(msg);

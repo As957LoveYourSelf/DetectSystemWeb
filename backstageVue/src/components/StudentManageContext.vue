@@ -19,8 +19,8 @@
           :suffix-icon="Search"
       />
       <!-- 按钮 -->
-      <el-button class="ml-8" type="success" :icon="Search" round>搜索</el-button>
-      <el-button class="ml-8" type="warning" :icon="Delete" round>重置</el-button>
+      <el-button class="ml-8" type="success" :icon="Search" @click="search" round>搜索</el-button>
+      <el-button class="ml-8" type="warning" :icon="Delete" @click="reset" round>重置</el-button>
     </div>
     <!-- 信息栏 -->
     <div style="min-height:87%; padding: 10px ">
@@ -32,7 +32,7 @@
         <el-table-column prop="collage" label="学院" />
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
-            <el-button type="success" plain>查看</el-button>
+            <el-button type="success" @click="getDetail(scope.row.sno)" plain>查看</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -53,25 +53,77 @@
 </template>
 
 <script setup>
+import {getStudentDetail, selectBysname, selectBysno, selectBysnoAndsname} from "@/utils/studentManage";
+
+let tableData = [
+
+]
 import {
   Delete,
   Search,
 } from '@element-plus/icons-vue'
-  import { ref, reactive } from 'vue'
-  const unoInput = ref('')
-  const unameInput = ref('')
+import { ref, reactive } from 'vue'
+let unoInput = ref('')
+let unameInput = ref('')
 const changePage = reactive({
   currentPage:1, //默认当前页面为1
   pageSize:14,
-  total:20, //总共有多少数据
+  total: tableData.length, //总共有多少数据
   pageSizes: [10, 14]
 })
 //这里是获取当前页数
 const handleCurrentChange = (val)=> {
   changePage.currentPage = val
 }
-const tableData = [
+// 搜索函数
+function search() {
+  console.log(unameInput,unoInput)
 
-]
+  if (unoInput.value === "" && unameInput.value === ""){
+    tableData = []
+  }
+  else if (unoInput.value !== "" && unameInput.value === ""){
+    const data = {sno:unoInput.value}
+    selectBysno(data).then(res => {
+      console.log(res)
+      tableData = res
+    }).catch(err => {
+      console.log(err)
+    })
+  }else if (unoInput.value === "" && unameInput.value !== ""){
+    const data = {sname:unameInput.value}
+    selectBysname(data).then(res => {
+      console.log(res)
+      tableData = res
+    }).catch(err => {
+      console.log(err)
+    })
+  }else if (unoInput.value !== "" && unameInput.value !== ""){
+    const data = {sno:unoInput.value, sname:unameInput.value}
+    selectBysnoAndsname(data).then(res => {
+      console.log(res)
+      tableData = res
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
+}
+// 重置函数
+function reset() {
+  unoInput = ref('')
+  unameInput = ref('')
+}
+// 查看学生详情
+function getDetail(sno) {
+  // 跳转学生页面
+  const data = {sno: sno}
+  getStudentDetail(data).then(res => {
+    console.log(res)
+  }).catch(err => {
+    console.log(err)
+  })
+}
+
 </script>
 

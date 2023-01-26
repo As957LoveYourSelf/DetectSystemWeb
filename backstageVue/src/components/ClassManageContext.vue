@@ -105,41 +105,37 @@ let tableData = [
 // 搜索函数
 function search(grade, collage) {
   console.log(grade, collage)
-  let params = {
-    grade: "",
-    collage: "",
-  }
   if (grade === '请选择年级' && collage === '请选择学院'){
     tableData = []
   }
   else if (grade !== '请选择年级' && collage === '请选择学院'){
-    params.grade = grade.toInteger
-    params.collage = ""
-    selectByGrade(params).then(res => {
-      console.log(res)
-      tableData = res
-    }).catch(err => {
-      console.log(err)
+    const params = {grade:grade.toInteger}
+    selectByGrade(params)
+        .then(res => {
+          console.log(res)
+          tableData = res
+      }).catch(err => {
+        console.log(err)
     })
   }
   else if (grade === '请选择年级' && collage !== '请选择学院'){
-    params.grade = ""
-    params.collage = collage
-    selectByCollage(params).then(res => {
-      console.log(res)
-      tableData = res
-    })
+    const params = {collage:collage}
+    selectByCollage(params)
+        .then(res => {
+          console.log(res)
+          tableData = res
+      })
         .catch(err => {
           console.log(err)
         })
   }
   else if (grade !== '请选择年级' && collage !== '请选择学院'){
-    params.grade = grade.toInteger
-    params.collage = collage
-    selectByGradeAndCollage(params).then(res => {
-      console.log(res)
-      tableData = res
-    })
+    const params = {grade:grade.toInteger, collage:collage}
+    selectByGradeAndCollage(params)
+        .then(res => {
+          console.log(res)
+          tableData = res
+        })
         .catch(err => {
           console.log(err)
         })
