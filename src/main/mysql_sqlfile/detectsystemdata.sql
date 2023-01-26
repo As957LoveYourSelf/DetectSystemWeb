@@ -11,7 +11,7 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 23/01/2023 13:17:22
+ Date: 26/01/2023 09:56:52
 */
 
 SET NAMES utf8mb4;
@@ -47,23 +47,17 @@ INSERT INTO `building` VALUES ('综合楼C', 13, 'C-101', NULL);
 DROP TABLE IF EXISTS `classes`;
 CREATE TABLE `classes`  (
   `className` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `teacherNo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `collage` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `grade` int(0) NOT NULL,
   `major` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `studentNo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `useClassName` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  INDEX `teacherNo`(`teacherNo`) USING BTREE,
+  `studentCount` int(0) NULL DEFAULT NULL,
+  `teacherCount` int(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`className`) USING BTREE,
   INDEX `collage`(`collage`) USING BTREE,
   INDEX `className`(`className`) USING BTREE,
   INDEX `grade`(`grade`) USING BTREE,
-  INDEX `studentNo`(`studentNo`) USING BTREE,
-  INDEX `useClassName`(`useClassName`) USING BTREE,
-  CONSTRAINT `classes_ibfk_1` FOREIGN KEY (`teacherNo`) REFERENCES `teachers` (`tno`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `classes_ibfk_3` FOREIGN KEY (`collage`) REFERENCES `collage` (`name`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `classes_ibfk_4` FOREIGN KEY (`grade`) REFERENCES `grade` (`grade`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `classes_ibfk_5` FOREIGN KEY (`studentNo`) REFERENCES `students` (`sno`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `classes_ibfk_6` FOREIGN KEY (`useClassName`) REFERENCES `building` (`clsNo`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `classes_ibfk_4` FOREIGN KEY (`grade`) REFERENCES `grade` (`grade`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -106,6 +100,7 @@ CREATE TABLE `course`  (
   INDEX `teacher`(`teacher`) USING BTREE,
   INDEX `major`(`major`) USING BTREE,
   INDEX `collage`(`collage`) USING BTREE,
+  INDEX `cname`(`cname`) USING BTREE,
   CONSTRAINT `course_ibfk_1` FOREIGN KEY (`teacher`) REFERENCES `teachers` (`tname`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `course_ibfk_2` FOREIGN KEY (`major`) REFERENCES `majors` (`majorName`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `course_ibfk_3` FOREIGN KEY (`collage`) REFERENCES `collage` (`name`) ON DELETE RESTRICT ON UPDATE RESTRICT
@@ -202,17 +197,22 @@ CREATE TABLE `students`  (
 DROP TABLE IF EXISTS `teachers`;
 CREATE TABLE `teachers`  (
   `tno` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `tname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `college` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `title` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `leadclass` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '无',
+  `tname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `college` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `title` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `leadclass` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '无',
   `teachCourse` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `teachClass` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   INDEX `lead_class`(`leadclass`) USING BTREE,
   INDEX `tno`(`tno`) USING BTREE,
   INDEX `tname`(`tname`) USING BTREE,
+  INDEX `teachCourse`(`teachCourse`) USING BTREE,
+  INDEX `teacheClass`(`teachClass`) USING BTREE,
   CONSTRAINT `teachers_ibfk_3` FOREIGN KEY (`leadclass`) REFERENCES `classes` (`className`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `teachers_ibfk_4` FOREIGN KEY (`tno`) REFERENCES `users` (`uid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `teachers_ibfk_5` FOREIGN KEY (`tname`) REFERENCES `users` (`uname`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `teachers_ibfk_5` FOREIGN KEY (`tname`) REFERENCES `users` (`uname`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `teachers_ibfk_6` FOREIGN KEY (`teachCourse`) REFERENCES `course` (`cname`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `teachers_ibfk_7` FOREIGN KEY (`teachClass`) REFERENCES `classes` (`className`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
