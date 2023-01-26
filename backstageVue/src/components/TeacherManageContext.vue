@@ -69,7 +69,8 @@ import {
 } from '@element-plus/icons-vue'
 import { ref, reactive } from 'vue'
 import {
-  getTeacherDetail,
+  getCollageSelector,
+  getTeacherDetail, selectByCollage,
   selectByCollageAndTname,
   selectByCollageAndTno,
   selectByTname,
@@ -88,11 +89,26 @@ const handleCurrentChange = (val)=> {
 // 可选的学院数据
 let collage = ref('请选择教师所在学院')
 let collage_ops = []
+getCollageSelector().then(res => {
+  console.log(res)
+  collage_ops = res
+}).catch(err => {
+  console.log(err)
+})
 
 // 查询函数
 function searchfn() {
   if (unoInput.value === '' && unameInput.value === '' && collage.value === '请选择教师所在学院'){
     tableData = []
+  }
+  else if (unoInput.value === '' && unameInput.value === '' && collage.value !== '请选择教师所在学院'){
+    const data = {collage:collage.value}
+    selectByCollage(data).then(res => {
+      console.log(res)
+      tableData = res
+    }).catch(err => {
+      console.log(err)
+    })
   }
   else if (unoInput.value !== '' && unameInput.value === '' && collage.value === '请选择教师所在学院'){
     const data = {tno:unoInput.value}
