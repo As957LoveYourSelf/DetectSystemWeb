@@ -30,8 +30,8 @@ public class TokenUtil {
             // 返回token字符串
             return JWT.create()
                     .withHeader(header)
-                    .withClaim("loginName", username)
-                    .withClaim("pwd", password)
+                    .withClaim("uname", username)
+                    .withClaim("psw", password)
                     .withExpiresAt(date)
                     .sign(algorithm);
         } catch (Exception e) {
