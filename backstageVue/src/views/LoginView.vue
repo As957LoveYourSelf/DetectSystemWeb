@@ -49,6 +49,7 @@ function onSubmit() {
   };
   login(data)
       .then(res => {
+        // 判断是否登录成功
         console.log(res)
       })
       .catch(err => {
