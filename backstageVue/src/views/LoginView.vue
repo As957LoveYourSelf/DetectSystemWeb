@@ -50,6 +50,9 @@ function onSubmit() {
   login(data)
       .then(res => {
         // 判断是否登录成功
+        if(res.data.loginState == 'success'){
+          localStorage.setItem('token',res.data.userToken)
+        }
         console.log(res)
       })
       .catch(err => {

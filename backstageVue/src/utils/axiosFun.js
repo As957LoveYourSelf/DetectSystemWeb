@@ -45,6 +45,8 @@ const getClassData = (method, url, params) => {
         url: url,
         headers: {
             'Content-Type': 'application/json;charset:utf-8;',
+            // 'Bearer ' +
+            'Authorization': localStorage.getItem('userToken')
         },
         data: params,
         transformRequest: [
@@ -65,6 +67,7 @@ const getStudentData = (method, url, params) => {
         url: url,
         headers: {
             'Content-Type': 'application/json;charset:utf-8;',
+            'Authorization': localStorage.getItem('token')
         },
         data: params,
         transformRequest: [
@@ -84,6 +87,7 @@ const getTeacherData = (method, url, params) => {
         url: url,
         headers: {
             'Content-Type': 'application/json;charset:utf-8;',
+            'Authorization': localStorage.getItem('token')
         },
         data: params,
         transformRequest: [

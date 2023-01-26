@@ -7,7 +7,6 @@ import lombok.experimental.Accessors;
 
 //统一返回前端的json格式
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
 public class JSONResult <T>{
@@ -15,9 +14,10 @@ public class JSONResult <T>{
     private String message;
     private T data;
 
-    public JSONResult(Integer code, String message) {
+    public JSONResult(Integer code, String message, T data) {
         this.code = code;
         this.message = message;
+        this.data = data;
     }
 
     public JSONResult(T data) {
