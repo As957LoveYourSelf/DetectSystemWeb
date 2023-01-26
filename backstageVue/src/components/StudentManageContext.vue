@@ -19,7 +19,7 @@
           :suffix-icon="Search"
       />
       <!-- 按钮 -->
-      <el-button class="ml-8" type="success" :icon="Search" @click="search" round>搜索</el-button>
+      <el-button class="ml-8" type="success" :icon="Search" @click="searchfn" round>搜索</el-button>
       <el-button class="ml-8" type="warning" :icon="Delete" @click="reset" round>重置</el-button>
     </div>
     <!-- 信息栏 -->
@@ -76,7 +76,7 @@ const handleCurrentChange = (val)=> {
   changePage.currentPage = val
 }
 // 搜索函数
-function search() {
+function searchfn() {
   console.log(unameInput,unoInput)
 
   if (unoInput.value === "" && unameInput.value === ""){

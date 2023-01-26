@@ -4,9 +4,9 @@
     <!-- 搜索栏 -->
     <div style="padding: 10px;">
       <!-- 搜索框 -->
-      <el-select class="w-300" size="large" v-model="college" placeholder="Select">
+      <el-select class="w-300" size="large" v-model="collage" placeholder="Select">
         <el-option
-            v-for="item in college_ops"
+            v-for="item in collage_ops"
             :key="item.value"
             :value="item.value"
             :disabled="item.disabled"
@@ -21,7 +21,7 @@
         />
       </el-select>
       <!-- 按钮 -->
-      <el-button class="ml-8" type="success" :icon="Search" @click="search(level, college)" round>搜索</el-button>
+      <el-button class="ml-8" type="success" :icon="Search" @click="searchfn" round>搜索</el-button>
       <el-button class="ml-8" type="warning" :icon="Delete" @click="reset" round>重置</el-button>
     </div>
     <!-- 信息栏 -->
@@ -83,11 +83,11 @@ getGradeSelector().then(res => {
 })
 
 // 可选的学院数据
-let college = ref('请选择学院')
-let college_ops = null
+let collage = ref('请选择学院')
+let collage_ops = null
 getCollageSelector().then(res => {
   console.log(res)
-  college_ops = res
+  collage_ops = res
 }).catch(err => {
   console.log(err)
 })
@@ -103,24 +103,14 @@ let tableData = [
   // }
 ]
 // 搜索函数
-function search(grade, collage) {
-  console.log(grade, collage)
-  if (grade === '请选择年级' && collage === '请选择学院'){
+function searchfn() {
+  console.log()
+  if (this.level.value === '请选择年级' && this.collage.value === '请选择学院'){
     tableData = []
   }
-  else if (grade !== '请选择年级' && collage === '请选择学院'){
-    const params = {grade:grade.toInteger}
+  else if (this.level.value !== '请选择年级' && this.collage.value === '请选择学院'){
+    const params = {grade:this.level.value.toInteger}
     selectByGrade(params)
-        .then(res => {
-          console.log(res)
-          tableData = res
-      }).catch(err => {
-        console.log(err)
-    })
-  }
-  else if (grade === '请选择年级' && collage !== '请选择学院'){
-    const params = {collage:collage}
-    selectByCollage(params)
         .then(res => {
           console.log(res)
           tableData = res
@@ -129,8 +119,8 @@ function search(grade, collage) {
           console.log(err)
         })
   }
-  else if (grade !== '请选择年级' && collage !== '请选择学院'){
-    const params = {grade:grade.toInteger, collage:collage}
+  else if (this.level.value !== '请选择年级' && this.collage.value !== '请选择学院'){
+    const params = {grade:this.level.value.toInteger, collage:this.collage.value}
     selectByGradeAndCollage(params)
         .then(res => {
           console.log(res)
@@ -147,7 +137,7 @@ function search(grade, collage) {
 function reset() {
   console.log("reset")
   level = ref('请选择年级')
-  college = ref('请选择学院')
+  collage = ref('请选择学院')
   tableData = []
 }
 // 查看详情
