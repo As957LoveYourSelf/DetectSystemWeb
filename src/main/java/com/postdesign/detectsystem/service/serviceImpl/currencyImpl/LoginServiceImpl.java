@@ -26,13 +26,16 @@ public class LoginServiceImpl implements LoginService {
         if (user != null){
             if (checkPassword(user, password)){
                 msgMap.put("loginState", "success");
+                msgMap.put("userInfo",user);
             }
             else {
                 msgMap.put("loginState", "psdUnCheck");
+                msgMap.put("userInfo",null);
             }
         }
         else {
             msgMap.put("loginState", "unameUnCheck");
+            msgMap.put("userInfo",null);
         }
         return msgMap;
     }

@@ -1,4 +1,4 @@
-package com.postdesign.detectsystem.controller.backstage;
+package com.postdesign.detectsystem.controller.android;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/userManagePage")
 public class UserManageController {
+
 
 
 }

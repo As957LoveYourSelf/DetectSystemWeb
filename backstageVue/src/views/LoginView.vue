@@ -58,7 +58,6 @@ function onSubmit() {
       .catch(err => {
         console.log(err)
       })
-
 }
 function clearForm(){
   formData.name = ''
