@@ -1,12 +1,8 @@
 package com.postdesign.detectsystem.service.serviceImpl.backstageImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.postdesign.detectsystem.entity.Collage;
-import com.postdesign.detectsystem.entity.Teacher;
-import com.postdesign.detectsystem.entity.User;
-import com.postdesign.detectsystem.mapper.CollageMapper;
-import com.postdesign.detectsystem.mapper.TeacherMapper;
-import com.postdesign.detectsystem.mapper.UserMapper;
+import com.postdesign.detectsystem.entity.*;
+import com.postdesign.detectsystem.mapper.*;
 import com.postdesign.detectsystem.service.backstageService.TeacherManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +21,15 @@ public class TeacherManageServiceImpl implements TeacherManageService {
     TeacherMapper teacherMapper;
     @Autowired(required = false)
     UserMapper userMapper;
+
+    @Autowired(required = false)
+    TeachClsMapper teachClsMapper;
+
+    @Autowired(required = false)
+    TeachCourseMapper teachCourseMapper;
+
+    @Autowired(required = false)
+    CourseMapper courseMapper;
     /**
      * 获取教师管理页面教师所属学院选择器内容
      * */
@@ -123,23 +128,26 @@ public class TeacherManageServiceImpl implements TeacherManageService {
     public Map<String, Object> getTeacherDetail(String tno) {
         QueryWrapper<Teacher> teacherQueryWrapper = new QueryWrapper<>();
         teacherQueryWrapper.eq("tno", tno);
-        List<Teacher> teachers = teacherMapper.selectList(teacherQueryWrapper);
+        Teacher teacher = teacherMapper.selectOne(teacherQueryWrapper);
         String classes = "";
-        String currentCls = "";
         String courses = "";
-        String currentCourses = "";
         Map<String, Object> data = new HashMap<>();
-        for (Teacher t:teachers){
-            if (!currentCls.equals(t.getTeachClass())){
-                classes += (t.getTeachClass()+" ");
-                currentCls = t.getTeachClass();
-            }
-            if (!currentCourses.equals(t.getTeachCourse())){
-                courses += (t.getTeachCourse()+" ");
-                currentCourses = t.getTeachCourse();
-            }
+
+        QueryWrapper<TeachCourse> teachCourseQueryWrapper = new QueryWrapper<>();
+        QueryWrapper<TeachCls> teachClsQueryWrapper = new QueryWrapper<>();
+        teachCourseQueryWrapper.eq("tno", tno);
+        teachClsQueryWrapper.eq("tno",tno);
+
+        List<TeachCourse> teachCourses = teachCourseMapper.selectList(teachCourseQueryWrapper);
+        List<TeachCls> teachCls = teachClsMapper.selectList(teachClsQueryWrapper);
+
+        for (TeachCourse tc:teachCourses){
+            courses += courseMapper.selectById(tc.getCno()).getCname();
         }
-        Teacher teacher = teachers.get(0);
+        for (TeachCls tcls:teachCls){
+            classes += tcls.getClassname();
+        }
+
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
         userQueryWrapper.eq("uno", tno);
         User user = userMapper.selectOne(userQueryWrapper);
@@ -159,19 +167,28 @@ public class TeacherManageServiceImpl implements TeacherManageService {
      *         <el-table-column prop="title" label="职位" />
      *         <el-table-column prop="name" label="教师姓名"/>
      *         <el-table-column prop="collage" label="所属学院" />
-     *         <el-table-column prop="teachCourse" label="所教课程" />
+     *         <el-table-column prop="TeachCourseMapper" label="所教课程" />
      * */
-    private List<Map<String, Object>> getInfoByQueryWrapper(QueryWrapper<Teacher> queryWrapper){
-        List<Teacher> teachers = teacherMapper.selectList(queryWrapper);
+    private List<Map<String, Object>> getInfoByQueryWrapper(QueryWrapper<Teacher> teacherQueryWrapper){
+
+        List<Teacher> teachers = teacherMapper.selectList(teacherQueryWrapper);
         if (!teachers.isEmpty()){
             List<Map<String, Object>> info = new ArrayList<>();
             for (Teacher t:teachers){
+                QueryWrapper<TeachCourse> teachCourseQueryWrapper = new QueryWrapper<>();
+                teachCourseQueryWrapper.eq("tno",t.getTno());
+                List<TeachCourse> teachCourses = teachCourseMapper.selectList(teachCourseQueryWrapper);
+                String courses = "";
+                for (TeachCourse tc:teachCourses){
+                    Course course = courseMapper.selectById(tc.getCno());
+                    courses += course.getCname()+" ";
+                }
                 Map<String, Object> msg = new HashMap<>();
                 msg.put("tno", t.getTno());
                 msg.put("title", t.getTitle());
                 msg.put("tname", t.getTname());
                 msg.put("collage", t.getCollage());
-                msg.put("teachCourse", t.getTeachCourse());
+                msg.put("teachCourse", courses);
                 info.add(msg);
             }
             return info;

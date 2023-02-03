@@ -39,7 +39,7 @@
         <el-table-column prop="title" label="职位" /> <!-- title -->
         <el-table-column prop="name" label="教师姓名"/> <!-- tname -->
         <el-table-column prop="collage" label="所属学院" /> <!-- collage -->
-        <el-table-column prop="teachCourse" label="所教课程" /> <!-- teachCourse -->
+        <el-table-column prop="teachCourse" label="所教课程" /> <!-- TeachCourseMapper -->
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
             <el-button type="success" @click="getDetail(scope.row.no)" plain>查看</el-button>
