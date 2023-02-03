@@ -19,4 +19,5 @@ public class Course {
     private String cno;
     private String major;
     private String collage;
+    private Integer teach_count;
 }
