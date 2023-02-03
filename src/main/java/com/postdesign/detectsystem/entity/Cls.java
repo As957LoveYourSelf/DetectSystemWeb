@@ -22,4 +22,5 @@ public class Cls {
     private String collage;
     private Integer grade;
     private String major;
+    private String headmaster;
 }
