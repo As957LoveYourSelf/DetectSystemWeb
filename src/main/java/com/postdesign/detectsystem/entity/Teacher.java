@@ -15,11 +15,11 @@ import org.springframework.validation.annotation.Validated;
 @TableName("teachers")
 @Accessors(chain = true)
 public class Teacher {
+    @TableId(type = IdType.INPUT)
     private String tno;
     private String tname;
     private String collage;
     private String title;
     private String leadclass;
-    private String teachCourse;
-    private String teachClass;
+    private String sex;
 }

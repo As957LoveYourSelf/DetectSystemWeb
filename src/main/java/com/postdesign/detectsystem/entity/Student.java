@@ -22,5 +22,6 @@ public class Student {
     private String cls;
     private Integer grade;
     private String major;
+    private String sex;
 
 }

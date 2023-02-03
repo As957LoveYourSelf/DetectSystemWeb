@@ -23,7 +23,7 @@ public class User {
     private String uname;
     private String email;
     private String password;
-    private int uage;
+    private Integer uage;
     private String uphone;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
@@ -33,4 +33,5 @@ public class User {
     private String registerTime;
     private String utype;
     private String fid;
+    private String sex;
 }

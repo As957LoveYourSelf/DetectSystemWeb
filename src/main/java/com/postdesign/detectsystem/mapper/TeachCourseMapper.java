@@ -1,9 +1,9 @@
 package com.postdesign.detectsystem.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.postdesign.detectsystem.entity.Major;
+import com.postdesign.detectsystem.entity.TeachCourse;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface MajorMapper extends BaseMapper<Major> {
+public interface TeachCourseMapper extends BaseMapper<TeachCourse> {
 }
