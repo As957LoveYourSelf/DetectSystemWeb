@@ -11,7 +11,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Date;
-
+/**
+ *  用户数据表
+ * */
 @Data
 @NoArgsConstructor
 @Validated

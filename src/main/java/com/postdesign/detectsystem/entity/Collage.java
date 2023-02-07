@@ -13,6 +13,9 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @TableName("collage")
 @Accessors(chain = true)
+/**
+ *  学院数据表
+ * */
 public class Collage {
     @TableId(type = IdType.INPUT)
     private String name;

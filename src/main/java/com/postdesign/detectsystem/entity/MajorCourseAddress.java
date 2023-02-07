@@ -9,9 +9,14 @@ import org.springframework.validation.annotation.Validated;
 @Data
 @NoArgsConstructor
 @Validated
-@TableName("teachCourse")
+@TableName("course_address_person")
 @Accessors(chain = true)
-public class TeachCourse {
-    private String tno;
-    private String cno;
+/**
+ *  个人专业课上课地点数据表
+ * */
+public class MajorCourseAddress {
+    private String classname;
+    private Integer personCourseNo;
+    private String address;
+    private String time;
 }

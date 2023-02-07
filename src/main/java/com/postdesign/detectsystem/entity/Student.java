@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.validation.annotation.Validated;
 
+/**
+ *  学生数据表
+ * */
 @Data
 @NoArgsConstructor
 @Validated

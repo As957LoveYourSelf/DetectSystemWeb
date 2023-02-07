@@ -14,6 +14,9 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @TableName("classes")
 @Accessors(chain = true)
+/**
+ *  班级数据表
+ * */
 public class Cls {
     @TableId(type = IdType.INPUT)
     private String className;

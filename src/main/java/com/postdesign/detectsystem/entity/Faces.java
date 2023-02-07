@@ -13,6 +13,9 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @TableName("faces")
 @Accessors(chain = true)
+/**
+ *  人脸识别数据表
+ * */
 public class Faces {
     @TableId(type = IdType.ASSIGN_UUID)
     private String fid;

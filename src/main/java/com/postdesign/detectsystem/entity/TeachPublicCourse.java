@@ -1,24 +1,20 @@
 package com.postdesign.detectsystem.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.validation.annotation.Validated;
-
+/**
+ *  教师公共课上课数据表
+ * */
 @Data
 @NoArgsConstructor
 @Validated
-@TableName("majors")
+@TableName("teach_public_course")
 @Accessors(chain = true)
-/**
- *  专业数据表
- * */
-public class Major {
-
-    @TableId(type = IdType.INPUT)
-    private String majorName;
-    private String collage;
+public class TeachPublicCourse {
+    private String tno;
+    private Integer cpno;
 }
+

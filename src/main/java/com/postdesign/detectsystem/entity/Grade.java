@@ -13,6 +13,9 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @TableName("grade")
 @Accessors(chain = true)
+/**
+ *  年级数据表
+ * */
 public class Grade {
     @TableId(type = IdType.INPUT)
     Integer grade;

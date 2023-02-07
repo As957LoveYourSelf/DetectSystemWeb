@@ -1,7 +1,5 @@
 package com.postdesign.detectsystem.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,16 +9,12 @@ import org.springframework.validation.annotation.Validated;
 @Data
 @NoArgsConstructor
 @Validated
-@TableName("building")
+@TableName("studycourse")
 @Accessors(chain = true)
 /**
- *  教学楼数据表
+ *  学生对应上课课程数据表
  * */
-public class Building {
-
-    private String bname;
-    private Integer floors;
-    @TableId(type = IdType.INPUT)
-    private String clsNo;
-    private Byte isUsing;
+public class StudyMajorCourse {
+    private String sno;
+    private Integer cno;
 }

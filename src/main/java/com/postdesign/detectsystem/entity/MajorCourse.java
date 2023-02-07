@@ -13,11 +13,15 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @TableName("course")
 @Accessors(chain = true)
-public class Course {
+/**
+ *  课程数据表
+ * */
+public class MajorCourse {
     private String cname;
-    @TableId(type = IdType.ASSIGN_UUID)
-    private String cno;
+    @TableId(type = IdType.AUTO)
+    private Integer cno;
     private String major;
     private String collage;
     private Integer teach_count;
+    private Integer studygrade;
 }
