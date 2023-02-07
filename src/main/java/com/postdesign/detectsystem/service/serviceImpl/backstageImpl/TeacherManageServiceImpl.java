@@ -26,10 +26,10 @@ public class TeacherManageServiceImpl implements TeacherManageService {
     TeachClsMapper teachClsMapper;
 
     @Autowired(required = false)
-    TeachCourseMapper teachCourseMapper;
+    TeachMajorCourseMapper teachMajorCourseMapper;
 
     @Autowired(required = false)
-    CourseMapper courseMapper;
+    MajorCourseMapper majorCourseMapper;
     /**
      * 获取教师管理页面教师所属学院选择器内容
      * */
@@ -133,16 +133,16 @@ public class TeacherManageServiceImpl implements TeacherManageService {
         String courses = "";
         Map<String, Object> data = new HashMap<>();
 
-        QueryWrapper<TeachCourse> teachCourseQueryWrapper = new QueryWrapper<>();
+        QueryWrapper<TeachMajorCourse> teachCourseQueryWrapper = new QueryWrapper<>();
         QueryWrapper<TeachCls> teachClsQueryWrapper = new QueryWrapper<>();
         teachCourseQueryWrapper.eq("tno", tno);
         teachClsQueryWrapper.eq("tno",tno);
 
-        List<TeachCourse> teachCourses = teachCourseMapper.selectList(teachCourseQueryWrapper);
+        List<TeachMajorCourse> teachMajorCours = teachMajorCourseMapper.selectList(teachCourseQueryWrapper);
         List<TeachCls> teachCls = teachClsMapper.selectList(teachClsQueryWrapper);
 
-        for (TeachCourse tc:teachCourses){
-            courses += courseMapper.selectById(tc.getCno()).getCname();
+        for (TeachMajorCourse tc: teachMajorCours){
+            courses += majorCourseMapper.selectById(tc.getCno()).getCname();
         }
         for (TeachCls tcls:teachCls){
             classes += tcls.getClassname();
@@ -167,7 +167,7 @@ public class TeacherManageServiceImpl implements TeacherManageService {
      *         <el-table-column prop="title" label="职位" />
      *         <el-table-column prop="name" label="教师姓名"/>
      *         <el-table-column prop="collage" label="所属学院" />
-     *         <el-table-column prop="TeachCourseMapper" label="所教课程" />
+     *         <el-table-column prop="TeachMajorCourseMapper" label="所教课程" />
      * */
     private List<Map<String, Object>> getInfoByQueryWrapper(QueryWrapper<Teacher> teacherQueryWrapper){
 
@@ -175,13 +175,13 @@ public class TeacherManageServiceImpl implements TeacherManageService {
         if (!teachers.isEmpty()){
             List<Map<String, Object>> info = new ArrayList<>();
             for (Teacher t:teachers){
-                QueryWrapper<TeachCourse> teachCourseQueryWrapper = new QueryWrapper<>();
+                QueryWrapper<TeachMajorCourse> teachCourseQueryWrapper = new QueryWrapper<>();
                 teachCourseQueryWrapper.eq("tno",t.getTno());
-                List<TeachCourse> teachCourses = teachCourseMapper.selectList(teachCourseQueryWrapper);
+                List<TeachMajorCourse> teachMajorCours = teachMajorCourseMapper.selectList(teachCourseQueryWrapper);
                 String courses = "";
-                for (TeachCourse tc:teachCourses){
-                    Course course = courseMapper.selectById(tc.getCno());
-                    courses += course.getCname()+" ";
+                for (TeachMajorCourse tc: teachMajorCours){
+                    MajorCourse majorCourse = majorCourseMapper.selectById(tc.getCno());
+                    courses += majorCourse.getCname()+" ";
                 }
                 Map<String, Object> msg = new HashMap<>();
                 msg.put("tno", t.getTno());

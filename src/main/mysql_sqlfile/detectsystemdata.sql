@@ -88,10 +88,10 @@ INSERT INTO `collage` VALUES ('计算机科学与技术学院');
 INSERT INTO `collage` VALUES ('音乐与舞蹈学院');
 
 -- ----------------------------
--- Table structure for course
+-- Table structure for majorCourse
 -- ----------------------------
-DROP TABLE IF EXISTS `course`;
-CREATE TABLE `course`  (
+DROP TABLE IF EXISTS `majorCourse`;
+CREATE TABLE `majorCourse`  (
   `cname` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `cno` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `teacher` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -107,7 +107,7 @@ CREATE TABLE `course`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of course
+-- Records of majorCourse
 -- ----------------------------
 
 -- ----------------------------
@@ -201,17 +201,17 @@ CREATE TABLE `teachers`  (
   `college` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `title` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `leadclass` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '无',
-  `teachCourse` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `teachMajorCourse` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `teachClass` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   INDEX `lead_class`(`leadclass`) USING BTREE,
   INDEX `tno`(`tno`) USING BTREE,
   INDEX `tname`(`tname`) USING BTREE,
-  INDEX `teachCourse`(`teachCourse`) USING BTREE,
+  INDEX `teachMajorCourse`(`teachMajorCourse`) USING BTREE,
   INDEX `teacheClass`(`teachClass`) USING BTREE,
   CONSTRAINT `teachers_ibfk_3` FOREIGN KEY (`leadclass`) REFERENCES `classes` (`className`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `teachers_ibfk_4` FOREIGN KEY (`tno`) REFERENCES `users` (`uid`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `teachers_ibfk_5` FOREIGN KEY (`tname`) REFERENCES `users` (`uname`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `teachers_ibfk_6` FOREIGN KEY (`teachCourse`) REFERENCES `course` (`cname`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `teachers_ibfk_6` FOREIGN KEY (`teachMajorCourse`) REFERENCES `majorCourse` (`cname`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `teachers_ibfk_7` FOREIGN KEY (`teachClass`) REFERENCES `classes` (`className`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
