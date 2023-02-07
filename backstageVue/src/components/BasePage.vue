@@ -7,6 +7,7 @@ import {
   Shop,
   HomeFilled,
   Box,
+  Tickets
 } from '@element-plus/icons-vue'
 import {reactive, ref, toRefs, watch} from "vue";
 import {useRouter} from "vue-router";
@@ -64,6 +65,10 @@ watch(() => router.currentRoute.value.path, (path) =>{
           <el-menu-item index="/student">
             <el-icon><User /></el-icon>
             <span>学生管理</span>
+          </el-menu-item>
+          <el-menu-item index="/majorCourse">
+            <el-icon><Tickets /></el-icon>
+            <span>课程管理</span>
           </el-menu-item>
           <el-menu-item index="/teacher">
             <el-icon><UserFilled /></el-icon>
