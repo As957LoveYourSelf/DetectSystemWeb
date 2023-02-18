@@ -72,7 +72,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.27</version>
+            <version>8.0.30</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -110,6 +110,20 @@
             <artifactId>pytorch-engine</artifactId>
             <version>0.20.0</version>
         </dependency>
+        <dependency>
+            <groupId>ai.djl.pytorch</groupId>
+            <artifactId>pytorch-native-cu117</artifactId>
+            <classifier>win-x86_64</classifier>
+            <version>1.13.0</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>ai.djl.pytorch</groupId>
+            <artifactId>pytorch-native-cpu</artifactId>
+            <classifier>win-x86_64</classifier>
+            <scope>runtime</scope>
+            <version>1.13.0</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/ai.djl.pytorch/pytorch-native-auto -->
         <dependency>
             <groupId>ai.djl.pytorch</groupId>
@@ -122,6 +136,12 @@
             <groupId>ai.djl.pytorch</groupId>
             <artifactId>pytorch-model-zoo</artifactId>
             <version>0.20.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-compress -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.21</version>
         </dependency>
 
     </dependencies>
