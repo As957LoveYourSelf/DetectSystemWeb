@@ -4,20 +4,22 @@
     <!-- 搜索栏 -->
     <div style="padding: 10px;">
       <!-- 搜索框 -->
-      <el-select class="w-300" size="large" v-model="collage" placeholder="Select">
+      <el-select class="w-300" size="large" v-model="collage" placeholder="请选择学院">
         <el-option
             v-for="item in collage_ops"
-            :key="item.value"
-            :value="item.value"
-            :disabled="item.disabled"
+            :key="item"
+            :value="item"
+            :label="item"
+            :disabled=false
         />
       </el-select>
-      <el-select class="w-300 ml-8" size="large" v-model="level" placeholder="Select">
+      <el-select class="w-300 ml-8" size="large" v-model="level" placeholder="请选择年级">
         <el-option
             v-for="item in level_ops"
-            :key="item.value"
-            :value="item.value"
-            :disabled="item.disabled"
+            :key="item"
+            :value="item"
+            :label="item"
+            :disabled=false
         />
       </el-select>
       <!-- 按钮 -->
@@ -54,109 +56,94 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import {
   Delete,
   Search,
 } from '@element-plus/icons-vue'
-import { ref, reactive } from 'vue'
 import {
   getCollageSelector,
   getGradeSelector,
-  selectByCollage,
-  selectByGrade,
-  selectByGradeAndCollage,
+  selectClass,
   getClassDetail
-} from "@/utils/classManage";
-//这里是获取当前页数
-const handleCurrentChange = (val)=> {
-  changePage.currentPage = val
-}
-// 可选的年级数据
-let level = ref('请选择年级')
-let level_ops  = null
-getGradeSelector().then(res => {
-  console.log(res)
-  level_ops = res
-}).catch(err => {
-  console.log(err)
-})
+} from "../utils/classManage"
+import {useRouter} from "vue-router";
 
-// 可选的学院数据
-let collage = ref('请选择学院')
-let collage_ops = null
-getCollageSelector().then(res => {
-  console.log(res)
-  collage_ops = res
-}).catch(err => {
-  console.log(err)
-})
-
-// 表格数据
-let tableData = [
-  // {
-  //   collage:"1",
-  //   major: "2",
-  //   grade:2019,
-  //   classname:"1",
-  //   headmaster:"zzz"
-  // }
-]
-// 搜索函数
-function searchfn() {
-  console.log()
-  if (this.level.value === '请选择年级' && this.collage.value === '请选择学院'){
-    tableData = []
-  }
-  else if (this.level.value !== '请选择年级' && this.collage.value === '请选择学院'){
-    const params = {grade:this.level.value.toInteger}
-    selectByGrade(params)
+export default {
+  data(){
+    return{
+      params:{grade:'',collage:''},
+      data:{className:''},
+      collage:'',
+      collage_ops:[],
+      level:'',
+      level_ops:[],
+      tableData:[],
+      changePage:{
+        currentPage:1, //默认当前页面为1
+        pageSize:14, //一页多少数据
+        total: 0, //总共有多少数据
+        pageSizes: [10, 14] //一页可供显示多少数据
+      },
+      Search:Search,
+      Delete:Delete,
+      router:useRouter()
+    }
+  },
+  methods:{
+    searchfn(){
+      this.params.grade = this.level
+      this.params.collage = this.collage
+      console.log(this.params)
+      selectClass(this.params)
         .then(res => {
+          if (res.data == null){
+            this.tableData = []
+            console.log("not data")
+          }else {
+            this.tableData = res.data
+            this.changePage.total = this.tableData.length
+          }
           console.log(res)
-          tableData = res
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    // 查看详情
+    getClassDetailInfo(classname){
+      this.data.className = classname
+      getClassDetail(this.data).then(res => {
+        console.log(res.data)
+        this.router.push({
+          name: 'ClassDetail',
+          params: {userdata: res.data}
+        })
+        console.log(res.data)
+      }).catch(err => {
+        console.log(err)
       })
-        .catch(err => {
-          console.log(err)
-        })
-  }
-  else if (this.level.value !== '请选择年级' && this.collage.value !== '请选择学院'){
-    const params = {grade:this.level.value.toInteger, collage:this.collage.value}
-    selectByGradeAndCollage(params)
-        .then(res => {
-          console.log(res)
-          tableData = res
-        })
-        .catch(err => {
-          console.log(err)
-        })
-  }else {
-    console.log("nodata")
+    },
+    // 重置函数
+    reset() {
+      console.log("reset")
+      this.tableData = []
+      this.collage = ''
+      this.level = ''
+    },
+    //这里是获取当前页数
+    handleCurrentChange(val){
+      this.changePage.currentPage = val
+    }
+  },
+  created() {
+    getCollageSelector().then(res => {
+      this.collage_ops = res.data
+    })
+    getGradeSelector().then(res => {
+      this.level_ops = res.data
+    })
   }
 }
-// 重置函数
-function reset() {
-  console.log("reset")
-  level = ref('请选择年级')
-  collage = ref('请选择学院')
-  tableData = []
-}
-// 查看详情
-function getClassDetailInfo(classname){
-  let data = {
-    className: classname
-  }
-  getClassDetail(data).then(res => {
-    console.log(res)
-  }).catch(err => {
-    console.log(err)
-  })
-}
-const changePage = reactive({
-  currentPage:1, //默认当前页面为1
-  pageSize:14,
-  total: tableData.length, //总共有多少数据
-  pageSizes: [10, 14]
-})
-
 </script>
 

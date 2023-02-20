@@ -38,23 +38,12 @@ public class ClassManageController {
         return new JSONResult<>(collageSelector);
     }
     @ResponseBody
-    @RequestMapping("/selectByGrade")
-    JSONResult<List<Map<String, Object>>> selectByGrade(Integer grade){
-        List<Map<String, Object>> maps = classMangerService.selectByGrade(grade);
+    @RequestMapping("/selectClass")
+    JSONResult<List<Map<String, Object>>> select(Integer grade, String collage){
+        List<Map<String, Object>> maps = classMangerService.select(grade, collage);
         return new JSONResult<>(maps);
     }
-    @ResponseBody
-    @RequestMapping("/selectByCollage")
-    JSONResult<List<Map<String, Object>>> selectByCollage(String collage){
-        List<Map<String, Object>> maps = classMangerService.selectByCollage(collage);
-        return new JSONResult<>(maps);
-    }
-    @ResponseBody
-    @RequestMapping("/selectByGradeAndCollage")
-    JSONResult<List<Map<String, Object>>> selectByGradeAndCollage(Integer grade, String collage){
-        List<Map<String, Object>> maps = classMangerService.selectByGradeAndCollage(grade, collage);
-        return new JSONResult<>(maps);
-    }
+
     @ResponseBody
     @RequestMapping("/getClassDetail")
     JSONResult<Map<String, Object>> getClassDetail(String className){

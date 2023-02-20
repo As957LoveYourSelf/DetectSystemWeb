@@ -23,47 +23,10 @@ public class TeacherManageController {
         List<String> collageSelector = teacherManageService.getCollageSelector();
         return new JSONResult<>(collageSelector);
     }
-
-    @RequestMapping("/selectByCollage")
-    @ResponseBody
-    JSONResult<List<Map<String, Object>>> selectByCollage(String collage){
-        List<Map<String, Object>> maps = teacherManageService.selectByCollage(collage);
-        return new JSONResult<>(maps);
-    }
-    @RequestMapping("/selectByTno")
-    @ResponseBody
-    JSONResult<List<Map<String, Object>>> selectByTno(String tno) {
-        List<Map<String, Object>> maps = teacherManageService.selectByTno(tno);
-        return new JSONResult<>(maps);
-    }
-    @RequestMapping("/selectByTname")
-    @ResponseBody
-    JSONResult<List<Map<String, Object>>> selectByTname(String tname) {
-        List<Map<String, Object>> maps = teacherManageService.selectByTname(tname);
-        return new JSONResult<>(maps);
-    }
-    @RequestMapping("/selectByCollageAndTno")
-    @ResponseBody
-    JSONResult<List<Map<String, Object>>> selectByCollageAndTno(String collage, String tno){
-        List<Map<String, Object>> maps = teacherManageService.selectByCollageAndTno(collage, tno);
-        return new JSONResult<>(maps);
-    }
-    @RequestMapping("/selectByCollageAndTname")
-    @ResponseBody
-    JSONResult<List<Map<String, Object>>> selectByCollageAndTname(String collage, String tname){
-        List<Map<String, Object>> maps = teacherManageService.selectByCollageAndTname(collage, tname);
-        return new JSONResult<>(maps);
-    }
-    @RequestMapping("/selectByTnoAndTName")
-    @ResponseBody
-    JSONResult<List<Map<String, Object>>> selectByTnoAndTName(String tno, String tname){
-        List<Map<String, Object>> maps = teacherManageService.selectByTnoAndTName(tno, tname);
-        return new JSONResult<>(maps);
-    }
-    @RequestMapping("/selectByTnoAndTNameAndCollage")
+    @RequestMapping("/selectTeacher")
     @ResponseBody
     JSONResult<List<Map<String, Object>>> selectByTnoAndTNameAndCollage(String tno, String tname, String collage){
-        List<Map<String, Object>> maps = teacherManageService.selectByTnoAndTNameAndCollage(tno, tname, collage);
+        List<Map<String, Object>> maps = teacherManageService.select(tno, tname, collage);
         return new JSONResult<>(maps);
     }
 

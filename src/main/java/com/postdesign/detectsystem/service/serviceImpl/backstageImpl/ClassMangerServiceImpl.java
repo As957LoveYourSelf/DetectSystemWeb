@@ -61,34 +61,24 @@ public class ClassMangerServiceImpl implements ClassMangerService {
         }
         return null;
     }
-
     /**
-     * 通过年级查找对应班级
+     * 查找对应班级
      **/
     @Override
-    public List<Map<String, Object>> selectByGrade(Integer grade) {
+    public List<Map<String, Object>> select(Integer grade, String collage) {
+        if (collage == null){
+            return null;
+        }
         QueryWrapper<Cls> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("grade", grade);
-        return getClassInfoByQueryWrapper(queryWrapper);
-    }
-
-    /**
-     * 通过学院名称查找班级
-     **/
-    @Override
-    public List<Map<String, Object>> selectByCollage(String collage) {
-        QueryWrapper<Cls> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("collage", collage);
-        return getClassInfoByQueryWrapper(queryWrapper);
-    }
-
-    /**
-     *
-     **/
-    @Override
-    public List<Map<String, Object>> selectByGradeAndCollage(Integer grade, String collage) {
-        QueryWrapper<Cls> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("grade",grade).eq("collage", collage);
+        if (collage.equals("") && grade != null){
+            queryWrapper.eq("grade", grade);
+        }else if (!collage.equals("") && grade == null){
+            queryWrapper.eq("collage", collage);
+        }else if (!collage.equals("")){
+            queryWrapper.eq("grade", grade).eq("collage", collage);
+        }else {
+            return null;
+        }
         return getClassInfoByQueryWrapper(queryWrapper);
     }
 

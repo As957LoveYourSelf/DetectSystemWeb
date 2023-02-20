@@ -1,13 +1,13 @@
 import axios from 'axios';
 axios.interceptors.request.use((config)=>{
-  console.log("进入请求拦截器")
+  // console.log("进入请求拦截器")
   return config
 },(error)=>{
   return Promise.reject(error)
 })
 
 axios.interceptors.response.use((config)=>{
-  console.log("响应拦截器")
+  // console.log("响应拦截器")
   console.log(config.data.code)
   if(config.data.code === 401){
     setTimeout(() => {
@@ -27,14 +27,7 @@ const loginreq = (method, url, params) => {
         headers: {
             'Content-Type': 'application/json;charset:utf-8;',
         },
-        data: params,
-        transformRequest: [(data) => {
-            let ret = "";
-            for (let it in data) {
-                ret += encodeURIComponent(it) + "=" + encodeURIComponent(data[it]) + "&";
-            }
-            return ret;
-        }]
+        params: params
     }).then(res => res.data);
 };
 
@@ -48,15 +41,7 @@ const getClassData = (method, url, params) => {
             // 'Bearer ' +
             'Authorization': localStorage.getItem('userToken')
         },
-        data: params,
-        transformRequest: [
-            (data) => {
-            let ret = "";
-            for (let it in data) {
-                ret += encodeURIComponent(it) + "=" + encodeURIComponent(data[it]) + "&";
-            }
-            return ret;
-        }]
+        params: params
     }).then(res => res.data);
 };
 

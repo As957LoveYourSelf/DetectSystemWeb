@@ -1,13 +1,12 @@
 package com.postdesign.detectsystem.service.serviceImpl.currencyImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.postdesign.detectsystem.entity.User;
 import com.postdesign.detectsystem.mapper.UserMapper;
 import com.postdesign.detectsystem.service.currencyService.LoginService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +15,7 @@ import java.util.Map;
  * 实现登录业务
  */
 @Service
+@Slf4j
 public class LoginServiceImpl implements LoginService {
     @Autowired(required = false)
     private UserMapper userMapper;
@@ -23,6 +23,17 @@ public class LoginServiceImpl implements LoginService {
     public Map<String, Object> login(String uname, String password) {
         Map<String, Object> msgMap = new HashMap<>();
         User user = checkUser(uname);
+        return getInfo(password, user, msgMap);
+    }
+
+    @Override
+    public Map<String, Object> loginByID(String id, String password) {
+        User user = userMapper.selectById(id);
+        Map<String, Object> msgMap = new HashMap<>();
+        return getInfo(password, user, msgMap);
+    }
+
+    private Map<String, Object> getInfo(String password, User user, Map<String, Object> msgMap) {
         if (user != null){
             if (checkPassword(user, password)){
                 msgMap.put("loginState", "success");
@@ -47,6 +58,6 @@ public class LoginServiceImpl implements LoginService {
     private User checkUser(String uname){
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("uname", uname);
-        return this.userMapper.selectOne(queryWrapper);
+        return userMapper.selectOne(queryWrapper);
     }
 }

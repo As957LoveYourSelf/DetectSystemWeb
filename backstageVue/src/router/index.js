@@ -106,6 +106,14 @@ const router = createRouter({
       meta: {
         requireAuth: true
       }
+    },
+    {
+      path: '/course',
+      name: 'Course',
+      component:() => import('../views/CourseManageView.vue'),
+      meta: {
+        requireAuth: true
+      }
     }
   ]
 })

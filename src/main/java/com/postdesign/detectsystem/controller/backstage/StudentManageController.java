@@ -17,22 +17,10 @@ public class StudentManageController {
     @Autowired
     StudentManageService studentManageService;
 
-    @RequestMapping("/selectBysno")
-    @ResponseBody
-    JSONResult<List<Map<String, Object>>> selectBySno(String sno){
-        List<Map<String, Object>> msg = studentManageService.selectBySno(sno);
-        return new JSONResult<>(msg);
-    }
-    @RequestMapping("/selectBysname")
-    @ResponseBody
-    JSONResult<List<Map<String, Object>>> selectBySname(String sname){
-        List<Map<String, Object>> msg = studentManageService.selectBySname(sname);
-        return new JSONResult<>(msg);
-    }
-    @RequestMapping("/selectBysnoAndsname")
+    @RequestMapping("/selectStudent")
     @ResponseBody
     JSONResult<List<Map<String, Object>>> selectBySNoAndSName(String sno, String sname){
-        List<Map<String, Object>> msg = studentManageService.selectBySNoAndSName(sno,sname);
+        List<Map<String, Object>> msg = studentManageService.select(sno,sname);
         return new JSONResult<>(msg);
     }
 

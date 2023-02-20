@@ -32,7 +32,7 @@
         <el-table-column prop="isUsing" label="是否使用中" />
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
-            <el-button type="success" plain>预约</el-button>
+            <el-button type="success" plain>查看</el-button>
           </template>
         </el-table-column>
       </el-table>

@@ -6,12 +6,6 @@ import java.util.Map;
 public interface ClassMangerService {
     List<Integer> getGradeSelector();
     List<String> getCollageSelector();
-
-    List<Map<String, Object>> selectByGrade(Integer grade);
-
-    List<Map<String, Object>> selectByCollage(String collage);
-
-    List<Map<String, Object>> selectByGradeAndCollage(Integer grade, String collage);
-
+    List<Map<String, Object>> select(Integer grade, String collage);
     Map<String, Object> getClassDetail(String clsName);
 }

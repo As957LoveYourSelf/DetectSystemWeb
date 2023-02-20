@@ -66,7 +66,7 @@ watch(() => router.currentRoute.value.path, (path) =>{
             <el-icon><User /></el-icon>
             <span>学生管理</span>
           </el-menu-item>
-          <el-menu-item index="/majorCourse">
+          <el-menu-item index="/course">
             <el-icon><Tickets /></el-icon>
             <span>课程管理</span>
           </el-menu-item>

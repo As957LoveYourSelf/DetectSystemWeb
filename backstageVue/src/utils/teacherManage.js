@@ -1,4 +1,4 @@
-import {getTeacherData} from "@/utils/axiosFun";
+import {getTeacherData} from "./axiosFun";
 
 export const getCollageSelector = () => {return getTeacherData("post", "/api/teacherManagePage/getCollageSelector", "")}
 export const selectByCollage = (params) => {return getTeacherData("post", "/api/teacherManagePage/selectByCollage", params)}

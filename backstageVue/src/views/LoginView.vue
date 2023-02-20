@@ -32,35 +32,63 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import { reactive, ref } from 'vue'
-import { login } from '@/utils/user'
+import { login } from '../utils/user'
+import {useRouter} from "vue-router";
 import md5 from "blueimp-md5";
-const size = ref('large')
-const labelPosition = ref('left')
-const formData = reactive({
-  name: 'admin',
-  password: '123456',
-})
-function onSubmit() {
-  let data = {
-    uname:formData.name,
-    psd:md5(formData.password)
-  };
-  login(data)
-      .then(res => {
-        // 判断是否登录成功
-        if(res.data.loginState == 'success'){
-          localStorage.setItem('token',res.data.userToken)
-        }
-        console.log(res)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+export default {
+  data(){
+    return{
+      size: ref('large'),
+      labelPosition: ref('left'),
+      formData: reactive({
+        name: 'admin',
+        password: '123456',
+      }),
+      router:useRouter()
+    }
+  },
+  methods:{
+    onSubmit(){
+      let data = {
+        uname: this.formData.name,
+        psd: md5(this.formData.password)
+      };
+      console.log(data)
+      login(data)
+          .then(res => {
+            // 判断是否登录成功
+            if(res.data.loginState === 'success'){
+              localStorage.setItem('token',res.data.userToken)
+              console.log('登录成功')
+              console.log(res.data.userInfo)
+              this.router.push({
+                name: 'Home',
+                query:{
+                  userinfo: JSON.stringify(res.data.userInfo)
+                }
+              })
+            }
+            // console.log(res)
+            else if (res.data.loginState === "unameUnCheck"){
+              console.log("用户名不存在")
+            }
+            else if (res.data.loginState === "psdUnCheck"){
+              console.log("密码错误")
+            }else {
+              console.log("error")
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+    },
+    clearForm(){
+      this.formData.name = ''
+      this.formData.password = ''
+    }
+  }
 }
-function clearForm(){
-  formData.name = ''
-  formData.password = ''
-}
+
 </script>

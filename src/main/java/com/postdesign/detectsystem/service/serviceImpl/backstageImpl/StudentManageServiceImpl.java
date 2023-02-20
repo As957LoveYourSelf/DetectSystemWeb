@@ -22,31 +22,10 @@ public class StudentManageServiceImpl implements StudentManageService {
     @Autowired(required = false)
     UserMapper userMapper;
     /**
-     * 学号选择器内容获取
-     * */
-    @Override
-    public List<Map<String, Object>> selectBySno(String sno) {
-        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("sno", sno);
-        return putInfoMap(queryWrapper);
-    }
-
-    /**
-     * 学生姓名选择器内容获取
-     * */
-    @Override
-    public List<Map<String, Object>> selectBySname(String sname) {
-        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("sname", sname);
-        return putInfoMap(queryWrapper);
-    }
-
-
-    /**
      * 通过学号和姓名搜索学生信息（可能搜索成功，或者结果唯一）
      * */
     @Override
-    public List<Map<String, Object>> selectBySNoAndSName(String sno, String sname) {
+    public List<Map<String, Object>> select(String sno, String sname) {
         QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("sno", sno).eq("sname", sname);
         return putInfoMap(queryWrapper);
