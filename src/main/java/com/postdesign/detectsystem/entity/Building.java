@@ -17,10 +17,9 @@ import org.springframework.validation.annotation.Validated;
  *  教学楼数据表
  * */
 public class Building {
-
     private String bname;
     private Integer floors;
     @TableId(type = IdType.INPUT)
     private String clsNo;
-    private Byte isUsing;
+    private Integer isOrder;
 }

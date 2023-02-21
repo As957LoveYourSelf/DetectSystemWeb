@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/classroomManage")
@@ -15,16 +17,43 @@ public class ClassroomManageController {
     @Autowired
     ClassroomManageService classroomManageService;
 
-    @RequestMapping("/getBuildingInfo")
+    @RequestMapping("/getBuildingSelector")
     @ResponseBody
-    JSONResult<List<String>> getBuildingInfo(){
-        List<String> msg = classroomManageService.getBuildingInfo();
+    JSONResult<List<String>> getBuildingSelector(){
+        List<String> msg = classroomManageService.getBuildingSelector();
         return new JSONResult<>(msg);
     }
-    @RequestMapping("getBuildingFloor")
+    @RequestMapping("/getBuildingFloorSelector")
     @ResponseBody
-    JSONResult<Integer> getBuildingFloor(String buildingName){
+    JSONResult<List<Integer>> getBuildingFloor(String buildingName){
         Integer floor = classroomManageService.getBuildingFloor(buildingName);
-        return new JSONResult<>(floor);
+        List<Integer> list = new ArrayList<>();
+        for (int i = 1; i <= floor; i++) {
+            list.add(i);
+        }
+        return new JSONResult<>(list);
     }
+
+    @RequestMapping("/getClassroomInfo")
+    @ResponseBody
+    JSONResult<List<Map<String, Object>>> getClassroomInfo(String buildingName, Integer isOrder, Integer floor){
+        List<Map<String, Object>> buildingInfo = classroomManageService.getBuildingInfo(buildingName, isOrder, floor);
+        return new JSONResult<>(buildingInfo);
+    }
+
+    @RequestMapping("/orderClassroom")
+    @ResponseBody
+    JSONResult<String> orderClassroom(String clsNo){
+        String order = classroomManageService.order(clsNo);
+        return new JSONResult<>(order);
+    }
+
+    @RequestMapping("/deorderClassroom")
+    @ResponseBody
+    JSONResult<String> deorderClassroom(String clsNo){
+        String deorder = classroomManageService.deorder(clsNo);
+        return new JSONResult<>(deorder);
+    }
+
+
 }

@@ -32,7 +32,7 @@
         <el-table-column prop="collage" label="学院" />
         <el-table-column prop="major" label="专业"/>
         <el-table-column prop="grade" label="年级" />
-        <el-table-column prop="classname" label="班级名称" />
+        <el-table-column prop="class_name" label="班级名称" />
         <el-table-column prop="headmaster" label="班主任" />
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">

@@ -19,8 +19,9 @@ spring:
 mybatis-plus:
   type-aliases-package: com.postdesign.detectsystem.entity
   #开启驼峰映射
-  configuration:
-    map-underscore-to-camel-case: false
+#  configuration:
+#    map-underscore-to-camel-case: false
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 server:
   port: 8066
   address: 127.0.0.1

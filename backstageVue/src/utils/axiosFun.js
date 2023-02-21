@@ -54,15 +54,7 @@ const getStudentData = (method, url, params) => {
             'Content-Type': 'application/json;charset:utf-8;',
             'Authorization': localStorage.getItem('token')
         },
-        data: params,
-        transformRequest: [
-            (data) => {
-                let ret = "";
-                for (let it in data) {
-                    ret += encodeURIComponent(it) + "=" + encodeURIComponent(data[it]) + "&";
-                }
-                return ret;
-            }]
+        params: params
     }).then(res => res.data);
 };
 // 教师管理请求
@@ -74,20 +66,25 @@ const getTeacherData = (method, url, params) => {
             'Content-Type': 'application/json;charset:utf-8;',
             'Authorization': localStorage.getItem('token')
         },
-        data: params,
-        transformRequest: [
-            (data) => {
-                let ret = "";
-                for (let it in data) {
-                    ret += encodeURIComponent(it) + "=" + encodeURIComponent(data[it]) + "&";
-                }
-                return ret;
-            }]
+        params: params
+    }).then(res => res.data);
+};
+//课室管理请求
+const getClassroomData = (method, url, params) => {
+    return axios({
+        method: method,
+        url: url,
+        headers: {
+            'Content-Type': 'application/json;charset:utf-8;',
+            'Authorization': localStorage.getItem('token')
+        },
+        params: params
     }).then(res => res.data);
 };
 export {
     loginreq,
     getClassData,
     getStudentData,
-    getTeacherData
+    getTeacherData,
+    getClassroomData
 }
