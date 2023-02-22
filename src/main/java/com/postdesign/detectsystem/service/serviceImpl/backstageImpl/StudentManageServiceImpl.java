@@ -27,8 +27,21 @@ public class StudentManageServiceImpl implements StudentManageService {
     @Override
     public List<Map<String, Object>> select(String sno, String sname) {
         QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("sno", sno).eq("sname", sname);
-        return putInfoMap(queryWrapper);
+        if (sno == null || sname == null){
+            return null;
+        }
+        if (sno.equals("") && sname.equals("")){
+            return putInfoMap(null);
+        }else if (!sno.equals("") && sname.equals("")){
+            queryWrapper.eq("sno", sno);
+            return putInfoMap(queryWrapper);
+        } else if (sno.equals("")) {
+            queryWrapper.eq("sname", sname);
+            return putInfoMap(queryWrapper);
+        }else {
+            queryWrapper.eq("sno", sno).eq("sname", sname);
+            return putInfoMap(queryWrapper);
+        }
     }
 
     /**
@@ -69,7 +82,7 @@ public class StudentManageServiceImpl implements StudentManageService {
     /**
      * 包装学生信息
      *  <el-table-column prop="class" label="所属班级" />
-     *  <el-table-column prop="name" label="姓名"/>
+     *  <el-table-column prop="sname" label="姓名"/>
      *  <el-table-column prop="sno" label="学号"/>
      *  <el-table-column prop="major" label="专业"/>
      *  <el-table-column prop="collage" label="学院" />
@@ -77,7 +90,7 @@ public class StudentManageServiceImpl implements StudentManageService {
     private List<Map<String, Object>> putInfoMap(QueryWrapper<Student> queryWrapper) {
         List<Student> students = studentMapper.selectList(queryWrapper);
         List<Map<String, Object>> infoList = new ArrayList<>();
-        if (!students.isEmpty()){
+        if (students != null && !students.isEmpty()){
             for (Student student: students){
                 Map<String, Object> msg = new HashMap<>();
                 msg.put("class", student.getCls());

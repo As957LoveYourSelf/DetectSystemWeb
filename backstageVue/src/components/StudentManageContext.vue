@@ -26,7 +26,7 @@
     <div style="min-height:87%; padding: 10px ">
       <el-table :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)" stripe border>
         <el-table-column prop="class" label="所属班级" />
-        <el-table-column prop="name" label="姓名"/>
+        <el-table-column prop="sname" label="姓名"/>
         <el-table-column prop="sno" label="学号"/>
         <el-table-column prop="major" label="专业"/>
         <el-table-column prop="collage" label="学院" />
@@ -52,78 +52,70 @@
   </div>
 </template>
 
-<script setup>
-import {getStudentDetail, selectBysname, selectBysno, selectBysnoAndsname} from "@/utils/studentManage";
-
-let tableData = [
-
-]
+<script>
+import {getStudentDetail, selectStudent} from "../utils/studentManage";
+import {useRouter} from "vue-router";
 import {
   Delete,
   Search,
 } from '@element-plus/icons-vue'
-import { ref, reactive } from 'vue'
-let unoInput = ref('')
-let unameInput = ref('')
-const changePage = reactive({
-  currentPage:1, //默认当前页面为1
-  pageSize:14,
-  total: tableData.length, //总共有多少数据
-  pageSizes: [10, 14]
-})
-//这里是获取当前页数
-const handleCurrentChange = (val)=> {
-  changePage.currentPage = val
-}
-// 搜索函数
-function searchfn() {
-  console.log(unameInput,unoInput)
-
-  if (unoInput.value === "" && unameInput.value === ""){
-    tableData = []
+export default {
+  data(){
+    return{
+      tableData: [],
+      detailData:{sno:''},
+      searchData:{sno:'', sname:''},
+      unoInput: '',
+      unameInput: '',
+      changePage:{
+        currentPage:1, //默认当前页面为1
+        pageSize:14,
+        total: 0, //总共有多少数据
+        pageSizes: [10, 14]
+      },
+      Delete:Delete,
+      Search:Search,
+      router:useRouter()
+    }
+  },
+  methods:{
+    //这里是获取当前页数
+    handleCurrentChange(val){
+      this.changePage.currentPage = val
+    },
+    // 搜索函数
+    searchfn() {
+      this.searchData.sno = this.unoInput
+      this.searchData.sname = this.unameInput
+      console.log(this.searchData)
+      selectStudent(this.searchData).then(res => {
+        console.log(res.data)
+        this.tableData = res.data
+        this.changePage.total = this.tableData.length
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    // 重置函数
+    reset(){
+      this.unoInput = ''
+      this.unameInput = ''
+    },
+    // 查看学生详情
+    getDetail(sno) {
+      this.detailData.sno = sno
+      getStudentDetail(this.detailData).then(res => {
+          // console.log(res)
+          // 跳转学生页面
+          this.router.push({
+            name:"StudentDetail",
+            query:{info:res.data}
+          })
+        }).catch(err => {
+        console.log(err)
+      })
+    }
   }
-  else if (unoInput.value !== "" && unameInput.value === ""){
-    const data = {sno:unoInput.value}
-    selectBysno(data).then(res => {
-      console.log(res)
-      tableData = res
-    }).catch(err => {
-      console.log(err)
-    })
-  }else if (unoInput.value === "" && unameInput.value !== ""){
-    const data = {sname:unameInput.value}
-    selectBysname(data).then(res => {
-      console.log(res)
-      tableData = res
-    }).catch(err => {
-      console.log(err)
-    })
-  }else if (unoInput.value !== "" && unameInput.value !== ""){
-    const data = {sno:unoInput.value, sname:unameInput.value}
-    selectBysnoAndsname(data).then(res => {
-      console.log(res)
-      tableData = res
-    }).catch(err => {
-      console.log(err)
-    })
-  }
-
 }
-// 重置函数
-function reset() {
-  unoInput = ref('')
-  unameInput = ref('')
-}
-// 查看学生详情
-function getDetail(sno) {
-  // 跳转学生页面
-  const data = {sno: sno}
-  getStudentDetail(data).then(res => {
-    console.log(res)
-  }).catch(err => {
-    console.log(err)
-  })
-}
-
 </script>
 

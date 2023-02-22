@@ -25,7 +25,7 @@ public class TeacherManageController {
     }
     @RequestMapping("/selectTeacher")
     @ResponseBody
-    JSONResult<List<Map<String, Object>>> selectByTnoAndTNameAndCollage(String tno, String tname, String collage){
+    JSONResult<List<Map<String, Object>>> select(String tno, String tname, String collage){
         List<Map<String, Object>> maps = teacherManageService.select(tno, tname, collage);
         return new JSONResult<>(maps);
     }

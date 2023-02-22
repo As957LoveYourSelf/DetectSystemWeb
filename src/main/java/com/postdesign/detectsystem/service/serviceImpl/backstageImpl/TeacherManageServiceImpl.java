@@ -51,8 +51,31 @@ public class TeacherManageServiceImpl implements TeacherManageService {
     @Override
     public List<Map<String, Object>> select(String tno, String tname, String collage) {
         QueryWrapper<Teacher> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("collage", collage).eq("tno", tno).eq("tname", tname);
-        return getInfoByQueryWrapper(queryWrapper);
+        if (tno.equals("") && tname.equals("") && collage.equals("")){
+            return getInfoByQueryWrapper(null);
+        }
+        else if (!tno.equals("") && tname.equals("") && collage.equals("")) {
+            queryWrapper.eq("tno", tno);
+            return getInfoByQueryWrapper(queryWrapper);
+        } else if (tno.equals("") && !tname.equals("") && collage.equals("")) {
+            queryWrapper.eq("tname", tname);
+            return getInfoByQueryWrapper(queryWrapper);
+        } else if (tno.equals("") && tname.equals("")) {
+            queryWrapper.eq("collage", collage);
+            return getInfoByQueryWrapper(queryWrapper);
+        }else if (!tno.equals("") && !tname.equals("") && collage.equals("")){
+            queryWrapper.eq("tno", tno).eq("tname", tname);
+            return getInfoByQueryWrapper(queryWrapper);
+        } else if (!tno.equals("") && tname.equals("")) {
+            queryWrapper.eq("collage", collage).eq("tno", tno);
+            return getInfoByQueryWrapper(queryWrapper);
+        } else if (tno.equals("")) {
+            queryWrapper.eq("collage", collage).eq("tname", tname);
+            return getInfoByQueryWrapper(queryWrapper);
+        }else {
+            queryWrapper.eq("collage", collage).eq("tno", tno).eq("tname", tname);
+            return getInfoByQueryWrapper(queryWrapper);
+        }
     }
 
     /**
@@ -70,8 +93,8 @@ public class TeacherManageServiceImpl implements TeacherManageService {
         QueryWrapper<Teacher> teacherQueryWrapper = new QueryWrapper<>();
         teacherQueryWrapper.eq("tno", tno);
         Teacher teacher = teacherMapper.selectOne(teacherQueryWrapper);
-        String classes = "";
-        String courses = "";
+        StringBuilder classes = new StringBuilder();
+        StringBuilder courses = new StringBuilder();
         Map<String, Object> data = new HashMap<>();
 
         QueryWrapper<TeachMajorCourse> teachCourseQueryWrapper = new QueryWrapper<>();
@@ -83,10 +106,10 @@ public class TeacherManageServiceImpl implements TeacherManageService {
         List<TeachCls> teachCls = teachClsMapper.selectList(teachClsQueryWrapper);
 
         for (TeachMajorCourse tc: teachMajorCours){
-            courses += majorCourseMapper.selectById(tc.getCno()).getCname();
+            courses.append(majorCourseMapper.selectById(tc.getCno()).getCname());
         }
         for (TeachCls tcls:teachCls){
-            classes += tcls.getClassname();
+            classes.append(tcls.getClassname());
         }
 
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
@@ -95,8 +118,8 @@ public class TeacherManageServiceImpl implements TeacherManageService {
         data.put("name", teacher.getTname());
         data.put("collage", teacher.getCollage());
         data.put("age", user.getUage());
-        data.put("classes", classes);
-        data.put("courses", courses);
+        data.put("classes", classes.toString());
+        data.put("courses", courses.toString());
         data.put("email", user.getEmail());
         data.put("no", teacher.getTno());
         data.put("phone", user.getUphone());
@@ -113,23 +136,23 @@ public class TeacherManageServiceImpl implements TeacherManageService {
     private List<Map<String, Object>> getInfoByQueryWrapper(QueryWrapper<Teacher> teacherQueryWrapper){
 
         List<Teacher> teachers = teacherMapper.selectList(teacherQueryWrapper);
-        if (!teachers.isEmpty()){
+        if (teachers != null && !teachers.isEmpty()){
             List<Map<String, Object>> info = new ArrayList<>();
             for (Teacher t:teachers){
                 QueryWrapper<TeachMajorCourse> teachCourseQueryWrapper = new QueryWrapper<>();
                 teachCourseQueryWrapper.eq("tno",t.getTno());
                 List<TeachMajorCourse> teachMajorCours = teachMajorCourseMapper.selectList(teachCourseQueryWrapper);
-                String courses = "";
+                StringBuilder courses = new StringBuilder();
                 for (TeachMajorCourse tc: teachMajorCours){
                     MajorCourse majorCourse = majorCourseMapper.selectById(tc.getCno());
-                    courses += majorCourse.getCname()+" ";
+                    courses.append(majorCourse.getCname()).append(" ");
                 }
                 Map<String, Object> msg = new HashMap<>();
                 msg.put("tno", t.getTno());
                 msg.put("title", t.getTitle());
                 msg.put("tname", t.getTname());
                 msg.put("collage", t.getCollage());
-                msg.put("teachCourse", courses);
+                msg.put("teachCourse", courses.toString());
                 info.add(msg);
             }
             return info;
