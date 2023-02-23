@@ -87,13 +87,19 @@ export default {
     searchfn() {
       this.searchData.sno = this.unoInput
       this.searchData.sname = this.unameInput
+      let loading = this.$loading({
+        lock:true,
+        text:"查询中"
+      })
       console.log(this.searchData)
       selectStudent(this.searchData).then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         this.tableData = res.data
         this.changePage.total = this.tableData.length
+        loading.close()
       }).catch(err => {
         console.log(err)
+        loading.close()
       })
     },
     // 重置函数
@@ -109,7 +115,7 @@ export default {
           // 跳转学生页面
           this.router.push({
             name:"StudentDetail",
-            query:{info:res.data}
+            query:{info:JSON.stringify(res.data)}
           })
         }).catch(err => {
         console.log(err)

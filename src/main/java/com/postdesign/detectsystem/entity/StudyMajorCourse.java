@@ -9,7 +9,7 @@ import org.springframework.validation.annotation.Validated;
 @Data
 @NoArgsConstructor
 @Validated
-@TableName("studycourse")
+@TableName("study_major_course")
 @Accessors(chain = true)
 /**
  *  学生对应上课课程数据表

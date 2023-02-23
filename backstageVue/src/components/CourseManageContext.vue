@@ -28,7 +28,7 @@
       </el-upload>
     </div>
     <!-- 信息栏 -->
-    <div style=" min-height: 77%; padding: 10px; margin-top: 10px ">
+    <div style=" min-height: 81%; padding: 11px; margin-top: 10px ">
       <el-table :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)" stripe border>
         <el-table-column prop="cname" label="课程名称" />
         <el-table-column prop="major" label="所属专业"/>

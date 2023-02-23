@@ -19,7 +19,6 @@ import org.springframework.validation.annotation.Validated;
 public class Faces {
     @TableId(type = IdType.ASSIGN_UUID)
     private String fid;
-    private String uname;
     private String uid;
-    private String picturePath;
+    private byte[] faceImg;
 }

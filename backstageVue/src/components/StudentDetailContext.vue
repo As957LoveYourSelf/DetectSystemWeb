@@ -9,30 +9,58 @@
         title="学生信息"
         direction="vertical"
         :column="4"
-        :size="size"
+        size="large"
         border
     >
       <div>
-        <el-descriptions-item label="学生姓名" v-model="data.name"></el-descriptions-item>
-        <el-descriptions-item label="学号" v-model="data.no"></el-descriptions-item>
-        <el-descriptions-item label="所属学院" v-model="data.collage"></el-descriptions-item>
-        <el-descriptions-item label="专业" v-model="data.major" :span="2"></el-descriptions-item>
-        <el-descriptions-item label="年龄" v-model="data.age" :span="2"></el-descriptions-item>
-        <el-descriptions-item label="邮箱" v-model="data.email" :span="2"></el-descriptions-item>
-        <el-descriptions-item label="电话" v-model="data.phone" :span="2"></el-descriptions-item>
-        <el-descriptions-item label="年级" v-model="data.grade" :span="2"></el-descriptions-item>
-        <el-descriptions-item label="班级" v-model="data.class" :span="2"></el-descriptions-item>
+        <el-descriptions-item label="学生姓名">
+          <el-tag size="large">{{info.name == null?'无': info.name}}</el-tag>
+        </el-descriptions-item>
+        <el-descriptions-item label="学号">
+          <el-tag size="large">{{info.no == null?'无': info.no}}</el-tag>
+        </el-descriptions-item>
+        <el-descriptions-item label="所属学院">
+          <el-tag size="large">{{info.collage == null?'无': info.collage}}</el-tag>
+        </el-descriptions-item>
+        <el-descriptions-item label="专业" :span="2">
+          <el-tag size="large">{{info.major == null?'无': info.major}}</el-tag>
+        </el-descriptions-item>
+        <el-descriptions-item label="年级" :span="2">
+          <el-tag size="large">
+            {{info.grade == null?'无': info.grade}}
+          </el-tag>
+        </el-descriptions-item>
+        <el-descriptions-item label="班级" :span="2">
+          <el-tag size="large">
+            {{info.class == null?'无': info.class}}
+          </el-tag>
+        </el-descriptions-item>
+        <el-descriptions-item label="年龄" :span="1">
+          <el-tag size="large">{{info.age == null?'无': info.age}}</el-tag>
+        </el-descriptions-item>
+        <el-descriptions-item label="邮箱" :span="1">
+          <el-tag size="large">{{info.email == null?'无': info.email}}</el-tag>
+        </el-descriptions-item>
+        <el-descriptions-item label="电话" :span="2">
+          <el-tag size="large">{{info.phone == null?'无': info.phone}}</el-tag>
+        </el-descriptions-item>
       </div>
     </el-descriptions>
-
   </div>
-
 </template>
 
-<script setup>
-import { computed, ref } from 'vue'
-const size = ref('large');
-const data = [
-
-]
+<script>
+import {useRoute} from "vue-router";
+export default {
+  data(){
+    return{
+      info:[],
+      route:useRoute()
+    }
+  },
+  created() {
+    this.info = JSON.parse(this.route.query.info)
+    console.log(this.info)
+  }
+}
 </script>

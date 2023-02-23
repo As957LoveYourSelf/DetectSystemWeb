@@ -11,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 @Data
 @NoArgsConstructor
 @Validated
-@TableName("course")
+@TableName("course_major")
 @Accessors(chain = true)
 /**
  *  课程数据表
@@ -22,6 +22,5 @@ public class MajorCourse {
     private Integer cno;
     private String major;
     private String collage;
-    private Integer teach_count;
     private Integer studygrade;
 }

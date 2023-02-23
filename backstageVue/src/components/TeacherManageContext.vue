@@ -42,7 +42,7 @@
         <el-table-column prop="teachCourse" label="所教课程" /> <!-- TeachMajorCourseMapper -->
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
-            <el-button type="success" @click="getDetail(scope.row.no)" plain>查看</el-button>
+            <el-button type="success" @click="getDetail(scope.row.tno)" plain>查看</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -72,6 +72,7 @@ import {
   searchTeacherInfo,
   getTeacherDetail,
 } from "../utils/teacherManage";
+import {useRouter} from 'vue-router'
 export default {
   data(){
     return{
@@ -89,7 +90,8 @@ export default {
         pageSizes: [10, 14]
       },
       Delete:Delete,
-      Search:Search
+      Search:Search,
+      router:useRouter()
     }
   },
   methods:{
@@ -103,13 +105,18 @@ export default {
       this.searchData.tno = this.unoInput
       this.searchData.collage = this.collage
       console.log(this.searchData)
+      let loading = this.$loading({
+        lock:true,
+        text:"查询中"
+      })
       searchTeacherInfo(this.searchData).then(res => {
         this.tableData = res.data
         this.changePage.total = this.tableData.length
+        loading.close()
       }).catch(err => {
         console.log(err)
+        loading.close()
       })
-
     },
     // 重置函数
     reset() {
@@ -119,10 +126,13 @@ export default {
    },
     getDetail(tno){
       this.detailData.tno = tno
-      getTeacherDetail(data).then(res => {
-        console.log(res)
+      getTeacherDetail(this.detailData).then(res => {
+        // console.log(res)
         // 跳转至详情页面
-
+        this.router.push({
+          name:"TeacherDetail",
+          query:{info:JSON.stringify(res.data)}
+        })
       }).catch(err => {
         console.log(err)
       })
@@ -130,7 +140,7 @@ export default {
   },
   created() {
     getCollageSelector().then(res => {
-      console.log(res)
+      // console.log(res)
       this.collage_ops = res.data
     }).catch(err => {
       console.log(err)

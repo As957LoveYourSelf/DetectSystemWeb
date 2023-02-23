@@ -109,13 +109,19 @@ export default {
       this.postData.buildingName = this.classroom_building
       this.postData.isOrder = Number.parseInt(this.OrderSelect)
       this.postData.floor = this.classroom_floor
+      let loading = this.$loading({
+        lock:true,
+        text:"查询中"
+      })
       console.log(this.postData)
       getClassroomInfo(this.postData).then(res => {
         this.tableData = res.data
         this.changePage.total = this.tableData.length
-        console.log(res.data)
+        // console.log(res.data)
+        loading.close()
       }).catch(err => {
         console.log(err)
+        loading.close()
       })
     },
     //重置选框

@@ -72,14 +72,16 @@ public class ClassMangerServiceImpl implements ClassMangerService {
         QueryWrapper<Cls> queryWrapper = new QueryWrapper<>();
         if (collage.equals("") && grade != null){
             queryWrapper.eq("grade", grade);
+            return getClassInfoByQueryWrapper(queryWrapper);
         }else if (!collage.equals("") && grade == null){
             queryWrapper.eq("collage", collage);
+            return getClassInfoByQueryWrapper(queryWrapper);
         }else if (!collage.equals("")){
             queryWrapper.eq("grade", grade).eq("collage", collage);
+            return getClassInfoByQueryWrapper(queryWrapper);
         }else {
-            return null;
+            return getClassInfoByQueryWrapper(null);
         }
-        return getClassInfoByQueryWrapper(queryWrapper);
     }
 
     /**
@@ -129,7 +131,6 @@ public class ClassMangerServiceImpl implements ClassMangerService {
             data.put("people", peopledata);
             return data;
         }
-
         return null;
     }
 

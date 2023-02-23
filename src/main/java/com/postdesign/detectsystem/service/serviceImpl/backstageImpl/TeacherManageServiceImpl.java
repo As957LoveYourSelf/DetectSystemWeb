@@ -90,9 +90,7 @@ public class TeacherManageServiceImpl implements TeacherManageService {
      * */
     @Override
     public Map<String, Object> getTeacherDetail(String tno) {
-        QueryWrapper<Teacher> teacherQueryWrapper = new QueryWrapper<>();
-        teacherQueryWrapper.eq("tno", tno);
-        Teacher teacher = teacherMapper.selectOne(teacherQueryWrapper);
+        Teacher teacher = teacherMapper.selectById(tno);
         StringBuilder classes = new StringBuilder();
         StringBuilder courses = new StringBuilder();
         Map<String, Object> data = new HashMap<>();
@@ -112,9 +110,7 @@ public class TeacherManageServiceImpl implements TeacherManageService {
             classes.append(tcls.getClassname());
         }
 
-        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
-        userQueryWrapper.eq("uno", tno);
-        User user = userMapper.selectOne(userQueryWrapper);
+        User user = userMapper.selectById(tno);
         data.put("name", teacher.getTname());
         data.put("collage", teacher.getCollage());
         data.put("age", user.getUage());

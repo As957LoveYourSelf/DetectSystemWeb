@@ -16,4 +16,5 @@ import org.springframework.validation.annotation.Validated;
 public class TeachCls {
     private String tno;
     private String classname;
+
 }

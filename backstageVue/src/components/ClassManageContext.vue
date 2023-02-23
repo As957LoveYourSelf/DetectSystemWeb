@@ -28,7 +28,8 @@
     </div>
     <!-- 信息栏 -->
     <div style="min-height:87%; padding: 10px ">
-      <el-table :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)" stripe border>
+      <el-table :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)"
+                stripe border>
         <el-table-column prop="collage" label="学院" />
         <el-table-column prop="major" label="专业"/>
         <el-table-column prop="grade" label="年级" />
@@ -68,7 +69,6 @@ import {
   getClassDetail
 } from "../utils/classManage"
 import {useRouter} from "vue-router";
-
 export default {
   data(){
     return{
@@ -76,7 +76,7 @@ export default {
       data:{className:''},
       collage:'',
       collage_ops:[],
-      level:'',
+      level:null,
       level_ops:[],
       tableData:[],
       changePage:{
@@ -95,19 +95,30 @@ export default {
       this.params.grade = this.level
       this.params.collage = this.collage
       console.log(this.params)
+      let loading = this.$loading({
+        lock:true,
+        text:"查询中"
+      })
       selectClass(this.params)
         .then(res => {
           if (res.data == null){
             this.tableData = []
             console.log("not data")
+            loading.close()
           }else {
             this.tableData = res.data
             this.changePage.total = this.tableData.length
+            loading.close()
+            this.$message({
+              type:'success',
+              message:'查询成功'
+            })
           }
           console.log(res)
         })
         .catch(err => {
           console.log(err)
+          loading.close()
         })
     },
     // 查看详情
@@ -129,7 +140,7 @@ export default {
       console.log("reset")
       this.tableData = []
       this.collage = ''
-      this.level = ''
+      this.level = null
     },
     //这里是获取当前页数
     handleCurrentChange(val){
