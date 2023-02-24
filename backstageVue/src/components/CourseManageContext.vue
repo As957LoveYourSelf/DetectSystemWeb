@@ -110,6 +110,27 @@ export default {
     handleCurrentChange(val){
       this.changePage.currentPage = val
     },
+    delectCs(cno, type){
+      const postParams={cno:cno, courseType:type}
+      deleteCourse(postParams).then(res =>{
+        if (res.data == 'success'){
+          this.$message({
+            type:'success',
+            message:'删除成功!'
+          })
+        }else {
+          this.$message({
+            type:'error',
+            message:'删除失败!'
+          })
+        }
+      }).catch(err =>{
+        this.$message({
+          type:'error',
+          message:'未知错误!'
+        })
+      })
+    },
     searchfn(){
       const postParams={collage:this.collage, major:this.major, grade:this.level === ''?null:this.level, type:this.type}
       console.log(postParams)

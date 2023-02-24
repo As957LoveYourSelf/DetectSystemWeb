@@ -41,7 +41,15 @@ public class CourseManageServiceImpl implements CourseManageService {
 
     @Override
     public String deleteCourse(String cno, String courseType) {
-        return null;
+        if (courseType.equals("public")){
+            publicCourseMapper.deleteById(cno);
+            return "success";
+        }
+        if (courseType.equals("major")){
+            majorCourseMapper.deleteById(cno);
+            return "success";
+        }
+        return "error";
     }
 
     /**
