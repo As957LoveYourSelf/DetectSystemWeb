@@ -1,28 +1,3 @@
-<script setup>
-import {
-  User,
-  UserFilled,
-  Setting,
-  House,
-  Shop,
-  HomeFilled,
-  Box,
-  Tickets
-} from '@element-plus/icons-vue'
-import {reactive, ref, toRefs, watch} from "vue";
-import {useRouter} from "vue-router";
-const state = reactive({
-  circleUrl:
-      'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
-})
-const {circleUrl} = toRefs(state)
-const router = useRouter()
-let current_route = ref('')
-watch(() => router.currentRoute.value.path, (path) =>{
-  current_route = path
-  console.log(current_route)
-},{immediate: true,deep: true})
-</script>
 <template>
   <div>
     <div style="height: 65px; line-height: 65px; background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); ">
@@ -82,16 +57,52 @@ watch(() => router.currentRoute.value.path, (path) =>{
             <el-icon><Box /></el-icon>
             <span>待处理请求</span>
           </el-menu-item>
-          <el-menu-item index="/setting">
-            <el-icon><setting /></el-icon>
-            <span>设置</span>
-          </el-menu-item>
+          <!-- -->
+          <el-sub-menu index="/test">
+            <template #title>
+              <el-icon><Setting/></el-icon>
+              <span>算法部署测试</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/test/superResolution">超分辨率</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group>
+              <el-menu-item index="/test/styleTransform">风格转化</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group>
+              <el-menu-item index="/test/wordDistinguish">文字识别</el-menu-item>
+            </el-menu-item-group>
+          </el-sub-menu>
         </el-menu>
       </div>
       <slot>
         Context
       </slot>
     </div>
-
   </div>
 </template>
+<script setup>
+import {
+  User,
+  UserFilled,
+  Setting,
+  House,
+  Shop,
+  HomeFilled,
+  Box,
+  Tickets
+} from '@element-plus/icons-vue'
+import {reactive, ref, toRefs, watch} from "vue";
+import {useRouter} from "vue-router";
+const state = reactive({
+  circleUrl:
+      'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+})
+const {circleUrl} = toRefs(state)
+const router = useRouter()
+let current_route = ref('')
+watch(() => router.currentRoute.value.path, (path) =>{
+  current_route = path
+  console.log(current_route)
+},{immediate: true,deep: true})
+</script>

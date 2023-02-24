@@ -6,7 +6,6 @@
     <div style="flex: 1;">
       <span style="font-family: Cambria; font-size: xxx-large; font-weight: bolder; color: red">QQ邮箱: 1290450579@qq.com</span>
     </div>
-    <button @click="log">log</button>
   </div>
 
 </template>
@@ -20,9 +19,7 @@ export default {
     }
   },
   methods:{
-    log(){
-      console.log(this.route.query)
-    }
+
   }
 }
 

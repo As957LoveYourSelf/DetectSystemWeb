@@ -37,7 +37,7 @@
         <el-table-column prop="headmaster" label="班主任" />
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
-            <el-button type="success" @click="getClassDetailInfo(scope.row.classname)" plain>查看</el-button>
+            <el-button type="success" @click="getClassDetailInfo(scope.row.class_name)" plain>查看</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -66,14 +66,11 @@ import {
   getCollageSelector,
   getGradeSelector,
   selectClass,
-  getClassDetail
 } from "../utils/classManage"
 import {useRouter} from "vue-router";
 export default {
   data(){
     return{
-      params:{grade:'',collage:''},
-      data:{className:''},
       collage:'',
       collage_ops:[],
       level:null,
@@ -83,7 +80,7 @@ export default {
         currentPage:1, //默认当前页面为1
         pageSize:14, //一页多少数据
         total: 0, //总共有多少数据
-        pageSizes: [10, 14] //一页可供显示多少数据
+        pageSizes: [5, 10, 14] //一页可供显示多少数据
       },
       Search:Search,
       Delete:Delete,
@@ -92,19 +89,21 @@ export default {
   },
   methods:{
     searchfn(){
-      this.params.grade = this.level
-      this.params.collage = this.collage
-      console.log(this.params)
+      const params= {grade:this.level,collage:this.collage}
+      console.log(params)
       let loading = this.$loading({
         lock:true,
         text:"查询中"
       })
-      selectClass(this.params)
+      selectClass(params)
         .then(res => {
           if (res.data == null){
             this.tableData = []
-            console.log("not data")
             loading.close()
+            this.$message({
+              type:'error',
+              message:'无数据'
+            })
           }else {
             this.tableData = res.data
             this.changePage.total = this.tableData.length
@@ -114,25 +113,19 @@ export default {
               message:'查询成功'
             })
           }
-          console.log(res)
-        })
-        .catch(err => {
-          console.log(err)
+        }).catch(err => {
           loading.close()
+          this.$message({
+            type:'error',
+            message:'查询失败'
+          })
         })
     },
     // 查看详情
     getClassDetailInfo(classname){
-      this.data.className = classname
-      getClassDetail(this.data).then(res => {
-        console.log(res.data)
-        this.router.push({
-          name: 'ClassDetail',
-          params: {userdata: res.data}
-        })
-        console.log(res.data)
-      }).catch(err => {
-        console.log(err)
+      this.router.push({
+        name: 'ClassDetail',
+        query: {classname: classname}
       })
     },
     // 重置函数
@@ -142,10 +135,11 @@ export default {
       this.collage = ''
       this.level = null
     },
-    //这里是获取当前页数
     handleCurrentChange(val){
+      // 分页查询
       this.changePage.currentPage = val
-    }
+      // this.searchfn(val, this.changePage.pageSize)
+    },
   },
   created() {
     getCollageSelector().then(res => {

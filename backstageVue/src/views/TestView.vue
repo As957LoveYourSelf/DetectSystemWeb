@@ -6,5 +6,5 @@
 
 <script setup>
 import BasePage from "@/components/BasePage.vue";
-import SettingContext from "@/components/SettingContext.vue";
+import SettingContext from "@/components/TestContext.vue";
 </script>

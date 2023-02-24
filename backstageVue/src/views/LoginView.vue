@@ -7,8 +7,8 @@
           ref="form"
           :model="formData"
           label-width="auto"
-          :label-position="labelPosition"
-          :size="size"
+          label-position="left"
+          size="large"
       >
         <div>
           <el-form-item label="用户名">
@@ -33,19 +33,16 @@
 </template>
 
 <script>
-import { reactive, ref } from 'vue'
 import { login } from '../utils/user'
 import {useRouter} from "vue-router";
 import md5 from "blueimp-md5";
 export default {
   data(){
     return{
-      size: ref('large'),
-      labelPosition: ref('left'),
-      formData: reactive({
+      formData: {
         name: 'admin',
         password: '123456',
-      }),
+      },
       router:useRouter()
     }
   },
@@ -60,14 +57,12 @@ export default {
           .then(res => {
             // 判断是否登录成功
             if(res.data.loginState === 'success'){
-              localStorage.setItem('token',res.data.userToken)
+              localStorage.setItem('userToken',res.data.userToken)
+              localStorage.setItem('userInfo', res.data.userInfo)
               console.log('登录成功')
-              console.log(res.data.userInfo)
               this.router.push({
                 name: 'Home',
-                query:{
-                  userinfo: JSON.stringify(res.data.userInfo)
-                }
+                query:{uname:res.data.userInfo.uname}
               })
             }
             // console.log(res)

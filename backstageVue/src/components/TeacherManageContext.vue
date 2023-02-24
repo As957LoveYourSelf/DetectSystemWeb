@@ -70,7 +70,6 @@ import {
 import {
   getCollageSelector,
   searchTeacherInfo,
-  getTeacherDetail,
 } from "../utils/teacherManage";
 import {useRouter} from 'vue-router'
 export default {
@@ -81,13 +80,11 @@ export default {
       tableData:[],
       collage:'',
       collage_ops:[],
-      detailData:{tno:''},
-      searchData:{tno:'', tname:'', collage:''},
       changePage:{
         currentPage:1, //默认当前页面为1
-        pageSize:14,
+        pageSize:8,
         total: 0, //总共有多少数据
-        pageSizes: [10, 14]
+        pageSizes: [6, 8]
       },
       Delete:Delete,
       Search:Search,
@@ -101,21 +98,27 @@ export default {
     },
     // 查询函数
     searchfn() {
-      this.searchData.tname = this.unameInput
-      this.searchData.tno = this.unoInput
-      this.searchData.collage = this.collage
+      const searchData = {tno:this.unoInput, tname:this.unameInput, collage:this.collage}
       console.log(this.searchData)
       let loading = this.$loading({
         lock:true,
         text:"查询中"
       })
-      searchTeacherInfo(this.searchData).then(res => {
+      searchTeacherInfo(searchData).then(res => {
         this.tableData = res.data
         this.changePage.total = this.tableData.length
         loading.close()
+        this.$message({
+          type:'success',
+          message:'查询成功'
+        })
       }).catch(err => {
         console.log(err)
         loading.close()
+        this.$message({
+          type:'error',
+          message:'查询失败'
+        })
       })
     },
     // 重置函数
@@ -125,16 +128,10 @@ export default {
       this.collage=''
    },
     getDetail(tno){
-      this.detailData.tno = tno
-      getTeacherDetail(this.detailData).then(res => {
-        // console.log(res)
-        // 跳转至详情页面
-        this.router.push({
-          name:"TeacherDetail",
-          query:{info:JSON.stringify(res.data)}
-        })
-      }).catch(err => {
-        console.log(err)
+      // 跳转至详情页面
+      this.router.push({
+        name:"TeacherDetail",
+        query:{tno:tno}
       })
     }
   },

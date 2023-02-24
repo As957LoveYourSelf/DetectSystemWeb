@@ -63,7 +63,6 @@ export default {
   data(){
     return{
       tableData: [],
-      detailData:{sno:''},
       searchData:{sno:'', sname:''},
       unoInput: '',
       unameInput: '',
@@ -97,9 +96,17 @@ export default {
         this.tableData = res.data
         this.changePage.total = this.tableData.length
         loading.close()
+        this.$message({
+          type:'success',
+          message:'查询成功'
+        })
       }).catch(err => {
         console.log(err)
         loading.close()
+        this.$message({
+          type:'error',
+          message:'查询失败'
+        })
       })
     },
     // 重置函数
@@ -109,16 +116,9 @@ export default {
     },
     // 查看学生详情
     getDetail(sno) {
-      this.detailData.sno = sno
-      getStudentDetail(this.detailData).then(res => {
-          // console.log(res)
-          // 跳转学生页面
-          this.router.push({
-            name:"StudentDetail",
-            query:{info:JSON.stringify(res.data)}
-          })
-        }).catch(err => {
-        console.log(err)
+      this.router.push({
+        name:"StudentDetail",
+        query:{sno:sno}
       })
     }
   }

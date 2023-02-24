@@ -44,15 +44,22 @@
 
 <script>
 import {useRoute} from "vue-router";
+import {getTeacherDetail} from "../utils/teacherManage";
 export default {
   data(){
     return{
       info:[],
-      route:useRoute()
+      route:useRoute(),
+      detailData:{tno:''}
     }
   },
   created() {
-    this.info = JSON.parse(this.route.query.info)
+    this.detailData.tno = this.route.query.tno
+    getTeacherDetail(this.detailData).then(res => {
+      this.info = res.data
+    }).catch(err => {
+      console.log(err)
+    })
   }
 }
 </script>

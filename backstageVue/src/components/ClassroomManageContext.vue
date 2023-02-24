@@ -119,9 +119,17 @@ export default {
         this.changePage.total = this.tableData.length
         // console.log(res.data)
         loading.close()
+        this.$message({
+          type:'success',
+          message:'查询成功'
+        })
       }).catch(err => {
         console.log(err)
         loading.close()
+        this.$message({
+          type:'error',
+          message:'查询成功'
+        })
       })
     },
     //重置选框
