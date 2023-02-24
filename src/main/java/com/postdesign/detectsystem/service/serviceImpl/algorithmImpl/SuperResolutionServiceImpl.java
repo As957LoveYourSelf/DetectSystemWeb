@@ -52,7 +52,7 @@ public class SuperResolutionServiceImpl implements SuperResolutionService {
     }
 
     private JSONResult<byte[]> saveImageAndReturn(Image image) throws IOException {
-        Path output = Paths.get("src/main/saveimg/output");
+        Path output = Paths.get("src/main/resources/superResolutionImg");
         if (Files.notExists(output)){
             Files.createDirectory(output);
         }

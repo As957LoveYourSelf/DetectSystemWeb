@@ -22,5 +22,5 @@ public class MajorCourse {
     private Integer cno;
     private String major;
     private String collage;
-    private Integer studygrade;
+    private Integer grade;
 }

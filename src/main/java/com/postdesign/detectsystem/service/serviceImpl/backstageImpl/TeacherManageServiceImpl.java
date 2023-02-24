@@ -29,7 +29,13 @@ public class TeacherManageServiceImpl implements TeacherManageService {
     TeachMajorCourseMapper teachMajorCourseMapper;
 
     @Autowired(required = false)
+    TeacherPublicCourseMapper teacherPublicCourseMapper;
+
+    @Autowired(required = false)
     MajorCourseMapper majorCourseMapper;
+
+    @Autowired(required = false)
+    PublicCourseMapper publicCourseMapper;
     /**
      * 获取教师管理页面教师所属学院选择器内容
      * */
@@ -55,25 +61,25 @@ public class TeacherManageServiceImpl implements TeacherManageService {
             return getInfoByQueryWrapper(null);
         }
         else if (!tno.equals("") && tname.equals("") && collage.equals("")) {
-            queryWrapper.eq("tno", tno);
+            queryWrapper.like("tno", tno);
             return getInfoByQueryWrapper(queryWrapper);
         } else if (tno.equals("") && !tname.equals("") && collage.equals("")) {
-            queryWrapper.eq("tname", tname);
+            queryWrapper.like("tname", tname);
             return getInfoByQueryWrapper(queryWrapper);
         } else if (tno.equals("") && tname.equals("")) {
             queryWrapper.eq("collage", collage);
             return getInfoByQueryWrapper(queryWrapper);
         }else if (!tno.equals("") && !tname.equals("") && collage.equals("")){
-            queryWrapper.eq("tno", tno).eq("tname", tname);
+            queryWrapper.like("tno", tno).like("tname", tname);
             return getInfoByQueryWrapper(queryWrapper);
         } else if (!tno.equals("") && tname.equals("")) {
-            queryWrapper.eq("collage", collage).eq("tno", tno);
+            queryWrapper.eq("collage", collage).like("tno", tno);
             return getInfoByQueryWrapper(queryWrapper);
         } else if (tno.equals("")) {
-            queryWrapper.eq("collage", collage).eq("tname", tname);
+            queryWrapper.eq("collage", collage).like("tname", tname);
             return getInfoByQueryWrapper(queryWrapper);
         }else {
-            queryWrapper.eq("collage", collage).eq("tno", tno).eq("tname", tname);
+            queryWrapper.eq("collage", collage).like("tno", tno).like("tname", tname);
             return getInfoByQueryWrapper(queryWrapper);
         }
     }
@@ -96,16 +102,24 @@ public class TeacherManageServiceImpl implements TeacherManageService {
         Map<String, Object> data = new HashMap<>();
 
         QueryWrapper<TeachMajorCourse> teachCourseQueryWrapper = new QueryWrapper<>();
+        QueryWrapper<TeachPublicCourse> teachPublicCourseQueryWrapper = new QueryWrapper<>();
         QueryWrapper<TeachCls> teachClsQueryWrapper = new QueryWrapper<>();
         teachCourseQueryWrapper.eq("tno", tno);
         teachClsQueryWrapper.eq("tno",tno);
+        teachPublicCourseQueryWrapper.eq("tno", tno);
 
+        List<TeachPublicCourse> teachPublicCourses = teacherPublicCourseMapper.selectList(teachPublicCourseQueryWrapper);
         List<TeachMajorCourse> teachMajorCours = teachMajorCourseMapper.selectList(teachCourseQueryWrapper);
         List<TeachCls> teachCls = teachClsMapper.selectList(teachClsQueryWrapper);
 
         for (TeachMajorCourse tc: teachMajorCours){
-            courses.append(majorCourseMapper.selectById(tc.getCno()).getCname());
+            courses.append(majorCourseMapper.selectById(tc.getCno()).getCname()).append(" ");
         }
+
+        for (TeachPublicCourse tc: teachPublicCourses){
+            courses.append(publicCourseMapper.selectById(tc.getCpno()).getCname()).append(" ");
+        }
+
         for (TeachCls tcls:teachCls){
             classes.append(tcls.getClassname());
         }
@@ -123,9 +137,9 @@ public class TeacherManageServiceImpl implements TeacherManageService {
     }
 
     /**
-     *         <el-table-column prop="no" label="教工号"/>
+     *         <el-table-column prop="tno" label="教工号"/>
      *         <el-table-column prop="title" label="职位" />
-     *         <el-table-column prop="name" label="教师姓名"/>
+     *         <el-table-column prop="tname" label="教师姓名"/>
      *         <el-table-column prop="collage" label="所属学院" />
      *         <el-table-column prop="TeachMajorCourseMapper" label="所教课程" />
      * */
@@ -143,6 +157,15 @@ public class TeacherManageServiceImpl implements TeacherManageService {
                     MajorCourse majorCourse = majorCourseMapper.selectById(tc.getCno());
                     courses.append(majorCourse.getCname()).append(" ");
                 }
+
+                QueryWrapper<TeachPublicCourse> teachPublicCourseQueryWrapper = new QueryWrapper<>();
+                teachPublicCourseQueryWrapper.eq("tno",t.getTno());
+                List<TeachPublicCourse> teachPublicCourses = teacherPublicCourseMapper.selectList(teachPublicCourseQueryWrapper);
+                for (TeachPublicCourse tc: teachPublicCourses){
+                    PublicCourse publicCourse = publicCourseMapper.selectById(tc.getCpno());
+                    courses.append(publicCourse.getCname()).append(" ");
+                }
+
                 Map<String, Object> msg = new HashMap<>();
                 msg.put("tno", t.getTno());
                 msg.put("title", t.getTitle());

@@ -33,13 +33,13 @@ public class StudentManageServiceImpl implements StudentManageService {
         if (sno.equals("") && sname.equals("")){
             return putInfoMap(null);
         }else if (!sno.equals("") && sname.equals("")){
-            queryWrapper.eq("sno", sno);
+            queryWrapper.like("sno", sno);
             return putInfoMap(queryWrapper);
         } else if (sno.equals("")) {
-            queryWrapper.eq("sname", sname);
+            queryWrapper.like("sname", sname);
             return putInfoMap(queryWrapper);
         }else {
-            queryWrapper.eq("sno", sno).eq("sname", sname);
+            queryWrapper.like("sno", sno).like("sname", sname);
             return putInfoMap(queryWrapper);
         }
     }

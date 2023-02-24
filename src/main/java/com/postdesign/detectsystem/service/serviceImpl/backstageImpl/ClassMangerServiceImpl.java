@@ -5,6 +5,8 @@ import com.postdesign.detectsystem.entity.*;
 import com.postdesign.detectsystem.mapper.*;
 import com.postdesign.detectsystem.service.backstageService.ClassMangerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -69,6 +71,7 @@ public class ClassMangerServiceImpl implements ClassMangerService {
         if (collage == null){
             return null;
         }
+
         QueryWrapper<Cls> queryWrapper = new QueryWrapper<>();
         if (collage.equals("") && grade != null){
             queryWrapper.eq("grade", grade);
@@ -135,6 +138,7 @@ public class ClassMangerServiceImpl implements ClassMangerService {
     }
 
     private List<Map<String, Object>> getClassInfoByQueryWrapper(QueryWrapper<Cls> clumnQueryWrapper) {
+
         List<Cls> clsList = classMapper.selectList(clumnQueryWrapper);
         if (!clsList.isEmpty()){
             List<Map<String, Object>> infoList = new ArrayList<>();

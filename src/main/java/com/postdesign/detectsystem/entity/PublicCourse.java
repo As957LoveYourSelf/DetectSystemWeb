@@ -21,5 +21,5 @@ public class PublicCourse {
     @TableId(type = IdType.AUTO)
     private Integer cno;
     private String collage;
-    private Integer studygrade;
+    private Integer grade;
 }

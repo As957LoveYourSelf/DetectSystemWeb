@@ -9,7 +9,7 @@ const router = createRouter({
       component: () => import('../views/LoginView.vue'),
       meta: {
         requireAuth: false
-      }
+      },
     },
     {
       path : '/login',
@@ -17,7 +17,7 @@ const router = createRouter({
       component: () => import('../views/LoginView.vue'),
       meta: {
         requireAuth: false
-      }
+      },
     },
     {
       path: '/home',
@@ -25,63 +25,69 @@ const router = createRouter({
       component: () => import('../views/HomeView.vue'),
       meta: {
         requireAuth: true
-      }
+      },
     },
     {
       path: '/student',
       name: 'Student',
       component:() => import('../views/StudentManageView.vue'),
       meta: {
-        requireAuth: true
-      }
+        requireAuth: true,
+        keepAlive:true
+      },
     },
     {
       path: '/teacher',
       name: 'Teacher',
       component:() => import('../views/TeacherManageView.vue'),
       meta: {
-        requireAuth: true
-      }
+        requireAuth: true,
+        keepAlive:true
+      },
     },
     {
       path: '/class',
       name: 'Class',
       component:() => import('../views/ClassManageView.vue'),
       meta: {
-        requireAuth: true
-      }
+        requireAuth: true,
+        keepAlive:true
+      },
     },
     {
       path: '/classroom',
       name: 'Classroom',
       component:() => import('../views/ClassroomManageView.vue'),
       meta: {
-        requireAuth: true
-      }
+        requireAuth: true,
+        keepAlive:true
+      },
     },
     {
       path: '/course',
       name: 'Course',
       component:() => import('../views/CourseManageView.vue'),
       meta: {
-        requireAuth: true
-      }
+        requireAuth: true,
+        keepAlive:true
+      },
     },
     {
-      path: '/setting',
-      name: 'Setting',
-      component:() => import('../views/SettingView.vue'),
+      path: '/test',
+      name: 'Test',
+      component:() => import('../views/TestView.vue'),
       meta: {
         requireAuth: true
-      }
+      },
     },
     {
       path: '/todo',
       name: 'ToDo',
       component:() => import('../views/TODOView.vue'),
       meta: {
-        requireAuth: true
-      }
+        requireAuth: true,
+        keepAlive:true
+      },
     },
     {
       path: '/classdetail',
@@ -89,7 +95,7 @@ const router = createRouter({
       component:() => import('../views/ClassDetailView.vue'),
       meta: {
         requireAuth: true
-      }
+      },
     },
     {
       path: '/studentdetail',
@@ -97,7 +103,7 @@ const router = createRouter({
       component:() => import('../views/StudentDetailView.vue'),
       meta: {
         requireAuth: true
-      }
+      },
     },
     {
       path: '/teacherdetail',
@@ -105,7 +111,7 @@ const router = createRouter({
       component:() => import('../views/TeacherDetailView.vue'),
       meta: {
         requireAuth: true
-      }
+      },
     },
     {
       path: '/course',
@@ -113,7 +119,7 @@ const router = createRouter({
       component:() => import('../views/CourseManageView.vue'),
       meta: {
         requireAuth: true
-      }
+      },
     }
   ]
 })

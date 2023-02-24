@@ -11,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 @Data
 @NoArgsConstructor
 @Validated
-@TableName("teachCls")
+@TableName("teachcls")
 @Accessors(chain = true)
 public class TeachCls {
     private String tno;
