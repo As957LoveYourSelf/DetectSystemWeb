@@ -52,7 +52,7 @@ const getStudentData = (method, url, params) => {
         url: url,
         headers: {
             'Content-Type': 'application/json;charset:utf-8;',
-            'Authorization': localStorage.getItem('token')
+            'Authorization': localStorage.getItem('userToken')
         },
         params: params
     }).then(res => res.data);
@@ -64,7 +64,7 @@ const getTeacherData = (method, url, params) => {
         url: url,
         headers: {
             'Content-Type': 'application/json;charset:utf-8;',
-            'Authorization': localStorage.getItem('token')
+            'Authorization': localStorage.getItem('userToken')
         },
         params: params
     }).then(res => res.data);
@@ -76,7 +76,19 @@ const getClassroomData = (method, url, params) => {
         url: url,
         headers: {
             'Content-Type': 'application/json;charset:utf-8;',
-            'Authorization': localStorage.getItem('token')
+            'Authorization': localStorage.getItem('userToken')
+        },
+        params: params
+    }).then(res => res.data);
+};
+//课程管理请求
+const getCourseData = (method, url, params) => {
+    return axios({
+        method: method,
+        url: url,
+        headers: {
+            'Content-Type': 'application/json;charset:utf-8;',
+            'Authorization': localStorage.getItem('userToken')
         },
         params: params
     }).then(res => res.data);
@@ -86,5 +98,6 @@ export {
     getClassData,
     getStudentData,
     getTeacherData,
-    getClassroomData
+    getClassroomData,
+    getCourseData
 }

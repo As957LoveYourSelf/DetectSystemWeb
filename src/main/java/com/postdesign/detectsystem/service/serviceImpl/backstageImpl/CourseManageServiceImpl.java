@@ -30,9 +30,134 @@ public class CourseManageServiceImpl implements CourseManageService {
     MajorCourseMapper majorCourseMapper;
     @Autowired(required = false)
     PublicCourseMapper publicCourseMapper;
+    @Autowired(required = false)
+    GradeMapper gradeMapper;
+    @Autowired(required = false)
+    CollageMapper collageMapper;
     @Override
-    public Map<String, Object> importCourseInfo() {
+    public String importCourseInfo() {
         return null;
+    }
+
+    @Override
+    public String deleteCourse(String cno, String courseType) {
+        return null;
+    }
+
+    /**
+     * 获取年级选择器内容
+     * */
+    @Override
+    public List<Integer> getGradeSelector() {
+        QueryWrapper<Grade> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("grade");
+        List<Grade> gradeList = gradeMapper.selectList(queryWrapper);
+        List<Integer> gradeSelector = new ArrayList<>();
+        if (!gradeList.isEmpty()){
+            for (Grade g:gradeList){
+                gradeSelector.add(g.getGrade());
+            }
+            return gradeSelector;
+        }
+        return null;
+    }
+
+    /**
+     * 获取学院选择器内容
+     **/
+    @Override
+    public List<String> getCollageSelector() {
+        QueryWrapper<Collage> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("name");
+        List<Collage> collageList = collageMapper.selectList(queryWrapper);
+        List<String> collageSelector = new ArrayList<>();
+        if (!collageList.isEmpty()){
+            for (Collage c:collageList){
+                collageSelector.add(c.getName());
+            }
+            return collageSelector;
+        }
+        return null;
+    }
+
+    /**
+     *         <el-table-column prop="cname" label="课程名称" />
+     *         <el-table-column prop="major" label="所属专业"/>
+     *         <el-table-column prop="collage" label="所属学院" />
+     * */
+    @Override
+    public List<Map<String, Object>> select(String collage, String major,  Integer grade, String type) {
+        if (collage == null || major == null || type == null){
+            return null;
+        }
+        QueryWrapper<MajorCourse> majorCourseQueryWrapper = new QueryWrapper<>();
+        QueryWrapper<PublicCourse> publicCourseQueryWrapper = new QueryWrapper<>();
+        if (type.equals("all")){
+            if (collage.equals("") && major.equals("") && grade == null){
+                return getCourses(null, null);
+            }else if(!collage.equals("") && major.equals("") && grade == null){
+                majorCourseQueryWrapper.eq("collage", collage);
+                publicCourseQueryWrapper.eq("collage", collage);
+                return getCourses(majorCourseQueryWrapper, publicCourseQueryWrapper);
+            } else if (collage.equals("") && !major.equals("") && grade == null) {
+                majorCourseQueryWrapper.eq("major", major);
+                publicCourseQueryWrapper.eq("major", major);
+                return getCourses(majorCourseQueryWrapper, publicCourseQueryWrapper);
+            } else if (collage.equals("") && major.equals("")) {
+                majorCourseQueryWrapper.eq("grade", grade);
+                publicCourseQueryWrapper.eq("grade", grade);
+                return getCourses(majorCourseQueryWrapper, publicCourseQueryWrapper);
+            } else if (!collage.equals("") && !major.equals("") && grade == null) {
+                majorCourseQueryWrapper.eq("major", major).eq("collage", collage);
+                publicCourseQueryWrapper.eq("major", major).eq("collage", collage);
+                return getCourses(majorCourseQueryWrapper, publicCourseQueryWrapper);
+            } else {
+                majorCourseQueryWrapper.eq("major", major).eq("collage", collage).eq("grade",grade);
+                publicCourseQueryWrapper.eq("major", major).eq("collage", collage).eq("grade", grade);
+                return getCourses(majorCourseQueryWrapper, publicCourseQueryWrapper);
+            }
+        }
+        else if (type.equals("public")){
+            if (collage.equals("") && major.equals("") && grade == null){
+                return getPublicCourses( null);
+            }else if(!collage.equals("") && major.equals("") && grade == null){
+                publicCourseQueryWrapper.eq("collage", collage);
+                return getPublicCourses(publicCourseQueryWrapper);
+            } else if (collage.equals("") && !major.equals("") && grade == null) {
+                publicCourseQueryWrapper.eq("major", major);
+                return getPublicCourses(publicCourseQueryWrapper);
+            } else if (collage.equals("") && major.equals("")) {
+                publicCourseQueryWrapper.eq("grade", grade);
+                return getPublicCourses(publicCourseQueryWrapper);
+            } else if (!collage.equals("") && !major.equals("") && grade == null) {
+                publicCourseQueryWrapper.eq("major", major).eq("collage", collage);
+                return getPublicCourses(publicCourseQueryWrapper);
+            } else {
+                publicCourseQueryWrapper.eq("major", major).eq("collage", collage).eq("grade", grade);
+                return getPublicCourses(publicCourseQueryWrapper);
+            }
+        } else if (type.equals("major")) {
+            if (collage.equals("") && major.equals("") && grade == null){
+                return getMajorCourses( null);
+            }else if(!collage.equals("") && major.equals("") && grade == null){
+                majorCourseQueryWrapper.eq("collage", collage);
+                return getMajorCourses(majorCourseQueryWrapper);
+            } else if (collage.equals("") && !major.equals("") && grade == null) {
+                majorCourseQueryWrapper.eq("major", major);
+                return getMajorCourses(majorCourseQueryWrapper);
+            } else if (collage.equals("") && major.equals("")) {
+                majorCourseQueryWrapper.eq("grade", grade);
+                return getMajorCourses(majorCourseQueryWrapper);
+            } else if (!collage.equals("") && !major.equals("") && grade == null) {
+                majorCourseQueryWrapper.eq("major", major).eq("collage", collage);
+                return getMajorCourses(majorCourseQueryWrapper);
+            } else {
+                majorCourseQueryWrapper.eq("major", major).eq("collage", collage).eq("grade",grade);
+                return getMajorCourses(majorCourseQueryWrapper);
+            }
+        }else {
+            return null;
+        }
     }
 
     @Override
@@ -133,19 +258,71 @@ public class CourseManageServiceImpl implements CourseManageService {
 
     private List<TeachMajorCourse> getTeachMajorCourse(String tno){
         QueryWrapper<TeachMajorCourse> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("sno", tno);
+        queryWrapper.eq("tno", tno);
         return teachMajorCourseMapper.selectList(queryWrapper);
     }
 
     private List<TeachPublicCourse> getTeachPublicCourse(String tno){
         QueryWrapper<TeachPublicCourse> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("sno", tno);
+        queryWrapper.eq("tno", tno);
         return teacherPublicCourseMapper.selectList(queryWrapper);
     }
 
     private MajorCourse getMajorCourse(Integer cno){
         return majorCourseMapper.selectById(cno);
     }
+
+    private List<Map<String, Object>> getMajorCourses(QueryWrapper<MajorCourse> queryWrapper){
+        List<MajorCourse> majorCourses = majorCourseMapper.selectList(queryWrapper);
+        List<Map<String, Object>> info = new ArrayList<>();
+        for (MajorCourse mc:majorCourses){
+            Map<String, Object> map = new HashMap<>();
+            map.put("cno", mc.getCno());
+            map.put("cname", mc.getCname());
+            map.put("collage", mc.getCollage());
+            map.put("type", "专业课");
+            info.add(map);
+        }
+        return info;
+    }
+
+    private List<Map<String, Object>> getPublicCourses(QueryWrapper<PublicCourse> queryWrapper){
+        List<PublicCourse> publicCourses = publicCourseMapper.selectList(queryWrapper);
+        List<Map<String, Object>> info = new ArrayList<>();
+        for (PublicCourse pc:publicCourses){
+            Map<String, Object> map = new HashMap<>();
+            map.put("cno", pc.getCno());
+            map.put("cname", pc.getCname());
+            map.put("collage", pc.getCollage());
+            map.put("type", "公共课");
+            info.add(map);
+        }
+        return info;
+    }
+
+    private List<Map<String, Object>> getCourses(QueryWrapper<MajorCourse> majorCs, QueryWrapper<PublicCourse> publicCs){
+        List<MajorCourse> majorCourses = majorCourseMapper.selectList(majorCs);
+        List<PublicCourse> publicCourses = publicCourseMapper.selectList(publicCs);
+        List<Map<String, Object>> info = new ArrayList<>();
+        for (MajorCourse mc:majorCourses){
+            Map<String, Object> map = new HashMap<>();
+            map.put("cno", mc.getCno());
+            map.put("cname", mc.getCname());
+            map.put("collage", mc.getCollage());
+            map.put("type", "专业课");
+            info.add(map);
+        }
+        for (PublicCourse pc:publicCourses){
+            Map<String, Object> map = new HashMap<>();
+            map.put("cno", pc.getCno());
+            map.put("cname", pc.getCname());
+            map.put("collage", pc.getCollage());
+            map.put("type", "公共课");
+            info.add(map);
+        }
+        return info;
+    }
+
     private PublicCourse getPublicCourse(Integer cno){
         return publicCourseMapper.selectById(cno);
     }

@@ -1,10 +1,14 @@
 package com.postdesign.detectsystem.service.backstageService;
 
+import java.util.List;
 import java.util.Map;
 
 public interface CourseManageService {
-    Map<String, Object> importCourseInfo();
-
+    String importCourseInfo();
+    List<Integer> getGradeSelector();
+    List<String> getCollageSelector();
+    List<Map<String, Object>> select(String sno, String major, Integer grade, String type);
+    String deleteCourse(String cno, String courseType);
     Map<String, Object> getCourseTableBySno(String sno);
     Map<String, Object> getCourseTableByTno(String tno);
 }

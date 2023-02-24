@@ -1,42 +1,56 @@
 <template>
   <div style="flex: 1;">
-    <div style="padding: 10px; height: 100px">
-      <el-upload
-          ref="upload"
-          class="upload-demo"
-          action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-          :limit="1"
-          :on-exceed="handleExceed"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
-          :before-remove="beforeRemove"
-          :before-upload="beforeUpload"
-          accept=".txt,.csv"
-          :auto-upload="false"
-      >
-        <template #trigger>
-          <el-button type="primary">选择课程数据文件</el-button>
-        </template>
-        <el-button class="ml-8" type="success" @click="submitUpload">
-          上传课程数据文件
-        </el-button>
-        <template #tip>
-          <div class="el-upload__tip text-red ml-8">
-            仅支持上传一个文件，文件格式为txt或者csv
-          </div>
-        </template>
-      </el-upload>
+    <div style="padding: 10px">
+      <!-- 搜索框 -->
+      <el-select class="w-300" size="large" v-model="collage" placeholder="请选择学院">
+        <el-option
+            v-for="item in collage_ops"
+            :key="item"
+            :value="item"
+            :label="item"
+            :disabled=false
+        />
+      </el-select>
+      <el-select class="w-300 ml-8" size="large" v-model="major" placeholder="请选择专业">
+        <el-option
+            v-for="item in major_ops"
+            :key="item"
+            :value="item"
+            :label="item"
+            :disabled=false
+        />
+      </el-select>
+      <el-select class="w-300 ml-8" size="large" v-model="level" placeholder="请选择年级">
+        <el-option
+            v-for="item in level_ops"
+            :key="item"
+            :value="item"
+            :label="item"
+            :disabled=false
+        />
+      </el-select>
+      <div class="mb-2 flex items-center text-sm">
+        <el-radio-group v-model="type" class="ml-4">
+          <el-radio label="all" size="large">所有</el-radio>
+          <el-radio label="public" size="large">公共课</el-radio>
+          <el-radio label="major" size="large">专业课</el-radio>
+        </el-radio-group>
+      </div>
+      <el-button class="ml-8" type="success" :icon="Search" @click="searchfn" round>搜索</el-button>
+      <el-button class="ml-8" type="warning" :icon="Refresh" @click="reset" round>重置</el-button>
     </div>
     <!-- 信息栏 -->
-    <div style=" min-height: 81%; padding: 11px; margin-top: 10px ">
+    <div style=" min-height: 87%; padding: 10px;">
       <el-table :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)" stripe border>
+        <el-table-column prop="cno" label="课程号" />
         <el-table-column prop="cname" label="课程名称" />
         <el-table-column prop="major" label="所属专业"/>
         <el-table-column prop="collage" label="所属学院" />
+        <el-table-column prop="type" label="课程类型" />
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
-            <el-button type="success" @click="" plain>查看</el-button>
-            <el-button type="danger" @click="" plain>删除</el-button>
+            <el-button type="success" @click="" :icon="Search" plain>查看</el-button>
+            <el-button type="danger" @click="" :icon="Delete" plain>删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -55,64 +69,94 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import {ElMessage, ElMessageBox, genFileId} from 'element-plus'
-import { ref, reactive } from 'vue'
-
-const upload = ref()
-
-const handleExceed = (files) => {
-  upload.value.clearFiles()
-  const file = files[0]
-  file.uid = genFileId()
-  upload.value.handleStart(file)
-}
-const handleRemove= (file, uploadFiles) => {
-  console.log(file, uploadFiles)
-}
-
-const handlePreview = (uploadFile) => {
-  console.log(uploadFile)
-}
-
-const beforeRemove= (uploadFile) => {
-  return ElMessageBox.confirm(
-      `Cancel the transfert of ${uploadFile.name} ?`
-  ).then(
-      () => true,
-      () => false
-  )
-}
-
-const beforeUpload = (rawFile) => {
-  if (rawFile.type !== 'txt/csv') {
-    ElMessage.error('文件必须为TXT或者CSV格式！')
-    return false
-  } else if (rawFile.size / 1024 / 1024 > 2) {
-    ElMessage.error('文件大小不超过2MB！')
-    return false
+<script>
+import {
+  Delete,
+  Search,
+  Refresh,
+} from '@element-plus/icons-vue'
+import {
+  getCourseTableByTno,
+  getCourseTableBySno,
+  getCollageSelector,
+  getGradeSelector,
+  selectCourse,
+  importCourse,
+  deleteCourse
+} from '../utils/courseManage'
+export default {
+  data(){
+    return{
+      tableData:[],
+      changePage:{
+        currentPage:1, //默认当前页面为1
+        pageSize:14,
+        total: 0, //总共有多少数据
+        pageSizes: [10, 14],
+      },
+      collage:'',
+      level:'',
+      major:'',
+      type:'all',
+      major_ops:[],
+      collage_ops:[],
+      level_ops:[],
+      Delete:Delete,
+      Search:Search,
+      Refresh:Refresh
+    }
+  },
+  methods:{
+    handleCurrentChange(val){
+      this.changePage.currentPage = val
+    },
+    searchfn(){
+      const postParams={collage:this.collage, major:this.major, grade:this.level === ''?null:this.level, type:this.type}
+      console.log(postParams)
+      let loading = this.$loading({
+        lock:true,
+        text:"查询中"
+      })
+      selectCourse(postParams).then(res => {
+        if (res.data == null){
+          this.tableData = []
+          loading.close()
+          this.$message({
+            type:'error',
+            message:'无数据'
+          })
+        }else {
+          this.tableData = res.data
+          this.changePage.total = this.tableData.length
+          loading.close()
+          this.$message({
+            type:'success',
+            message:'查询成功'
+          })
+        }
+      }).catch(err =>{
+        loading.close()
+        this.$message({
+          type:'error',
+          message:'查询失败'
+        })
+      })
+    },
+    reset(){
+      this.collage = ''
+      this.level = ''
+      this.major = ''
+      this.type = 'all'
+    }
+  },
+  created() {
+    getCollageSelector().then(res => {
+      this.collage_ops = res.data
+    })
+    getGradeSelector().then(res => {
+      this.level_ops = res.data
+    })
   }
-  return true
-}
-
-const submitUpload = () => {
-  upload.value.submit()
-}
-
-let tableData = [
-
-]
-
-const changePage = reactive({
-  currentPage:1, //默认当前页面为1
-  pageSize:14,
-  total: tableData.length, //总共有多少数据
-  pageSizes: [10, 14]
-})
-//这里是获取当前页数
-const handleCurrentChange = (val)=> {
-  changePage.currentPage = val
 }
 
 
