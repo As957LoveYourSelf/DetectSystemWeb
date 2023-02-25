@@ -12,7 +12,7 @@
           <el-tag effect="dark" size="large">{{ info.name }}</el-tag>
         </el-descriptions-item>
         <el-descriptions-item label="所属学院">
-          <el-tag effect="dark" size="large">{{ info.collage }}</el-tag>
+          <el-tag effect="dark" size="large">{{ info.college }}</el-tag>
         </el-descriptions-item>
         <el-descriptions-item label="所属专业">
           <el-tag effect="dark" size="large">{{ info.major }}</el-tag>
@@ -37,7 +37,7 @@
         <el-table-column prop="name" label="姓名"/>
         <el-table-column prop="sno" label="学号"/>
         <el-table-column prop="major" label="专业"/>
-        <el-table-column prop="collage" label="学院" />
+        <el-table-column prop="college" label="学院" />
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
             <el-button type="success" plain>查看</el-button>

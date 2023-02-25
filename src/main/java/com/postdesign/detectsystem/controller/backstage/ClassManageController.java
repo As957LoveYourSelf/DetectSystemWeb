@@ -32,10 +32,10 @@ public class ClassManageController {
         return new JSONResult<>(gradeSelector);
     }
     @ResponseBody
-    @RequestMapping("/getCollageSelector")
-    JSONResult<List<String>> getCollageSelector(){
-        List<String> collageSelector = classMangerService.getCollageSelector();
-        return new JSONResult<>(collageSelector);
+    @RequestMapping("/getCollegeSelector")
+    JSONResult<List<String>> getCollegeSelector(){
+        List<String> collegeSelector = classMangerService.getCollegeSelector();
+        return new JSONResult<>(collegeSelector);
     }
     @ResponseBody
     @RequestMapping("/selectClass")

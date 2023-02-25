@@ -17,16 +17,16 @@ public class TeacherManageController {
     @Autowired
     TeacherManageService teacherManageService;
 
-    @RequestMapping("/getCollageSelector")
+    @RequestMapping("/getCollegeSelector")
     @ResponseBody
-    JSONResult<List<String>> getCollageSelector(){
-        List<String> collageSelector = teacherManageService.getCollageSelector();
-        return new JSONResult<>(collageSelector);
+    JSONResult<List<String>> getCollegeSelector(){
+        List<String> collegeSelector = teacherManageService.getCollegeSelector();
+        return new JSONResult<>(collegeSelector);
     }
     @RequestMapping("/selectTeacher")
     @ResponseBody
-    JSONResult<List<Map<String, Object>>> select(String tno, String tname, String collage){
-        List<Map<String, Object>> maps = teacherManageService.select(tno, tname, collage);
+    JSONResult<List<Map<String, Object>>> select(String tno, String tname, String college){
+        List<Map<String, Object>> maps = teacherManageService.select(tno, tname, college);
         return new JSONResult<>(maps);
     }
 

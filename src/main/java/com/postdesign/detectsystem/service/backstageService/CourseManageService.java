@@ -6,7 +6,8 @@ import java.util.Map;
 public interface CourseManageService {
     String importCourseInfo();
     List<Integer> getGradeSelector();
-    List<String> getCollageSelector();
+    List<String> getCollegeSelector();
+    List<String> getMajors(String collage);
     List<Map<String, Object>> select(String sno, String major, Integer grade, String type);
     String deleteCourse(String cno, String courseType);
     Map<String, Object> getCourseTableBySno(String sno);

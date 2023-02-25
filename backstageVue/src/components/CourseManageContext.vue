@@ -2,9 +2,9 @@
   <div style="flex: 1;">
     <div style="padding: 10px">
       <!-- 搜索框 -->
-      <el-select class="w-300" size="large" v-model="collage" placeholder="请选择学院">
+      <el-select @change="getMajor" class="w-300" size="large" v-model="college" placeholder="请选择学院">
         <el-option
-            v-for="item in collage_ops"
+            v-for="item in college_ops"
             :key="item"
             :value="item"
             :label="item"
@@ -20,32 +20,33 @@
             :disabled=false
         />
       </el-select>
-      <el-select class="w-300 ml-8" size="large" v-model="level" placeholder="请选择年级">
+      <el-select class="w-300 ml-8" size="large" v-model="grade" placeholder="请选择年级">
         <el-option
-            v-for="item in level_ops"
+            v-for="item in grade_ops"
             :key="item"
             :value="item"
             :label="item"
             :disabled=false
         />
       </el-select>
+      <el-button class=" ml-8" type="success" :icon="Search" @click="searchfn" round>搜索</el-button>
+      <el-button class="ml-8" type="warning" :icon="Refresh" @click="reset" round>重置</el-button>
       <div class="mb-2 flex items-center text-sm">
-        <el-radio-group v-model="type" class="ml-4">
+        <el-radio-group v-model="type" class="ml-8">
           <el-radio label="all" size="large">所有</el-radio>
           <el-radio label="public" size="large">公共课</el-radio>
           <el-radio label="major" size="large">专业课</el-radio>
         </el-radio-group>
       </div>
-      <el-button class="ml-8" type="success" :icon="Search" @click="searchfn" round>搜索</el-button>
-      <el-button class="ml-8" type="warning" :icon="Refresh" @click="reset" round>重置</el-button>
+
     </div>
     <!-- 信息栏 -->
-    <div style=" min-height: 87%; padding: 10px;">
+    <div style=" min-height: 80%; padding: 10px;">
       <el-table :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)" stripe border>
         <el-table-column prop="cno" label="课程号" />
         <el-table-column prop="cname" label="课程名称" />
         <el-table-column prop="major" label="所属专业"/>
-        <el-table-column prop="collage" label="所属学院" />
+        <el-table-column prop="college" label="所属学院" />
         <el-table-column prop="type" label="课程类型" />
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
@@ -76,13 +77,12 @@ import {
   Refresh,
 } from '@element-plus/icons-vue'
 import {
-  getCourseTableByTno,
-  getCourseTableBySno,
-  getCollageSelector,
+  getCollegeSelector,
   getGradeSelector,
   selectCourse,
   importCourse,
-  deleteCourse
+  deleteCourse,
+  getMajorSelector
 } from '../utils/courseManage'
 export default {
   data(){
@@ -94,13 +94,13 @@ export default {
         total: 0, //总共有多少数据
         pageSizes: [10, 14],
       },
-      collage:'',
-      level:'',
+      college:'',
+      grade:'',
       major:'',
       type:'all',
       major_ops:[],
-      collage_ops:[],
-      level_ops:[],
+      college_ops:[],
+      grade_ops:[],
       Delete:Delete,
       Search:Search,
       Refresh:Refresh
@@ -110,10 +110,16 @@ export default {
     handleCurrentChange(val){
       this.changePage.currentPage = val
     },
+    getMajor(){
+      const params = {college:this.college}
+      getMajorSelector(params).then(res=>{
+        this.major_ops = res.data
+      })
+    },
     delectCs(cno, type){
       const postParams={cno:cno, courseType:type}
       deleteCourse(postParams).then(res =>{
-        if (res.data == 'success'){
+        if (res.data === 'success'){
           this.$message({
             type:'success',
             message:'删除成功!'
@@ -132,7 +138,7 @@ export default {
       })
     },
     searchfn(){
-      const postParams={collage:this.collage, major:this.major, grade:this.level === ''?null:this.level, type:this.type}
+      const postParams={college:this.college, major:this.major, grade:this.grade === ''?null:this.grade, type:this.type}
       console.log(postParams)
       let loading = this.$loading({
         lock:true,
@@ -164,18 +170,18 @@ export default {
       })
     },
     reset(){
-      this.collage = ''
-      this.level = ''
+      this.college = ''
+      this.grade = ''
       this.major = ''
       this.type = 'all'
     }
   },
   created() {
-    getCollageSelector().then(res => {
-      this.collage_ops = res.data
+    getCollegeSelector().then(res => {
+      this.college_ops = res.data
     })
     getGradeSelector().then(res => {
-      this.level_ops = res.data
+      this.grade_ops = res.data
     })
   }
 }

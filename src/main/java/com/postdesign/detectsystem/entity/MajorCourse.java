@@ -21,6 +21,6 @@ public class MajorCourse {
     @TableId(type = IdType.AUTO)
     private Integer cno;
     private String major;
-    private String collage;
+    private String college;
     private Integer grade;
 }

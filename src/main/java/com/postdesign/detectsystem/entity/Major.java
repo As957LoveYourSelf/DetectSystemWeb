@@ -20,5 +20,5 @@ public class Major {
 
     @TableId(type = IdType.INPUT)
     private String majorName;
-    private String collage;
+    private String college;
 }

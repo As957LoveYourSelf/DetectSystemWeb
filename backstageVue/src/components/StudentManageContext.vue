@@ -29,7 +29,7 @@
         <el-table-column prop="sname" label="姓名"/>
         <el-table-column prop="sno" label="学号"/>
         <el-table-column prop="major" label="专业"/>
-        <el-table-column prop="collage" label="学院" />
+        <el-table-column prop="college" label="学院" />
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
             <el-button type="success" @click="getDetail(scope.row.sno)" plain>查看</el-button>

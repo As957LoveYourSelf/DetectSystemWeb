@@ -22,7 +22,7 @@ public class Cls {
     private String className;
     private Integer teacherCount;
     private Integer studentCount;
-    private String collage;
+    private String college;
     private Integer grade;
     private String major;
     private String headmaster;

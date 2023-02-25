@@ -21,7 +21,7 @@ public class Student {
     @TableId(type = IdType.INPUT)
     private String sno;
     private String sname;
-    private String collage;
+    private String college;
     private String cls;
     private Integer grade;
     private String major;

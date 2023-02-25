@@ -4,18 +4,18 @@
     <!-- 搜索栏 -->
     <div style="padding: 10px;">
       <!-- 搜索框 -->
-      <el-select class="w-300" size="large" v-model="collage" placeholder="请选择学院">
+      <el-select class="w-300" size="large" v-model="college" placeholder="请选择学院">
         <el-option
-            v-for="item in collage_ops"
+            v-for="item in college_ops"
             :key="item"
             :value="item"
             :label="item"
             :disabled=false
         />
       </el-select>
-      <el-select class="w-300 ml-8" size="large" v-model="level" placeholder="请选择年级">
+      <el-select class="w-300 ml-8" size="large" v-model="grade" placeholder="请选择年级">
         <el-option
-            v-for="item in level_ops"
+            v-for="item in grade_ops"
             :key="item"
             :value="item"
             :label="item"
@@ -30,7 +30,7 @@
     <div style="min-height:87%; padding: 10px ">
       <el-table :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)"
                 stripe border>
-        <el-table-column prop="collage" label="学院" />
+        <el-table-column prop="college" label="学院" />
         <el-table-column prop="major" label="专业"/>
         <el-table-column prop="grade" label="年级" />
         <el-table-column prop="class_name" label="班级名称" />
@@ -63,7 +63,7 @@ import {
   Search,
 } from '@element-plus/icons-vue'
 import {
-  getCollageSelector,
+  getCollegeSelector,
   getGradeSelector,
   selectClass,
 } from "../utils/classManage"
@@ -71,10 +71,10 @@ import {useRouter} from "vue-router";
 export default {
   data(){
     return{
-      collage:'',
-      collage_ops:[],
-      level:null,
-      level_ops:[],
+      college:'',
+      college_ops:[],
+      grade:null,
+      grade_ops:[],
       tableData:[],
       changePage:{
         currentPage:1, //默认当前页面为1
@@ -89,7 +89,7 @@ export default {
   },
   methods:{
     searchfn(){
-      const params= {grade:this.level,collage:this.collage}
+      const params= {grade:this.grade,college:this.college}
       console.log(params)
       let loading = this.$loading({
         lock:true,
@@ -132,8 +132,8 @@ export default {
     reset() {
       console.log("reset")
       this.tableData = []
-      this.collage = ''
-      this.level = null
+      this.college = ''
+      this.grade = null
     },
     handleCurrentChange(val){
       // 分页查询
@@ -142,11 +142,11 @@ export default {
     },
   },
   created() {
-    getCollageSelector().then(res => {
-      this.collage_ops = res.data
+    getCollegeSelector().then(res => {
+      this.college_ops = res.data
     })
     getGradeSelector().then(res => {
-      this.level_ops = res.data
+      this.grade_ops = res.data
     })
   }
 }

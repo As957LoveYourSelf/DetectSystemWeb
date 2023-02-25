@@ -4,9 +4,9 @@
     <!-- 搜索栏 -->
     <div style="padding: 10px;">
       <!-- 搜索框 -->
-      <el-select class="w-300" size="large" v-model="collage" placeholder="请选择教师所在学院">
+      <el-select class="w-300" size="large" v-model="college" placeholder="请选择教师所在学院">
         <el-option
-            v-for="item in collage_ops"
+            v-for="item in college_ops"
             :key="item"
             :value="item"
             :label="item"
@@ -38,7 +38,7 @@
         <el-table-column prop="tno" label="教工号"/> <!-- tno -->
         <el-table-column prop="title" label="职位" /> <!-- title -->
         <el-table-column prop="tname" label="教师姓名"/> <!-- tname -->
-        <el-table-column prop="collage" label="所属学院" /> <!-- collage -->
+        <el-table-column prop="college" label="所属学院" /> <!-- college -->
         <el-table-column prop="teachCourse" label="所教课程" /> <!-- TeachMajorCourseMapper -->
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
@@ -68,7 +68,7 @@ import {
   Search,
 } from '@element-plus/icons-vue'
 import {
-  getCollageSelector,
+  getCollegeSelector,
   searchTeacherInfo,
 } from "../utils/teacherManage";
 import {useRouter} from 'vue-router'
@@ -78,8 +78,8 @@ export default {
       unoInput:'',
       unameInput:'',
       tableData:[],
-      collage:'',
-      collage_ops:[],
+      college:'',
+      college_ops:[],
       changePage:{
         currentPage:1, //默认当前页面为1
         pageSize:8,
@@ -98,7 +98,7 @@ export default {
     },
     // 查询函数
     searchfn() {
-      const searchData = {tno:this.unoInput, tname:this.unameInput, collage:this.collage}
+      const searchData = {tno:this.unoInput, tname:this.unameInput, college:this.college}
       console.log(this.searchData)
       let loading = this.$loading({
         lock:true,
@@ -125,7 +125,7 @@ export default {
     reset() {
       this.unoInput = ''
       this.unameInput = ''
-      this.collage=''
+      this.college=''
    },
     getDetail(tno){
       // 跳转至详情页面
@@ -136,9 +136,9 @@ export default {
     }
   },
   created() {
-    getCollageSelector().then(res => {
+    getCollegeSelector().then(res => {
       // console.log(res)
-      this.collage_ops = res.data
+      this.college_ops = res.data
     }).catch(err => {
       console.log(err)
     })

@@ -11,12 +11,12 @@ import org.springframework.validation.annotation.Validated;
 @Data
 @NoArgsConstructor
 @Validated
-@TableName("collage")
+@TableName("college")
 @Accessors(chain = true)
 /**
  *  学院数据表
  * */
-public class Collage {
+public class College {
     @TableId(type = IdType.INPUT)
     private String name;
 

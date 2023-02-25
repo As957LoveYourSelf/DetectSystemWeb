@@ -27,16 +27,24 @@ public class CourseManageController {
         List<Integer> gradeSelector = courseManageService.getGradeSelector();
         return new JSONResult<>(gradeSelector);
     }
-    @RequestMapping("/getCollageSelector")
+    @RequestMapping("/getCollegeSelector")
     @ResponseBody
-    JSONResult<List<String>> getCollageSelector(){
-        List<String> collageSelector = courseManageService.getCollageSelector();
-        return new JSONResult<>(collageSelector);
+    JSONResult<List<String>> getCollegeSelector(){
+        List<String> collegeSelector = courseManageService.getCollegeSelector();
+        return new JSONResult<>(collegeSelector);
     }
+
+    @RequestMapping("/getMajorSelector")
+    @ResponseBody
+    JSONResult<List<String>> getMajorSelector(String college){
+        List<String> collegeSelector = courseManageService.getMajors(college);
+        return new JSONResult<>(collegeSelector);
+    }
+
     @RequestMapping("/select")
     @ResponseBody
-    JSONResult<List<Map<String, Object>>> select(String collage, String major, Integer grade, String type){
-        List<Map<String, Object>> select = courseManageService.select(collage, major, grade, type);
+    JSONResult<List<Map<String, Object>>> select(String college, String major, Integer grade, String type){
+        List<Map<String, Object>> select = courseManageService.select(college, major, grade, type);
         return new JSONResult<>(select);
     }
     @RequestMapping("/deleteCourse")

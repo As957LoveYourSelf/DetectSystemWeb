@@ -17,7 +17,7 @@
           <el-tag size="large">{{info.name == null?'无': info.name}}</el-tag>
         </el-descriptions-item>
         <el-descriptions-item label="所属学院">
-          <el-tag size="large">{{info.collage == null?'无': info.collage}}</el-tag>
+          <el-tag size="large">{{info.college == null?'无': info.college}}</el-tag>
         </el-descriptions-item>
         <el-descriptions-item label="年龄" :span="2">
           <el-tag size="large">{{info.age == null?'无': info.age}}</el-tag>

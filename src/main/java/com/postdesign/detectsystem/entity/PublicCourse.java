@@ -20,6 +20,6 @@ public class PublicCourse {
     private String cname;
     @TableId(type = IdType.AUTO)
     private Integer cno;
-    private String collage;
+    private String college;
     private Integer grade;
 }

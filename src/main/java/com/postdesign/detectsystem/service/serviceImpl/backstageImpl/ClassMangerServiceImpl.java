@@ -5,8 +5,6 @@ import com.postdesign.detectsystem.entity.*;
 import com.postdesign.detectsystem.mapper.*;
 import com.postdesign.detectsystem.service.backstageService.ClassMangerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,7 +18,7 @@ public class ClassMangerServiceImpl implements ClassMangerService {
     @Autowired(required = false)
     GradeMapper gradeMapper;
     @Autowired(required = false)
-    CollageMapper collageMapper;
+    CollegeMapper collegeMapper;
     @Autowired(required = false)
     ClassMapper classMapper;
     @Autowired(required = false)
@@ -50,16 +48,16 @@ public class ClassMangerServiceImpl implements ClassMangerService {
      * 获取学院选择器内容
      **/
     @Override
-    public List<String> getCollageSelector() {
-        QueryWrapper<Collage> queryWrapper = new QueryWrapper<>();
+    public List<String> getCollegeSelector() {
+        QueryWrapper<College> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("name");
-        List<Collage> collageList = collageMapper.selectList(queryWrapper);
-        List<String> collageSelector = new ArrayList<>();
-        if (!collageList.isEmpty()){
-            for (Collage c:collageList){
-                collageSelector.add(c.getName());
+        List<College> collegeList = collegeMapper.selectList(queryWrapper);
+        List<String> collegeSelector = new ArrayList<>();
+        if (!collegeList.isEmpty()){
+            for (College c: collegeList){
+                collegeSelector.add(c.getName());
             }
-            return collageSelector;
+            return collegeSelector;
         }
         return null;
     }
@@ -67,20 +65,20 @@ public class ClassMangerServiceImpl implements ClassMangerService {
      * 查找对应班级
      **/
     @Override
-    public List<Map<String, Object>> select(Integer grade, String collage) {
-        if (collage == null){
+    public List<Map<String, Object>> select(Integer grade, String college) {
+        if (college == null){
             return null;
         }
 
         QueryWrapper<Cls> queryWrapper = new QueryWrapper<>();
-        if (collage.equals("") && grade != null){
+        if (college.equals("") && grade != null){
             queryWrapper.eq("grade", grade);
             return getClassInfoByQueryWrapper(queryWrapper);
-        }else if (!collage.equals("") && grade == null){
-            queryWrapper.eq("collage", collage);
+        }else if (!college.equals("") && grade == null){
+            queryWrapper.eq("college", college);
             return getClassInfoByQueryWrapper(queryWrapper);
-        }else if (!collage.equals("")){
-            queryWrapper.eq("grade", grade).eq("collage", collage);
+        }else if (!college.equals("")){
+            queryWrapper.eq("grade", grade).eq("college", college);
             return getClassInfoByQueryWrapper(queryWrapper);
         }else {
             return getClassInfoByQueryWrapper(null);
@@ -90,7 +88,7 @@ public class ClassMangerServiceImpl implements ClassMangerService {
     /**
      *         班级信息
      *         <el-descriptions-item label="班级名称" v-model="data.name"></el-descriptions-item>
-     *         <el-descriptions-item label="所属学院" v-model="data.collage"></el-descriptions-item>
+     *         <el-descriptions-item label="所属学院" v-model="data.college"></el-descriptions-item>
      *         <el-descriptions-item label="所属专业" v-model="data.major"></el-descriptions-item>
      *         <el-descriptions-item label="班级人数" v-model="data.peoplenum" ></el-descriptions-item>
      *         <el-descriptions-item label="班主任" v-model="data.headmaster"></el-descriptions-item>
@@ -100,7 +98,7 @@ public class ClassMangerServiceImpl implements ClassMangerService {
      *         <el-table-column prop="name" label="姓名"/>
      *         <el-table-column prop="sno" label="学号"/>
      *         <el-table-column prop="major" label="专业"/>
-     *         <el-table-column prop="collage" label="学院" />
+     *         <el-table-column prop="college" label="学院" />
      * */
     @Override
     public Map<String, Object> getClassDetail(String clsName) {
@@ -118,7 +116,7 @@ public class ClassMangerServiceImpl implements ClassMangerService {
         if (cls != null && teacher != null && students != null){
             Map<String, Object> data = new HashMap<>();
             data.put("name", cls.getClassName());
-            data.put("collage", cls.getCollage());
+            data.put("college", cls.getCollege());
             data.put("major", cls.getMajor());
             data.put("headmaster", teacher.getTname());
             List<Map<String, Object>> peopledata = new ArrayList<>();
@@ -128,7 +126,7 @@ public class ClassMangerServiceImpl implements ClassMangerService {
                 info.put("name", s.getSname());
                 info.put("sno", s.getSno());
                 info.put("major",s.getMajor());
-                info.put("collage",s.getCollage());
+                info.put("college",s.getCollege());
                 peopledata.add(info);
             }
             data.put("people", peopledata);
@@ -151,7 +149,7 @@ public class ClassMangerServiceImpl implements ClassMangerService {
                 objectMap.put("class_name", c.getClassName());
                 objectMap.put("headmaster", teacher.getTname());
                 objectMap.put("major", c.getMajor());
-                objectMap.put("collage", c.getCollage());
+                objectMap.put("college", c.getCollege());
                 objectMap.put("grade", c.getGrade());
                 infoList.add(objectMap);
             }

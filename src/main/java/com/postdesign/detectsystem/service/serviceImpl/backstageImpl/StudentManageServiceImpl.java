@@ -67,7 +67,7 @@ public class StudentManageServiceImpl implements StudentManageService {
             Map<String, Object> info = new HashMap<>();
             info.put("name", user.getUname());
             info.put("no", user.getUid());
-            info.put("collage", student.getCollage());
+            info.put("college", student.getCollege());
             info.put("major", student.getMajor());
             info.put("age", user.getUage());
             info.put("email", user.getEmail());
@@ -97,7 +97,7 @@ public class StudentManageServiceImpl implements StudentManageService {
                 msg.put("sname", student.getSname());
                 msg.put("sno", student.getSno());
                 msg.put("major", student.getMajor());
-                msg.put("collage", student.getCollage());
+                msg.put("college", student.getCollege());
                 infoList.add(msg);
             }
             return infoList;

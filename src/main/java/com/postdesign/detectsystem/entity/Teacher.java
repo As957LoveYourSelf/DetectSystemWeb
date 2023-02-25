@@ -20,7 +20,7 @@ public class Teacher {
     @TableId(type = IdType.INPUT)
     private String tno;
     private String tname;
-    private String collage;
+    private String college;
     private String title;
     private String leadclass;
     private String sex;

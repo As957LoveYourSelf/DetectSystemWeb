@@ -16,7 +16,7 @@ import java.util.Map;
 public class TeacherManageServiceImpl implements TeacherManageService {
 
     @Autowired(required = false)
-    CollageMapper collageMapper;
+    CollegeMapper collegeMapper;
     @Autowired(required = false)
     TeacherMapper teacherMapper;
     @Autowired(required = false)
@@ -40,53 +40,53 @@ public class TeacherManageServiceImpl implements TeacherManageService {
      * 获取教师管理页面教师所属学院选择器内容
      * */
     @Override
-    public List<String> getCollageSelector() {
-        QueryWrapper<Collage> queryWrapper = new QueryWrapper<>();
+    public List<String> getCollegeSelector() {
+        QueryWrapper<College> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("name");
-        List<Collage> collages = collageMapper.selectList(queryWrapper);
-        List<String> collageName = new ArrayList<>();
-        for (Collage c: collages){
-            collageName.add(c.getName());
+        List<College> colleges = collegeMapper.selectList(queryWrapper);
+        List<String> collegeName = new ArrayList<>();
+        for (College c: colleges){
+            collegeName.add(c.getName());
         }
-        return collageName;
+        return collegeName;
     }
 
     /**
      * 通过学院、学号、姓名来查询信息
      * */
     @Override
-    public List<Map<String, Object>> select(String tno, String tname, String collage) {
+    public List<Map<String, Object>> select(String tno, String tname, String college) {
         QueryWrapper<Teacher> queryWrapper = new QueryWrapper<>();
-        if (tno.equals("") && tname.equals("") && collage.equals("")){
+        if (tno.equals("") && tname.equals("") && college.equals("")){
             return getInfoByQueryWrapper(null);
         }
-        else if (!tno.equals("") && tname.equals("") && collage.equals("")) {
+        else if (!tno.equals("") && tname.equals("") && college.equals("")) {
             queryWrapper.like("tno", tno);
             return getInfoByQueryWrapper(queryWrapper);
-        } else if (tno.equals("") && !tname.equals("") && collage.equals("")) {
+        } else if (tno.equals("") && !tname.equals("") && college.equals("")) {
             queryWrapper.like("tname", tname);
             return getInfoByQueryWrapper(queryWrapper);
         } else if (tno.equals("") && tname.equals("")) {
-            queryWrapper.eq("collage", collage);
+            queryWrapper.eq("college", college);
             return getInfoByQueryWrapper(queryWrapper);
-        }else if (!tno.equals("") && !tname.equals("") && collage.equals("")){
+        }else if (!tno.equals("") && !tname.equals("") && college.equals("")){
             queryWrapper.like("tno", tno).like("tname", tname);
             return getInfoByQueryWrapper(queryWrapper);
         } else if (!tno.equals("") && tname.equals("")) {
-            queryWrapper.eq("collage", collage).like("tno", tno);
+            queryWrapper.eq("college", college).like("tno", tno);
             return getInfoByQueryWrapper(queryWrapper);
         } else if (tno.equals("")) {
-            queryWrapper.eq("collage", collage).like("tname", tname);
+            queryWrapper.eq("college", college).like("tname", tname);
             return getInfoByQueryWrapper(queryWrapper);
         }else {
-            queryWrapper.eq("collage", collage).like("tno", tno).like("tname", tname);
+            queryWrapper.eq("college", college).like("tno", tno).like("tname", tname);
             return getInfoByQueryWrapper(queryWrapper);
         }
     }
 
     /**
      *         <el-descriptions-item label="教师姓名" v-model="data.name"></el-descriptions-item>
-     *         <el-descriptions-item label="所属学院" v-model="data.collage"></el-descriptions-item>
+     *         <el-descriptions-item label="所属学院" v-model="data.college"></el-descriptions-item>
      *         <el-descriptions-item label="年龄" v-model="data.age" :span="2"></el-descriptions-item>
      *         <el-descriptions-item label="教学班级" v-model="data.classes" :span="2"></el-descriptions-item>
      *         <el-descriptions-item label="教学课程" v-model="data.courses" :span="2"></el-descriptions-item>
@@ -126,7 +126,7 @@ public class TeacherManageServiceImpl implements TeacherManageService {
 
         User user = userMapper.selectById(tno);
         data.put("name", teacher.getTname());
-        data.put("collage", teacher.getCollage());
+        data.put("college", teacher.getCollege());
         data.put("age", user.getUage());
         data.put("classes", classes.toString());
         data.put("courses", courses.toString());
@@ -140,7 +140,7 @@ public class TeacherManageServiceImpl implements TeacherManageService {
      *         <el-table-column prop="tno" label="教工号"/>
      *         <el-table-column prop="title" label="职位" />
      *         <el-table-column prop="tname" label="教师姓名"/>
-     *         <el-table-column prop="collage" label="所属学院" />
+     *         <el-table-column prop="college" label="所属学院" />
      *         <el-table-column prop="TeachMajorCourseMapper" label="所教课程" />
      * */
     private List<Map<String, Object>> getInfoByQueryWrapper(QueryWrapper<Teacher> teacherQueryWrapper){
@@ -170,7 +170,7 @@ public class TeacherManageServiceImpl implements TeacherManageService {
                 msg.put("tno", t.getTno());
                 msg.put("title", t.getTitle());
                 msg.put("tname", t.getTname());
-                msg.put("collage", t.getCollage());
+                msg.put("college", t.getCollege());
                 msg.put("teachCourse", courses.toString());
                 info.add(msg);
             }
