@@ -9,5 +9,5 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public interface SuperResolutionService {
-    JSONResult<byte[]> enhanceImage(Path image) throws IOException, ModelNotFoundException, MalformedModelException, TranslateException;
+    JSONResult<String> enhanceImage(Path image) throws IOException, ModelNotFoundException, MalformedModelException, TranslateException;
 }

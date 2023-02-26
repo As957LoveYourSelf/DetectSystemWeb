@@ -64,13 +64,13 @@
               <span>算法部署测试</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/test/superResolution">超分辨率</el-menu-item>
+              <el-menu-item index="/test/supImg">超分辨率</el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group>
-              <el-menu-item index="/test/styleTransform">风格转化</el-menu-item>
+              <el-menu-item index="/test/styTran">风格转化</el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group>
-              <el-menu-item index="/test/wordDistinguish">文字识别</el-menu-item>
+              <el-menu-item index="/test/wordDis">文字识别</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
         </el-menu>

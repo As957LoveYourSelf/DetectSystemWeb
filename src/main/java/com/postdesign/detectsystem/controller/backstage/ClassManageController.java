@@ -39,8 +39,8 @@ public class ClassManageController {
     }
     @ResponseBody
     @RequestMapping("/selectClass")
-    JSONResult<List<Map<String, Object>>> select(Integer grade, String collage){
-        List<Map<String, Object>> maps = classMangerService.select(grade, collage);
+    JSONResult<List<Map<String, Object>>> select(Integer grade, String college){
+        List<Map<String, Object>> maps = classMangerService.select(grade, college);
         return new JSONResult<>(maps);
     }
 

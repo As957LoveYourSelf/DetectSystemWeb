@@ -12,4 +12,5 @@ public interface CourseManageService {
     String deleteCourse(String cno, String courseType);
     Map<String, Object> getCourseTableBySno(String sno);
     Map<String, Object> getCourseTableByTno(String tno);
+    Map<String, Object> getCourseDetail(String cno, String type);
 }

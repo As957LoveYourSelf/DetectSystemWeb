@@ -129,6 +129,30 @@ const router = createRouter({
       meta: {
         requireAuth: true
       },
+    },
+    {
+      path: '/test/supImg',
+      name: 'SupImg',
+      component:() => import('../views/SuperResolutionTestView.vue'),
+      meta: {
+        requireAuth: true
+      },
+    },
+    {
+      path: '/test/wordDis',
+      name: 'WordDis',
+      component:() => import('../views/WordDistinguishTestView.vue'),
+      meta: {
+        requireAuth: true
+      },
+    },
+    {
+      path: '/test/styTran',
+      name: 'StyTran',
+      component:() => import('../views/StyleTransformTestView.vue'),
+      meta: {
+        requireAuth: true
+      },
     }
   ]
 })

@@ -256,6 +256,17 @@ public class CourseManageServiceImpl implements CourseManageService {
         return info;
     }
 
+    @Override
+    public Map<String, Object> getCourseDetail(String cno, String type) {
+//        if (type.equals("public")) {
+//            QueryWrapper<>
+//        }
+//        if (type.equals("major")){
+//
+//        }
+        return null;
+    }
+
     public List<MajorCourseAddress> getMajorCourseAddress(Integer cno){
         QueryWrapper<MajorCourseAddress> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("personCourseNo", cno);
@@ -303,6 +314,7 @@ public class CourseManageServiceImpl implements CourseManageService {
             Map<String, Object> map = new HashMap<>();
             map.put("cno", mc.getCno());
             map.put("cname", mc.getCname());
+            map.put("major", mc.getMajor());
             map.put("college", mc.getCollege());
             map.put("type", "专业课");
             info.add(map);
@@ -317,6 +329,7 @@ public class CourseManageServiceImpl implements CourseManageService {
             Map<String, Object> map = new HashMap<>();
             map.put("cno", pc.getCno());
             map.put("cname", pc.getCname());
+            map.put("major", "无");
             map.put("college", pc.getCollege());
             map.put("type", "公共课");
             info.add(map);
@@ -333,6 +346,7 @@ public class CourseManageServiceImpl implements CourseManageService {
             map.put("cno", mc.getCno());
             map.put("cname", mc.getCname());
             map.put("college", mc.getCollege());
+            map.put("major", mc.getMajor());
             map.put("type", "专业课");
             info.add(map);
         }
@@ -340,6 +354,7 @@ public class CourseManageServiceImpl implements CourseManageService {
             Map<String, Object> map = new HashMap<>();
             map.put("cno", pc.getCno());
             map.put("cname", pc.getCname());
+            map.put("major", "无");
             map.put("college", pc.getCollege());
             map.put("type", "公共课");
             info.add(map);

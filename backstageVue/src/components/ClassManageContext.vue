@@ -89,7 +89,7 @@ export default {
   },
   methods:{
     searchfn(){
-      const params= {grade:this.grade,college:this.college}
+      const params= {grade:this.grade, college:this.college}
       console.log(params)
       let loading = this.$loading({
         lock:true,
@@ -97,6 +97,7 @@ export default {
       })
       selectClass(params)
         .then(res => {
+          // console.log(res.data)
           if (res.data == null){
             this.tableData = []
             loading.close()
@@ -142,6 +143,7 @@ export default {
     },
   },
   created() {
+
     getCollegeSelector().then(res => {
       this.college_ops = res.data
     })
