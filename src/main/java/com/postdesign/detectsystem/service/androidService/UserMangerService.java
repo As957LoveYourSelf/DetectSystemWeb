@@ -9,4 +9,5 @@ public interface UserMangerService {
     Map<String, Object> changePassword(String uid, String newPassword);
 
     Map<String, Object> changeConfirm(String uid, String code);
+
 }

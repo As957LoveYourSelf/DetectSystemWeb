@@ -1,17 +1,40 @@
 package com.postdesign.detectsystem.controller.android;
 
+import com.postdesign.detectsystem.entity.User;
+import com.postdesign.detectsystem.service.androidService.UserMangerService;
+import com.postdesign.detectsystem.utils.JSONResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * 1、后台导入学生数据(文本数据格式)
- * 2、修改学生数据（重置密码等）
- * 3、根据学号、姓名查询学生信息
- * 4、对老师的信息维护一样
- * */
+import java.util.Map;
+
+
 @Controller
 @RequestMapping("/userManagePage")
 public class UserManageController {
+
+    @Autowired
+    UserMangerService userMangerService;
+
+    @RequestMapping()
+    @ResponseBody
+    public JSONResult<Map<String, Object>> changeInfo(@RequestBody Map<String, Object> info){
+        User newUser = (User) info.get("newInfo");
+        Map<String, Object> response = userMangerService.changeInfo(newUser);
+        return new JSONResult<>(response);
+    }
+
+    @RequestMapping()
+    @ResponseBody
+    public JSONResult<Map<String, Object>> changePassword(@RequestBody Map<String, String> info){
+        String newPsd = info.get("newPsd");
+        String uid = info.get("uid");
+        Map<String, Object> response = userMangerService.changePassword(uid, newPsd);
+        return new JSONResult<>(response);
+    }
 
 
 

@@ -2,7 +2,7 @@ package com.postdesign.detectsystem.service.serviceImpl.androidImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.postdesign.detectsystem.entity.User;
-import com.postdesign.detectsystem.mapper.UserMapper;
+import com.postdesign.detectsystem.mapper.*;
 import com.postdesign.detectsystem.service.androidService.UserMangerService;
 import com.postdesign.detectsystem.utils.CodeUtil;
 import com.postdesign.detectsystem.utils.MailUtil;
@@ -18,16 +18,17 @@ public class UserMangerServiceImpl implements UserMangerService {
     @Autowired(required = false)
     UserMapper userMapper;
 
+
+
     @Override
     public Map<String, Object> changeInfo(User user) {
         Map<String ,Object> info = new HashMap<>();
         try {
             int rows = userMapper.updateById(user);
             System.out.println(rows);
-            info.put("state", "success");
+            info.put("status", "success");
         }catch (Exception e){
-            info.put("state", "error");
-            e.printStackTrace();
+            info.put("status", "error");
         }
         return info;
     }
@@ -38,17 +39,17 @@ public class UserMangerServiceImpl implements UserMangerService {
         // 通过邮箱验证
         User user = selectByuid(uid);
         if (user.getEmail() == null){
-            info.put("state", "nonEmail");
+            info.put("status", "nonEmail");
         }else {
             if (user.getPassword().equals(newPassword)){
-                info.put("state", "psdSame");
+                info.put("status", "psdSame");
             }else {
                 // 发送确认信息至邮箱，通过验证即修改密码
                 boolean b = postCheckContext2Email(user);
                 if (b){
-                    info.put("state", "identifyEmail");
+                    info.put("status", "identifyEmail");
                 }else {
-                    info.put("state", "postEmailError");
+                    info.put("status", "postEmailError");
                 }
             }
         }
@@ -61,12 +62,13 @@ public class UserMangerServiceImpl implements UserMangerService {
         User user = selectByuid(uid);
         if (user.getRcode().equals(code)){
             user.setState((byte)1);
-            info.put("state", "success");
+            info.put("status", "success");
         }else {
-            info.put("state", "error");
+            info.put("status", "error");
         }
         return info;
     }
+
 
     private User selectByuid(String uid){
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();

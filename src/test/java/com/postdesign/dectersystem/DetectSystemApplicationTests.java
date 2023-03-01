@@ -27,13 +27,12 @@ class DetectSystemApplicationTests {
         Path modelpath = Paths.get("src/main/java/com/postdesign/detectsystem/trained_models/superResolution/");
         Path imgpath = Paths.get("src/main/saveimg/comic.png");
         Image image = ImageFactory.getInstance().fromFile(imgpath);
+        
         Criteria<Image, Image> criteria = Criteria.builder()
-                .optApplication(Application.CV.IMAGE_ENHANCEMENT)
                 .setTypes(Image.class, Image.class)
                 .optModelPath(modelpath)
                 .optModelName("RRDB_ESRGAN_x4.pt")
                 .optTranslator(new superResolutionTranslator())
-                .optDevice(Device.gpu(0))
                 .optProgress(new ProgressBar())
                 .build();
 

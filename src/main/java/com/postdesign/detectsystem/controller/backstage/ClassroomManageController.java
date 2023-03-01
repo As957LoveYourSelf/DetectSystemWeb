@@ -41,6 +41,7 @@ public class ClassroomManageController {
         return new JSONResult<>(buildingInfo);
     }
 
+    // TODO: 添加用户id，以确认是哪个用户预定了教室
     @RequestMapping("/orderClassroom")
     @ResponseBody
     JSONResult<String> orderClassroom(String clsNo){
@@ -54,6 +55,5 @@ public class ClassroomManageController {
         String deorder = classroomManageService.deorder(clsNo);
         return new JSONResult<>(deorder);
     }
-
 
 }
