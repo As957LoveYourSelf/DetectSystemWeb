@@ -24,10 +24,11 @@ import java.nio.file.Paths;
 @Service
 public class SuperResolutionServiceImpl implements SuperResolutionService {
     @Override
-    public JSONResult<String> enhanceImage(Path imgpath) throws IOException, ModelNotFoundException, MalformedModelException, TranslateException {
+    public JSONResult<byte[]> enhanceImage(byte[] img) throws IOException, ModelNotFoundException, MalformedModelException, TranslateException {
         Path modelpath = Paths.get("src/main/trained_models/superResolution/");
-        Image image = ImageFactory.getInstance().fromFile(imgpath);
-
+        ByteArrayInputStream bis = new ByteArrayInputStream(img);
+        Image image = ImageFactory.getInstance().fromInputStream(bis);
+        bis.close();
         Criteria<Image, Image> criteria = Criteria.builder()
                 .setTypes(Image.class, Image.class)
                 .optModelPath(modelpath)
@@ -51,13 +52,24 @@ public class SuperResolutionServiceImpl implements SuperResolutionService {
         }
     }
 
-    private JSONResult<String> saveImageAndReturn(Image image) throws IOException {
-        Path output = Paths.get("src/main/saveimg/superResolutionImg");
-        if (Files.notExists(output)){
-            Files.createDirectory(output);
+    private JSONResult<byte[]> saveImageAndReturn(Image image) throws IOException {
+        byte[] bytes;
+        ByteArrayOutputStream baos = null;
+        try {
+            Path output = Paths.get("src/main/saveimg/superResolutionImg");
+            if (Files.notExists(output)){
+                Files.createDirectory(output);
+            }
+            Path resolve = output.resolve(output.getNameCount() + ".png");
+            image.save(Files.newOutputStream(resolve), "png");
+            baos = new ByteArrayOutputStream();
+            image.save(baos, "jpg");
+            bytes = baos.toByteArray();
+        }finally {
+            if (baos != null){
+                baos.close();
+            }
         }
-        Path resolve = output.resolve(output.getNameCount() + ".png");
-        image.save(Files.newOutputStream(resolve), "png");
-        return new JSONResult<>(resolve.toString());
+        return new JSONResult<>(bytes);
     }
 }

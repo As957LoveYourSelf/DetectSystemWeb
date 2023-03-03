@@ -25,6 +25,7 @@ public class UserMangerServiceImpl implements UserMangerService {
         Map<String ,Object> info = new HashMap<>();
         try {
             int rows = userMapper.updateById(user);
+            User new_user = userMapper.selectById(user.getUid());
             System.out.println(rows);
             info.put("status", "success");
         }catch (Exception e){

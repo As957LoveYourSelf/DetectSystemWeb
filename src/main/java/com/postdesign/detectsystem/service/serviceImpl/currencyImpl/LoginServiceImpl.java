@@ -30,7 +30,8 @@ public class LoginServiceImpl implements LoginService {
     public Map<String, Object> loginByID(String id, String password) {
         User user = userMapper.selectById(id);
         Map<String, Object> msgMap = new HashMap<>();
-        return getInfo(password, user, msgMap);
+        msgMap.put("utype", user.getUtype());
+        return msgMap;
     }
 
     private Map<String, Object> getInfo(String password, User user, Map<String, Object> msgMap) {

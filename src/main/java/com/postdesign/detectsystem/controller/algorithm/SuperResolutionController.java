@@ -23,15 +23,14 @@ public class SuperResolutionController {
 
     @RequestMapping(value = "/enhance")
     @ResponseBody
-    public JSONResult<String> enhance(String savepath) throws TranslateException, ModelNotFoundException, MalformedModelException {
+    public JSONResult<byte[]> enhance(byte[] img) throws TranslateException, ModelNotFoundException, MalformedModelException {
         try {
-            Path path = Paths.get(savepath);
-            return superResolutionService.enhanceImage(path);
+            return superResolutionService.enhanceImage(img);
         }catch (IOException e){
             return new JSONResult<>(401, "IOError", null);
         }
-
     }
+
     @RequestMapping("/upload")
     @ResponseBody
     public JSONResult<String> upload(MultipartFile file, String uname){
