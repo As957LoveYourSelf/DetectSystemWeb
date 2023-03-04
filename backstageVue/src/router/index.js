@@ -153,6 +153,14 @@ const router = createRouter({
       meta: {
         requireAuth: true
       },
+    },
+    {
+      path: '/test/styTran2',
+      name: 'StyTran2',
+      component:() => import('../views/AnyStyleTransformView.vue'),
+      meta: {
+        requireAuth: true
+      },
     }
   ]
 })

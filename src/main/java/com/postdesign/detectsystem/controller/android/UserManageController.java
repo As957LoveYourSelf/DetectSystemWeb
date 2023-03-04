@@ -19,7 +19,7 @@ public class UserManageController {
     @Autowired
     UserMangerService userMangerService;
 
-    @RequestMapping()
+    @RequestMapping("/changInfo")
     @ResponseBody
     public JSONResult<Map<String, Object>> changeInfo(@RequestBody Map<String, Object> info){
         User newUser = (User) info.get("newInfo");
@@ -27,7 +27,7 @@ public class UserManageController {
         return new JSONResult<>(response);
     }
 
-    @RequestMapping()
+    @RequestMapping("/changePassword")
     @ResponseBody
     public JSONResult<Map<String, Object>> changePassword(@RequestBody Map<String, String> info){
         String newPsd = info.get("newPsd");

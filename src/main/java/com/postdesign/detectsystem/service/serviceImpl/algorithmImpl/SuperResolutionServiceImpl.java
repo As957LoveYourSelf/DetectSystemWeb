@@ -24,7 +24,7 @@ import java.nio.file.Paths;
 @Service
 public class SuperResolutionServiceImpl implements SuperResolutionService {
     @Override
-    public JSONResult<byte[]> enhanceImage(byte[] img) throws IOException, ModelNotFoundException, MalformedModelException, TranslateException {
+    public JSONResult<byte[]> enhanceImage(byte[] img, String uname) throws IOException, ModelNotFoundException, MalformedModelException, TranslateException {
         Path modelpath = Paths.get("src/main/trained_models/superResolution/");
         ByteArrayInputStream bis = new ByteArrayInputStream(img);
         Image image = ImageFactory.getInstance().fromInputStream(bis);
@@ -45,18 +45,18 @@ public class SuperResolutionServiceImpl implements SuperResolutionService {
                 System.out.println("Predict");
                 Image supImage = predictor.predict(image);
                 System.out.println("Finish");
-                return saveImageAndReturn(supImage);
+                return saveImageAndReturn(supImage, uname);
             } catch (TranslateException e) {
                 throw new RuntimeException(e);
             }
         }
     }
 
-    private JSONResult<byte[]> saveImageAndReturn(Image image) throws IOException {
+    private JSONResult<byte[]> saveImageAndReturn(Image image, String uname) throws IOException {
         byte[] bytes;
         ByteArrayOutputStream baos = null;
         try {
-            Path output = Paths.get("src/main/saveimg/superResolutionImg");
+            Path output = Paths.get("src/main/saveimg/superResolutionImg", uname);
             if (Files.notExists(output)){
                 Files.createDirectory(output);
             }

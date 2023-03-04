@@ -7,6 +7,7 @@ import com.postdesign.detectsystem.service.algorithmService.SuperResolutionServi
 import com.postdesign.detectsystem.utils.JSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +16,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class SuperResolutionController {
@@ -23,9 +27,19 @@ public class SuperResolutionController {
 
     @RequestMapping(value = "/enhance")
     @ResponseBody
-    public JSONResult<byte[]> enhance(byte[] img) throws TranslateException, ModelNotFoundException, MalformedModelException {
+    public JSONResult<byte[]> enhance(@RequestBody Map<String, Object> map) throws TranslateException, ModelNotFoundException, MalformedModelException {
         try {
-            return superResolutionService.enhanceImage(img);
+            String uname = (String) map.get("uname");
+            byte[] img = Base64.getDecoder().decode((String) map.get("img"));
+            if (uname != null){
+                // App用户图片存储
+                String root_savepath = "src/main/saveimg";
+                Path path = Paths.get(root_savepath, uname);
+                if (Files.notExists(path)){
+                    Files.createDirectory(path);
+                }
+            }
+            return superResolutionService.enhanceImage(img, uname);
         }catch (IOException e){
             return new JSONResult<>(401, "IOError", null);
         }
@@ -33,18 +47,20 @@ public class SuperResolutionController {
 
     @RequestMapping("/upload")
     @ResponseBody
-    public JSONResult<String> upload(MultipartFile file, String uname){
+    public JSONResult<byte[]> upload(MultipartFile file){
         try {
             byte[] bytes = file.getBytes();
             String root_savepath = "src/main/saveimg";
-            Path path = Paths.get(root_savepath, uname);
+            Path path = Paths.get(root_savepath, "admin");
             if (Files.notExists(path)){
                 Files.createDirectory(path);
             }
             Path save_img = Paths.get(path.toString(), file.getOriginalFilename());
             // 写入图片二进制流
-            Files.write(save_img, bytes);
-            return new JSONResult<>("/api/"+ save_img);
+            if (Files.notExists(save_img)){
+                Files.write(save_img, bytes);
+            }
+            return new JSONResult<>(bytes);
         }catch (IOException e){
             return new JSONResult<>(401,"IOError",null);
         }

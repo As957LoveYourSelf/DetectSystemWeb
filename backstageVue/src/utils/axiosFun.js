@@ -93,6 +93,18 @@ const getCourseData = (method, url, params) => {
         params: params
     }).then(res => res.data);
 };
+
+export const algorithmServer = (method, url, params) => {
+    return axios({
+        method: method,
+        url: url,
+        headers: {
+            'Content-Type': 'application/json;charset:utf-8;',
+            'Authorization': localStorage.getItem('userToken')
+        },
+        data: params
+    }).then(res => res.data);
+};
 export {
     loginreq,
     getClassData,

@@ -119,7 +119,7 @@
         <dependency>
             <groupId>ai.djl.pytorch</groupId>
             <artifactId>pytorch-engine</artifactId>
-            <version>0.20.0</version>
+            <version>0.21.0</version>
         </dependency>
         <dependency>
             <groupId>ai.djl.pytorch</groupId>
@@ -128,25 +128,31 @@
             <version>1.13.0</version>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>ai.djl.pytorch</groupId>
-            <artifactId>pytorch-native-cpu</artifactId>
-            <classifier>win-x86_64</classifier>
-            <scope>runtime</scope>
-            <version>1.13.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>ai.djl.pytorch</groupId>-->
+<!--            <artifactId>pytorch-native-cpu</artifactId>-->
+<!--            <classifier>win-x86_64</classifier>-->
+<!--            <scope>runtime</scope>-->
+<!--            <version>1.13.0</version>-->
+<!--        </dependency>-->
         <!-- https://mvnrepository.com/artifact/ai.djl.pytorch/pytorch-native-auto -->
+<!--        <dependency>-->
+<!--            <groupId>ai.djl.pytorch</groupId>-->
+<!--            <artifactId>pytorch-native-auto</artifactId>-->
+<!--            <version>1.9.1</version>-->
+<!--            <scope>runtime</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>ai.djl.pytorch</groupId>
-            <artifactId>pytorch-native-auto</artifactId>
-            <version>1.9.1</version>
+            <artifactId>pytorch-jni</artifactId>
+            <version>1.13.0-0.20.0</version>
             <scope>runtime</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/ai.djl.pytorch/pytorch-model-zoo -->
         <dependency>
             <groupId>ai.djl.pytorch</groupId>
             <artifactId>pytorch-model-zoo</artifactId>
-            <version>0.20.0</version>
+            <version>0.21.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-compress -->
         <dependency>
