@@ -1,5 +1,7 @@
 package com.postdesign.detectsystem.controller.backstage;
 
+import com.postdesign.detectsystem.entity.MajorCourse;
+import com.postdesign.detectsystem.entity.PublicCourse;
 import com.postdesign.detectsystem.service.backstageService.CourseManageService;
 import com.postdesign.detectsystem.utils.JSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,18 @@ import java.util.Map;
 public class CourseManageController {
     @Autowired
     CourseManageService courseManageService;
-    @RequestMapping("/import")
+    @RequestMapping("/addmajorcourse")
     @ResponseBody
-    JSONResult<String> importCourseInfo(){
-        String s = courseManageService.importCourseInfo();
-        return new JSONResult<>(s);
+    JSONResult<String> addMajorCourseInfo(MajorCourse majorCourse){
+        return courseManageService.importMajorCourseInfo(majorCourse);
     }
+
+    @RequestMapping("/addpubliccourse")
+    @ResponseBody
+    JSONResult<String> addMajorCourseInfo(PublicCourse publicCourse){
+        return courseManageService.importPublicCourseInfo(publicCourse);
+    }
+
     @RequestMapping("/getGradeSelector")
     @ResponseBody
     JSONResult<List<Integer>> getGradeSelector(){
@@ -45,6 +53,7 @@ public class CourseManageController {
     @ResponseBody
     JSONResult<List<Map<String, Object>>> select(String college, String major, Integer grade, String type){
         List<Map<String, Object>> select = courseManageService.select(college, major, grade, type);
+
         return new JSONResult<>(select);
     }
     @RequestMapping("/deleteCourse")

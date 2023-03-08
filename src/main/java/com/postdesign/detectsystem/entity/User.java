@@ -32,8 +32,8 @@ public class User {
     private Byte state;
     private String rcode;
     private Byte online;
-    private String registerTime;
     private String utype;
     private String fid;
     private String sex;
+    private String introduce;
 }

@@ -27,7 +27,7 @@ public class LoginController {
         // 获取用户token
         if (msgMap.get("loginState").equals("success")){
             String tokenSecret = TokenUtil.getTokenSecret(uname, psd);
-            msgMap.put("usertoken", tokenSecret);
+            msgMap.put("userToken", tokenSecret);
         }else {
             msgMap.put("userToken", "");
         }
@@ -41,11 +41,11 @@ public class LoginController {
         Map<String, Object> msgMap = loginService.loginByID(id, psd);
 //        System.out.println(msgMap);
         // 获取用户token
-        if (msgMap.get("loginState").equals("success")){
+        if (msgMap != null && msgMap.get("loginState").equals("success")){
             String tokenSecret = TokenUtil.getTokenSecret(id, psd);
             msgMap.put("usertoken", tokenSecret);
         }else {
-            msgMap.put("userToken", "");
+            msgMap.put("usertoken", "");
         }
         return new JSONResult<>(msgMap);
     }

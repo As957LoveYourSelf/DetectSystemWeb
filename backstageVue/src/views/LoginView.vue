@@ -57,8 +57,9 @@ export default {
           .then(res => {
             // 判断是否登录成功
             if(res.data.loginState === 'success'){
-              localStorage.setItem('userToken',res.data.userToken)
-              localStorage.setItem('userInfo', res.data.userInfo)
+              localStorage.setItem("userInfo", res.data.userInfo)
+              localStorage.setItem("userToken", res.data.userToken)
+              console.log(res.data)
               console.log('登录成功')
               this.router.push({
                 name: 'Home',

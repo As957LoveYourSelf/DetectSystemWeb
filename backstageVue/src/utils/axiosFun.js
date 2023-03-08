@@ -1,18 +1,24 @@
 import axios from 'axios';
 axios.interceptors.request.use((config)=>{
-  // console.log("进入请求拦截器")
-  return config
+  console.log("进入请求拦截器")
+    // console.log(localStorage.getItem('userToken'))
+    // console.log(localStorage.getItem('userInfo'))
+    return config
 },(error)=>{
   return Promise.reject(error)
 })
 
 axios.interceptors.response.use((config)=>{
-  // console.log("响应拦截器")
-  console.log(config.data.code)
-  if(config.data.code === 401){
-    setTimeout(() => {
-        console.log('false')
-    }, 500)
+  console.log("响应拦截器")
+  console.log(config.data)
+  if(config.data === "token verify fail"){
+      console.log("token verify fail")
+      localStorage.clear()
+  }
+  if (config.data.code == 401){
+      setTimeout(() => {
+          console.log('false')
+      }, 500)
   }
   return config
 },(error)=>{
@@ -94,7 +100,7 @@ const getCourseData = (method, url, params) => {
     }).then(res => res.data);
 };
 
-export const algorithmServer = (method, url, params) => {
+const algorithmServer = (method, url, params) => {
     return axios({
         method: method,
         url: url,
@@ -111,5 +117,6 @@ export {
     getStudentData,
     getTeacherData,
     getClassroomData,
-    getCourseData
+    getCourseData,
+    algorithmServer
 }

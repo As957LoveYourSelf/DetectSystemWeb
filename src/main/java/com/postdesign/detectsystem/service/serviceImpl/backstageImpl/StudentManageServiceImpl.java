@@ -69,11 +69,13 @@ public class StudentManageServiceImpl implements StudentManageService {
             info.put("no", user.getUid());
             info.put("college", student.getCollege());
             info.put("major", student.getMajor());
-            info.put("age", user.getUage());
-            info.put("email", user.getEmail());
-            info.put("phone", user.getUphone());
+            info.put("age", user.getUage() == null?20:user.getUage());
+            info.put("email", user.getEmail() == null?"":user.getEmail());
+            info.put("phone", user.getUphone()== null?"":user.getUphone());
             info.put("grade", student.getGrade());
             info.put("class", student.getCls());
+            info.put("introduce", user.getIntroduce()== null?"":user.getIntroduce());
+            info.put("sex", user.getSex());
             return info;
         }
         return null;

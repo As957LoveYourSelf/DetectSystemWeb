@@ -5,7 +5,7 @@ import com.postdesign.detectsystem.entity.User;
 import java.util.Map;
 
 public interface UserMangerService {
-    Map<String, Object> changeInfo(User user);
+    Map<String, Object> changeInfo(String uid, Map<String, Object> newInfo);
     Map<String, Object> changePassword(String uid, String newPassword);
 
     Map<String, Object> changeConfirm(String uid, String code);

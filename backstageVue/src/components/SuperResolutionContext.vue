@@ -12,6 +12,7 @@
                   class="img"
                   drag
                   action="/api/upload"
+                  :headers="postHeader"
                   accept="image/*"
                   :file-list="filelist"
                   :on-success="handleAvatarSuccess"
@@ -39,6 +40,7 @@ export default {
   name: "SuperResolutionContext",
   data(){
     return{
+      postHeader:{Authorization:localStorage.getItem("userToken")},
       imgBytes:null,
       imgUrl:"",
       filelist:[]

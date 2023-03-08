@@ -21,12 +21,16 @@ public class UserMangerServiceImpl implements UserMangerService {
 
 
     @Override
-    public Map<String, Object> changeInfo(User user) {
+    public Map<String, Object> changeInfo(String uid, Map<String, Object> newInfo) {
         Map<String ,Object> info = new HashMap<>();
         try {
-            int rows = userMapper.updateById(user);
-            User new_user = userMapper.selectById(user.getUid());
-            System.out.println(rows);
+            User user = userMapper.selectById(uid);
+            user.setSex((String) newInfo.get("sex"));
+            user.setEmail((String) newInfo.get("email"));
+            user.setUage((Integer) newInfo.get("age"));
+            user.setUphone((String) newInfo.get("phone"));
+            user.setIntroduce((String) newInfo.get("introduce"));
+            userMapper.updateById(user);
             info.put("status", "success");
         }catch (Exception e){
             info.put("status", "error");

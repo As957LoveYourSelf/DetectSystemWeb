@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.postdesign.detectsystem.entity.*;
 import com.postdesign.detectsystem.mapper.*;
 import com.postdesign.detectsystem.service.backstageService.CourseManageService;
+import com.postdesign.detectsystem.utils.JSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,10 +39,7 @@ public class CourseManageServiceImpl implements CourseManageService {
     @Autowired(required = false)
     MajorMapper majorMapper;
 
-    @Override
-    public String importCourseInfo() {
-        return null;
-    }
+
 
     @Override
     public String deleteCourse(String cno, String courseType) {
@@ -54,6 +52,26 @@ public class CourseManageServiceImpl implements CourseManageService {
             return "success";
         }
         return "error";
+    }
+
+    @Override
+    public JSONResult<String> importMajorCourseInfo(MajorCourse majorCourse) {
+        try {
+            majorCourseMapper.insert(majorCourse);
+            return new JSONResult<>("success");
+        }catch (Exception e){
+            return new JSONResult<>(500,"error",null);
+        }
+    }
+
+    @Override
+    public JSONResult<String> importPublicCourseInfo(PublicCourse publicCourse) {
+        try {
+            publicCourseMapper.insert(publicCourse);
+            return new JSONResult<>("success");
+        }catch (Exception e){
+            return new JSONResult<>(500,"error",null);
+        }
     }
 
     /**

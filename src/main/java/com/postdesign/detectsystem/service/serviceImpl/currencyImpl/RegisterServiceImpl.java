@@ -97,7 +97,6 @@ public class RegisterServiceImpl implements RegisterService {
         user.setOnline((byte) 0);
         user.setEmail(email);
         user.setUtype(type);
-        user.setRegisterTime(currentDate2str());
         return user;
     }
 

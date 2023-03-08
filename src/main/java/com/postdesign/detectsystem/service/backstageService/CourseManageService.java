@@ -1,10 +1,16 @@
 package com.postdesign.detectsystem.service.backstageService;
 
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.postdesign.detectsystem.entity.MajorCourse;
+import com.postdesign.detectsystem.entity.PublicCourse;
+import com.postdesign.detectsystem.utils.JSONResult;
+
 import java.util.List;
 import java.util.Map;
 
-public interface CourseManageService {
-    String importCourseInfo();
+public interface CourseManageService{
+    JSONResult<String> importMajorCourseInfo(MajorCourse majorCourse);
+    JSONResult<String> importPublicCourseInfo(PublicCourse publicCourse);
     List<Integer> getGradeSelector();
     List<String> getCollegeSelector();
     List<String> getMajors(String collage);

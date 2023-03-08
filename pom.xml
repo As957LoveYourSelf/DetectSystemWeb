@@ -128,7 +128,14 @@
             <version>1.13.0</version>
             <scope>runtime</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/ai.djl.pytorch/pytorch-native-cu102 -->
 <!--        <dependency>-->
+<!--            <groupId>ai.djl.pytorch</groupId>-->
+<!--            <artifactId>pytorch-native-cu102</artifactId>-->
+<!--            <version>1.11.0</version>-->
+<!--        </dependency>-->
+
+        <!--        <dependency>-->
 <!--            <groupId>ai.djl.pytorch</groupId>-->
 <!--            <artifactId>pytorch-native-cpu</artifactId>-->
 <!--            <classifier>win-x86_64</classifier>-->

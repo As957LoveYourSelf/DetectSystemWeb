@@ -30,7 +30,18 @@ public class LoginServiceImpl implements LoginService {
     public Map<String, Object> loginByID(String id, String password) {
         User user = userMapper.selectById(id);
         Map<String, Object> msgMap = new HashMap<>();
-        msgMap.put("utype", user.getUtype());
+        if (user != null){
+            if (checkPassword(user, password)){
+                msgMap.put("loginState", "success");
+                msgMap.put("utype", user.getUtype());
+            }
+            else {
+                msgMap.put("loginState", "psdUnCheck");
+            }
+        }
+        else {
+            msgMap.put("loginState", "unameUnCheck");
+        }
         return msgMap;
     }
 

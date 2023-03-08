@@ -20,6 +20,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 @Service
 public class SuperResolutionServiceImpl implements SuperResolutionService {
@@ -60,7 +61,7 @@ public class SuperResolutionServiceImpl implements SuperResolutionService {
             if (Files.notExists(output)){
                 Files.createDirectory(output);
             }
-            Path resolve = output.resolve(output.getNameCount() + ".png");
+            Path resolve = output.resolve(UUID.randomUUID() + ".png");
             image.save(Files.newOutputStream(resolve), "png");
             baos = new ByteArrayOutputStream();
             image.save(baos, "jpg");

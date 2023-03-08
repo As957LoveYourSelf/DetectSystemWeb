@@ -21,11 +21,13 @@ public class UserManageController {
 
     @RequestMapping("/changInfo")
     @ResponseBody
-    public JSONResult<Map<String, Object>> changeInfo(@RequestBody Map<String, Object> info){
-        User newUser = (User) info.get("newInfo");
-        Map<String, Object> response = userMangerService.changeInfo(newUser);
+    public JSONResult<Map<String, Object>> changeInfo(String uid,@RequestBody Map<String, Object> info){
+        Map<String, Object> response = userMangerService.changeInfo(uid, info);
         return new JSONResult<>(response);
     }
+
+    
+
 
     @RequestMapping("/changePassword")
     @ResponseBody

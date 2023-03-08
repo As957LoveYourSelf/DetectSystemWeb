@@ -127,12 +127,14 @@ public class TeacherManageServiceImpl implements TeacherManageService {
         User user = userMapper.selectById(tno);
         data.put("name", teacher.getTname());
         data.put("college", teacher.getCollege());
-        data.put("age", user.getUage());
+        data.put("age", user.getUage().intValue());
         data.put("classes", classes.toString());
         data.put("courses", courses.toString());
         data.put("email", user.getEmail());
         data.put("no", teacher.getTno());
         data.put("phone", user.getUphone());
+        data.put("introduce", user.getIntroduce());
+        data.put("sex", user.getSex());
         return data;
     }
 
