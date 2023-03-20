@@ -10,10 +10,10 @@ axios.interceptors.request.use((config)=>{
 
 axios.interceptors.response.use((config)=>{
   console.log("响应拦截器")
-  console.log(config.data)
+  // console.log(config.data)
   if(config.data === "token verify fail"){
       console.log("token verify fail")
-      localStorage.clear()
+      sessionStorage.clear()
   }
   if (config.data.code == 401){
       setTimeout(() => {
@@ -45,7 +45,7 @@ const getClassData = (method, url, params) => {
         headers: {
             'Content-Type': 'application/json;charset:utf-8;',
             // 'Bearer ' +
-            'Authorization': localStorage.getItem('userToken')
+            'Authorization': sessionStorage.getItem('userToken')
         },
         params: params
     }).then(res => res.data);
@@ -58,7 +58,7 @@ const getStudentData = (method, url, params) => {
         url: url,
         headers: {
             'Content-Type': 'application/json;charset:utf-8;',
-            'Authorization': localStorage.getItem('userToken')
+            'Authorization': sessionStorage.getItem('userToken')
         },
         params: params
     }).then(res => res.data);
@@ -70,7 +70,7 @@ const getTeacherData = (method, url, params) => {
         url: url,
         headers: {
             'Content-Type': 'application/json;charset:utf-8;',
-            'Authorization': localStorage.getItem('userToken')
+            'Authorization': sessionStorage.getItem('userToken')
         },
         params: params
     }).then(res => res.data);
@@ -82,7 +82,7 @@ const getClassroomData = (method, url, params) => {
         url: url,
         headers: {
             'Content-Type': 'application/json;charset:utf-8;',
-            'Authorization': localStorage.getItem('userToken')
+            'Authorization': sessionStorage.getItem('userToken')
         },
         params: params
     }).then(res => res.data);
@@ -94,7 +94,7 @@ const getCourseData = (method, url, params) => {
         url: url,
         headers: {
             'Content-Type': 'application/json;charset:utf-8;',
-            'Authorization': localStorage.getItem('userToken')
+            'Authorization': sessionStorage.getItem('userToken')
         },
         params: params
     }).then(res => res.data);
@@ -106,7 +106,7 @@ const algorithmServer = (method, url, params) => {
         url: url,
         headers: {
             'Content-Type': 'application/json;charset:utf-8;',
-            'Authorization': localStorage.getItem('userToken')
+            'Authorization': sessionStorage.getItem('userToken')
         },
         data: params
     }).then(res => res.data);

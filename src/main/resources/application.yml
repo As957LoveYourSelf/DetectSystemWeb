@@ -18,6 +18,25 @@ spring:
       exclude: WEB-INF/**
     freemarker:
       cache: false
+  redis:
+    database: 0
+    host: localhost
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+      shutdown-timeout: 100ms
+    password: 123456
+    port: 6379
+    timeout: 5000
 
 pagehelper:
   helper-dialect: mysql

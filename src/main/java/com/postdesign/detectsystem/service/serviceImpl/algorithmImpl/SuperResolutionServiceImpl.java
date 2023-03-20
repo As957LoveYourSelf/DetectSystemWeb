@@ -48,7 +48,8 @@ public class SuperResolutionServiceImpl implements SuperResolutionService {
                 System.out.println("Finish");
                 return saveImageAndReturn(supImage, uname);
             } catch (TranslateException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
+                return new JSONResult<>(401, "error", null);
             }
         }
     }
@@ -66,11 +67,13 @@ public class SuperResolutionServiceImpl implements SuperResolutionService {
             baos = new ByteArrayOutputStream();
             image.save(baos, "jpg");
             bytes = baos.toByteArray();
+            return new JSONResult<>(bytes);
+        }catch (Exception e){
+            return new JSONResult<>(401,"error", null);
         }finally {
             if (baos != null){
                 baos.close();
             }
         }
-        return new JSONResult<>(bytes);
     }
 }

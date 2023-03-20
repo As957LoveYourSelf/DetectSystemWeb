@@ -17,8 +17,7 @@ import org.springframework.validation.annotation.Validated;
  *  人脸识别数据表
  * */
 public class Faces {
-    @TableId(type = IdType.ASSIGN_UUID)
-    private String fid;
+    @TableId(type = IdType.INPUT)
     private String uid;
     private byte[] faceImg;
 }

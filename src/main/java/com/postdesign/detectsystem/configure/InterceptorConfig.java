@@ -1,16 +1,22 @@
 package com.postdesign.detectsystem.configure;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class InterceptorConfig extends WebMvcConfigurationSupport {
+public class InterceptorConfig implements WebMvcConfigurer {
+    @Bean
+    public WebInterceptor webInterceptor(){
+        return new WebInterceptor();
+    }
+
     @Override
-    protected void addInterceptors(InterceptorRegistry registry) {
-        super.addInterceptors(registry);
-        registry.addInterceptor(new WebInterceptor())
+    public void addInterceptors(InterceptorRegistry registry) {
+        WebMvcConfigurer.super.addInterceptors(registry);
+        registry.addInterceptor(webInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/**/loginPage/login","/**/loginPage/applogin");
+                .excludePathPatterns("/**/login","/**/applogin");
     }
 }

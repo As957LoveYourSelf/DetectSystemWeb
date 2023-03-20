@@ -116,11 +116,11 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/ai.djl.pytorch/pytorch-engine -->
-        <dependency>
-            <groupId>ai.djl.pytorch</groupId>
-            <artifactId>pytorch-engine</artifactId>
-            <version>0.21.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>ai.djl.pytorch</groupId>-->
+<!--            <artifactId>pytorch-engine</artifactId>-->
+<!--            <version>0.21.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>ai.djl.pytorch</groupId>
             <artifactId>pytorch-native-cu117</artifactId>
@@ -128,27 +128,6 @@
             <version>1.13.0</version>
             <scope>runtime</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/ai.djl.pytorch/pytorch-native-cu102 -->
-<!--        <dependency>-->
-<!--            <groupId>ai.djl.pytorch</groupId>-->
-<!--            <artifactId>pytorch-native-cu102</artifactId>-->
-<!--            <version>1.11.0</version>-->
-<!--        </dependency>-->
-
-        <!--        <dependency>-->
-<!--            <groupId>ai.djl.pytorch</groupId>-->
-<!--            <artifactId>pytorch-native-cpu</artifactId>-->
-<!--            <classifier>win-x86_64</classifier>-->
-<!--            <scope>runtime</scope>-->
-<!--            <version>1.13.0</version>-->
-<!--        </dependency>-->
-        <!-- https://mvnrepository.com/artifact/ai.djl.pytorch/pytorch-native-auto -->
-<!--        <dependency>-->
-<!--            <groupId>ai.djl.pytorch</groupId>-->
-<!--            <artifactId>pytorch-native-auto</artifactId>-->
-<!--            <version>1.9.1</version>-->
-<!--            <scope>runtime</scope>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>ai.djl.pytorch</groupId>
             <artifactId>pytorch-jni</artifactId>

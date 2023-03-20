@@ -33,7 +33,6 @@ public class User {
     private String rcode;
     private Byte online;
     private String utype;
-    private String fid;
     private String sex;
     private String introduce;
 }
