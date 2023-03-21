@@ -56,40 +56,46 @@ public class FaceSignSystemServiceImpl implements FaceSignSystemService {
 
     @Override
     public String importFace(String uid, byte[] face) throws ModelNotFoundException, MalformedModelException, IOException {
-            Path modelpath = Paths.get("src/main/trained_models/cosface");
-            ByteArrayInputStream in = new ByteArrayInputStream(face);
-            Image image = ImageFactory.getInstance().fromInputStream(in);
-            in.close();
-            Criteria<Image, NDArray> criteria = Criteria.builder()
-                    .setTypes(Image.class, NDArray.class)
-                    .optModelPath(modelpath)
-                    .optModelName("cosface_cuda.pth")
-                    .optOption("mapLocation", "true")
-                    .optTranslator(new CosFaceTranslator())
-                    .optProgress(new ProgressBar())
-                    .build();
-
-            try (ZooModel<Image, NDArray> zooModel = criteria.loadModel()){
-                try (Predictor<Image, NDArray> predictor = zooModel.newPredictor()){
-                    NDArray predict = predictor.predict(image);
-                    byte[] bytes = predict.toByteArray();
-                    predict.close();
-                    predictor.close();
-                    Faces faces = new Faces();
-                    faces.setFaceImg(bytes);
-                    faces.setUid(uid);
-                    faceMapper.deleteById(uid);
-                    faceMapper.insert(faces);
-                    return "success";
-                } catch (TranslateException e) {
-                    e.printStackTrace();
-                    return "error";
-                }
-            }
+        Faces faces = new Faces();
+        faces.setFaceImg(face);
+        faces.setUid(uid);
+        faceMapper.deleteById(uid);
+        faceMapper.insert(faces);
+        return "success";
+//            Path modelpath = Paths.get("src/main/trained_models/cosface");
+//            ByteArrayInputStream in = new ByteArrayInputStream(face);
+//            Image image = ImageFactory.getInstance().fromInputStream(in);
+//            in.close();
+//            Criteria<Image, NDArray> criteria = Criteria.builder()
+//                    .setTypes(Image.class, NDArray.class)
+//                    .optModelPath(modelpath)
+//                    .optModelName("cosface_cuda.pth")
+//                    .optOption("mapLocation", "true")
+//                    .optTranslator(new CosFaceTranslator())
+//                    .optProgress(new ProgressBar())
+//                    .build();
+//
+//            try (ZooModel<Image, NDArray> zooModel = criteria.loadModel()){
+//                try (Predictor<Image, NDArray> predictor = zooModel.newPredictor()){
+//                    NDArray predict = predictor.predict(image);
+//                    byte[] bytes = predict.toByteArray();
+//                    predict.close();
+//                    predictor.close();
+//                    Faces faces = new Faces();
+//                    faces.setFaceImg(bytes);
+//                    faces.setUid(uid);
+//                    faceMapper.deleteById(uid);
+//                    faceMapper.insert(faces);
+//                    return "success";
+//                } catch (TranslateException e) {
+//                    e.printStackTrace();
+//                    return "error";
+//                }
+//            }
     }
 
     @Override
-    public synchronized Map<String, String> signFace(String classname, byte[] face) throws IOException, ModelNotFoundException, MalformedModelException {
+    public Map<String, String> signFace(String classname, byte[] face) throws IOException, ModelNotFoundException, MalformedModelException {
         if (redisService.get(classname) != null){
             redisService.update(classname);
         }else {
@@ -114,26 +120,25 @@ public class FaceSignSystemServiceImpl implements FaceSignSystemService {
         try (ZooModel<Image, NDArray> zooModel = criteria.loadModel()){
             try (Predictor<Image, NDArray> predictor = zooModel.newPredictor()){
                 NDArray detect = predictor.predict(image);
-                logger.info(detect.toDebugString());
+//                logger.info(detect.toDebugString());
                 String bastUid = null;
                 double bastDis = 0;
                 for (Faces fb:faces){
-//                    ByteArrayInputStream i = new ByteArrayInputStream(fb.getFaceImg());
-                    //TODO:解决数据类型匹配问题
-                    NDArray predict = NDArray.decode(NDManager.newBaseManager(), fb.getFaceImg());
-                    logger.info(predict.toDebugString());
-//                    System.out.println(predict);
-//                    i.close();
+                    ByteArrayInputStream i = new ByteArrayInputStream(fb.getFaceImg());
+                    Image f = ImageFactory.getInstance().fromInputStream(i);
+                    i.close();
+                    NDArray predict = predictor.predict(f);
                     NDArray distance = detect.dot(predict.transpose()).div(((detect.norm().mul(predict.norm())).add(1e-5)));
                     predict.close();
                     detect.close();
-                    distance.close();
                     predictor.close();
                     double[] doubles = distance.toDoubleArray();
+                    distance.close();
                     if (doubles[0] >= bastDis){
                         bastDis = doubles[0];
                         bastUid = fb.getUid();
                     }
+                    logger.info(String.valueOf(doubles[0]));
                 }
                 if (bastDis >= 0.5){
                     return getBastInfo(bastUid);
@@ -163,7 +168,7 @@ public class FaceSignSystemServiceImpl implements FaceSignSystemService {
             Student student = studentMapper.selectById(uid);
             Map<String, String> detectinfo = new HashMap<>();
             detectinfo.put("uno", uid);
-            detectinfo.put("name",student.getCls()+student.getSname());
+            detectinfo.put("name",student.getCls()+" "+student.getSname());
             return detectinfo;
         }
         return null;
