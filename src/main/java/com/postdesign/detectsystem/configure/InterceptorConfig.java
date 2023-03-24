@@ -17,6 +17,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
         WebMvcConfigurer.super.addInterceptors(registry);
         registry.addInterceptor(webInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/**/login","/**/applogin");
+                .excludePathPatterns("/**/login","/**/applogin","/**/userManagePage/psdConfirm");
     }
 }

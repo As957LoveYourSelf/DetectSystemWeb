@@ -29,8 +29,6 @@ public class User {
     private String uphone;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
-    private Byte state;
-    private String rcode;
     private Byte online;
     private String utype;
     private String sex;

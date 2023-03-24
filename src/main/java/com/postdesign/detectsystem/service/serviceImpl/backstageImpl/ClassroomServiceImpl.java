@@ -3,7 +3,6 @@ package com.postdesign.detectsystem.service.serviceImpl.backstageImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.postdesign.detectsystem.entity.Building;
 import com.postdesign.detectsystem.mapper.BuildingMapper;
-import com.postdesign.detectsystem.service.backstageService.ClassMangerService;
 import com.postdesign.detectsystem.service.backstageService.ClassroomManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,7 +63,7 @@ public class ClassroomServiceImpl implements ClassroomManageService {
             queryWrapper.eq("bname", buildingName).eq("isOrder", isOrder);
             return selectInfo(queryWrapper);
         } else if (!buildingName.equals("")) {
-            queryWrapper.eq("bname", buildingName).eq("isOrder", isOrder).eq("clsNo", floor).like("clsNo", "-"+ floor);
+            queryWrapper.eq("bname", buildingName).eq("isOrder", isOrder).like("clsNo", "-"+ floor);
             return selectInfo(queryWrapper);
         }else {
             return null;

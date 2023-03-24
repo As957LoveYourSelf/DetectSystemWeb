@@ -26,8 +26,6 @@ public class UserManageController {
         return new JSONResult<>(response);
     }
 
-    
-
 
     @RequestMapping("/changePassword")
     @ResponseBody
@@ -37,7 +35,14 @@ public class UserManageController {
         Map<String, Object> response = userMangerService.changePassword(uid, newPsd);
         return new JSONResult<>(response);
     }
-
-
-
+    //TODO:将验证码设置在Redis里面 可以设置过期时间
+    @RequestMapping("/psdConfirm")
+    public String psdConfirm(String uid, String code){
+        System.out.println(uid+code);
+        boolean b = userMangerService.changeConfirm(uid, code);
+        if (b){
+            return "codecheck_success";
+        }
+        return "codecheck_error";
+    }
 }
