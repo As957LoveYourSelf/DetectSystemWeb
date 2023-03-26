@@ -36,13 +36,13 @@
           </el-tag>
         </el-descriptions-item>
         <el-descriptions-item label="年龄" :span="1">
-          <el-tag size="large">{{info.age == null?'无': info.age}}</el-tag>
+          <el-tag size="large">{{info.age == ""?'无': info.age}}</el-tag>
         </el-descriptions-item>
         <el-descriptions-item label="邮箱" :span="1">
-          <el-tag size="large">{{info.email == null?'无': info.email}}</el-tag>
+          <el-tag size="large">{{info.email == ""?'无': info.email}}</el-tag>
         </el-descriptions-item>
         <el-descriptions-item label="电话" :span="2">
-          <el-tag size="large">{{info.phone == null?'无': info.phone}}</el-tag>
+          <el-tag size="large">{{info.phone == ""?'无': info.phone}}</el-tag>
         </el-descriptions-item>
       </div>
     </el-descriptions>

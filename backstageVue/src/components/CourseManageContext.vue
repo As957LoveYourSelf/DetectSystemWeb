@@ -41,17 +41,21 @@
 
     </div>
     <!-- 信息栏 -->
-    <div style=" min-height: 80%; padding: 10px;">
-      <el-table :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)" stripe border>
+    <div style=" padding: 10px;">
+      <el-table
+          :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)"
+          height="700"
+          stripe border>
         <el-table-column prop="cno" label="课程号" />
         <el-table-column prop="cname" label="课程名称" />
         <el-table-column prop="major" label="所属专业"/>
         <el-table-column prop="college" label="所属学院" />
         <el-table-column prop="type" label="课程类型" />
+        <el-table-column prop="grade" label="开设年级" />
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
-            <el-button type="success" @click="" :icon="Search" plain>查看</el-button>
-            <el-button type="danger" @click="" :icon="Delete" plain>删除</el-button>
+<!--            <el-button type="success" @click="" :icon="Search" plain>查看</el-button>-->
+            <el-button type="danger" @click="delectCs(scope.row.cno, scope.row.type)" :icon="Delete" plain>删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -111,6 +115,7 @@ export default {
       this.changePage.currentPage = val
     },
     getMajor(){
+      this.major = ""
       const params = {college:this.college}
       getMajorSelector(params).then(res=>{
         this.major_ops = res.data
@@ -139,7 +144,7 @@ export default {
     },
     searchfn(){
       const postParams={college:this.college, major:this.major, grade:this.grade === ''?null:this.grade, type:this.type}
-      console.log(postParams)
+      // console.log(postParams)
       let loading = this.$loading({
         lock:true,
         text:"查询中"
@@ -170,6 +175,7 @@ export default {
       })
     },
     reset(){
+      this.major_ops = []
       this.college = ''
       this.grade = ''
       this.major = ''

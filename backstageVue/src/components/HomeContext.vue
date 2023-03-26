@@ -18,9 +18,6 @@ export default {
     return{
       route:useRoute()
     }
-  },
-  created() {
-    console.log(this.route.query)
   }
 }
 

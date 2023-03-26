@@ -25,9 +25,9 @@
             active-text-color="#ffd04b"
             background-color="#272727"
             class="el-menu-vertical-demo"
-            default-active=""
             text-color="#fff"
             router
+            :default-active="$route.path"
         >
           <el-menu-item index="/home">
             <el-icon><House /></el-icon>
@@ -58,16 +58,16 @@
 <!--            <span>待处理请求</span>-->
 <!--          </el-menu-item>-->
           <!-- -->
-          <el-sub-menu index="/test">
+          <el-sub-menu>
             <template #title>
               <el-icon><Setting/></el-icon>
               <span>算法部署测试</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/test/supImg">超分辨率</el-menu-item>
+              <el-menu-item index="/supImg">超分辨率</el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group>
-              <el-menu-item index="/test/styTran">单一风格转化</el-menu-item>
+              <el-menu-item index="/styTran">单一风格转化</el-menu-item>
             </el-menu-item-group>
 <!--            <el-menu-item-group>-->
 <!--              <el-menu-item index="/test/styTran2">任意风格转化</el-menu-item>-->
@@ -95,17 +95,10 @@ import {
   Box,
   Tickets
 } from '@element-plus/icons-vue'
-import {reactive, ref, toRefs, watch} from "vue";
-import {useRouter} from "vue-router";
+import {reactive, toRefs} from "vue";
 const state = reactive({
   circleUrl:
       'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
 })
 const {circleUrl} = toRefs(state)
-const router = useRouter()
-let current_route = ref('')
-watch(() => router.currentRoute.value.path, (path) =>{
-  current_route = path
-  console.log(current_route)
-},{immediate: true,deep: true})
 </script>

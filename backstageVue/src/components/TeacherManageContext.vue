@@ -33,15 +33,18 @@
     </div>
     <!-- 信息栏 -->
     <div style="min-height:87%; padding: 10px ">
-      <el-table :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)" stripe border>
+      <el-table
+          :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)"
+          height="700"
+          stripe border>
 
         <el-table-column prop="tno" label="教工号"/> <!-- tno -->
         <el-table-column prop="title" label="职位" /> <!-- title -->
         <el-table-column prop="tname" label="教师姓名"/> <!-- tname -->
         <el-table-column prop="college" label="所属学院" /> <!-- college -->
-        <el-table-column prop="teachCourse" label="所教课程" /> <!-- TeachMajorCourseMapper -->
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
+            <el-button @click="" type="danger" plain>移除</el-button>
             <el-button type="success" @click="getDetail(scope.row.tno)" plain>查看</el-button>
           </template>
         </el-table-column>
@@ -82,9 +85,9 @@ export default {
       college_ops:[],
       changePage:{
         currentPage:1, //默认当前页面为1
-        pageSize:8,
+        pageSize:15,
         total: 0, //总共有多少数据
-        pageSizes: [6, 8]
+        pageSizes: [8, 15]
       },
       Delete:Delete,
       Search:Search,
@@ -96,10 +99,13 @@ export default {
     handleCurrentChange(val){
       this.changePage.currentPage = val
     },
+    removeTeacher(){
+
+    },
     // 查询函数
     searchfn() {
       const searchData = {tno:this.unoInput, tname:this.unameInput, college:this.college}
-      console.log(this.searchData)
+      // console.log(this.searchData)
       let loading = this.$loading({
         lock:true,
         text:"查询中"

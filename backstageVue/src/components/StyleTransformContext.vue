@@ -48,7 +48,7 @@ export default {
   name: "StyleTransformContext",
   data(){
     return{
-      postHeader:{Authorization:localStorage.getItem("userToken")},
+      postHeader:{Authorization:sessionStorage.getItem("userToken")},
       imgBytes:null,
       imgUrl:"",
       filelist:[],
@@ -79,7 +79,7 @@ export default {
     },
     transform() {
       const postData = {img: this.imgBytes, type: this.value, uname:"admin"}
-      console.log(postData)
+      // console.log(postData)
       let loading = this.$loading({
         lock:true,
         text:"算法运行中"

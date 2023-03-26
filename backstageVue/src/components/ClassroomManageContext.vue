@@ -32,7 +32,10 @@
     </div>
     <!-- 信息栏 -->
     <div style="min-height:87%; padding: 10px ">
-      <el-table :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)" stripe border>
+      <el-table
+          :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)"
+          height="700"
+          stripe border>
         <el-table-column prop="building" label="所属教学楼" />
         <el-table-column prop="roomNo" label="课室编号"/>
         <el-table-column prop="isOrder" label="是否被预约" >
@@ -169,6 +172,7 @@ export default {
     },
     change(){
       this.selectorData.buildingName = this.classroom_building
+      this.classroom_floor = ""
       getBuildingFloorSelector(this.selectorData).then(res => {
         // console.log(res.data)
         this.classroom_floor_ops = res.data

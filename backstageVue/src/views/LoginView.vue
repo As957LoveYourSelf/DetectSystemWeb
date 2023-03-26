@@ -59,7 +59,7 @@ export default {
             if(res.data.loginState === 'success'){
               sessionStorage.setItem("userInfo", res.data.userInfo)
               sessionStorage.setItem("userToken", res.data.userToken)
-              console.log(res.data)
+              // console.log(res.data)
               console.log('登录成功')
               this.router.push({
                 name: 'Home',

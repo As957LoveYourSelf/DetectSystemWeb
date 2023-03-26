@@ -40,8 +40,8 @@
         <el-table-column prop="college" label="学院" />
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
-            <el-button type="success" plain>查看</el-button>
-            <el-button type="danger" plain>移除</el-button>
+            <el-button @click="getStuDetail(scope.row.sno)" type="success" plain>查看</el-button>
+            <el-button @click="removeStu(scope.row.sno)" type="danger" plain>移除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -50,16 +50,36 @@
 </template>
 
 <script>
-import {useRoute} from "vue-router";
+import {onBeforeRouteLeave, useRoute, useRouter} from "vue-router";
 import {getClassDetail} from "../utils/classManage";
+import {removeStudent} from "../utils/studentManage";
 //这里是获取当前页数
 export default {
   data(){
     return{
       data:{className:''},
       route: useRoute(),
+      router: useRouter(),
       info:[],
       tableData:[]
+    }
+  },
+  methods:{
+    // 查看学生详情
+    getStuDetail(sno){
+      this.router.push({
+        name:"StudentDetail",
+        query:{sno:sno}
+      })
+    },
+    removeStu(sno){
+      removeStudent(sno).then(res => {
+        if (res.data === "success"){
+          this.$message.success("移除成功")
+        }else {
+          this.$message.error("移除失败")
+        }
+      })
     }
   },
   created() {
@@ -68,7 +88,7 @@ export default {
     getClassDetail(this.data).then(res => {
       this.info = res.data
       this.tableData = res.data.people
-      console.log(this.info)
+      // console.log(this.info)
     }).catch(err => {
       console.log(err)
     })

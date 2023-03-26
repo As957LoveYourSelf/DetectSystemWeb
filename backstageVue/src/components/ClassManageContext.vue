@@ -27,8 +27,9 @@
       <el-button class="ml-8" type="warning" :icon="Delete" @click="reset" round>重置</el-button>
     </div>
     <!-- 信息栏 -->
-    <div style="min-height:87%; padding: 10px ">
+    <div style="min-height:85%; padding: 10px ">
       <el-table :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)"
+                height="700"
                 stripe border>
         <el-table-column prop="college" label="学院" />
         <el-table-column prop="major" label="专业"/>
@@ -90,7 +91,7 @@ export default {
   methods:{
     searchfn(){
       const params= {grade:this.grade, college:this.college}
-      console.log(params)
+      // console.log(params)
       let loading = this.$loading({
         lock:true,
         text:"查询中"

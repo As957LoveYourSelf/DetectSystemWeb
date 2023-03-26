@@ -23,8 +23,11 @@
       <el-button class="ml-8" type="warning" :icon="Delete" @click="reset" round>重置</el-button>
     </div>
     <!-- 信息栏 -->
-    <div style="min-height:87%; padding: 10px ">
-      <el-table :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)" stripe border>
+    <div style="min-height:85%; padding: 10px ">
+      <el-table
+          :data="tableData.slice((changePage.currentPage -1) * changePage.pageSize, changePage.currentPage*changePage.pageSize)"
+          height="700"
+          stripe border>
         <el-table-column prop="class" label="所属班级" />
         <el-table-column prop="sname" label="姓名"/>
         <el-table-column prop="sno" label="学号"/>
@@ -32,6 +35,7 @@
         <el-table-column prop="college" label="学院" />
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
+            <el-button @click="" type="danger" plain>移除</el-button>
             <el-button type="success" @click="getDetail(scope.row.sno)" plain>查看</el-button>
           </template>
         </el-table-column>
@@ -53,7 +57,7 @@
 </template>
 
 <script>
-import {getStudentDetail, selectStudent} from "../utils/studentManage";
+import {selectStudent} from "../utils/studentManage";
 import {useRouter} from "vue-router";
 import {
   Delete,
@@ -82,6 +86,9 @@ export default {
     handleCurrentChange(val){
       this.changePage.currentPage = val
     },
+    removeStudent(sno){
+
+    },
     // 搜索函数
     searchfn() {
       this.searchData.sno = this.unoInput
@@ -90,7 +97,7 @@ export default {
         lock:true,
         text:"查询中"
       })
-      console.log(this.searchData)
+      // console.log(this.searchData)
       selectStudent(this.searchData).then(res => {
         // console.log(res.data)
         this.tableData = res.data

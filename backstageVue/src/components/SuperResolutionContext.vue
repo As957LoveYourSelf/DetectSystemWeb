@@ -40,7 +40,7 @@ export default {
   name: "SuperResolutionContext",
   data(){
     return{
-      postHeader:{Authorization:localStorage.getItem("userToken")},
+      postHeader:{Authorization:sessionStorage.getItem("userToken")},
       imgBytes:null,
       imgUrl:"",
       filelist:[]
@@ -56,7 +56,7 @@ export default {
     },
     enhance(){
       const postData = {img:this.imgBytes, uname:"admin"}
-      console.log(postData)
+      // console.log(postData)
       let loading = this.$loading({
         lock:true,
         text:"算法运行中"
