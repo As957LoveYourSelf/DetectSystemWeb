@@ -32,6 +32,8 @@ public class LoginServiceImpl implements LoginService {
         Map<String, Object> msgMap = new HashMap<>();
         if (user != null){
             if (checkPassword(user, password)){
+                user.setOnline((byte)1);
+                userMapper.updateById(user);
                 msgMap.put("loginState", "success");
                 msgMap.put("utype", user.getUtype());
             }
@@ -45,9 +47,18 @@ public class LoginServiceImpl implements LoginService {
         return msgMap;
     }
 
+    @Override
+    public void loginout(String uid) {
+        User user = userMapper.selectById(uid);
+        user.setOnline((byte)0);
+        userMapper.updateById(user);
+    }
+
     private Map<String, Object> getInfo(String password, User user, Map<String, Object> msgMap) {
         if (user != null){
             if (checkPassword(user, password)){
+                user.setOnline((byte)1);
+                userMapper.updateById(user);
                 msgMap.put("loginState", "success");
                 msgMap.put("userInfo",user);
             }

@@ -30,5 +30,12 @@ public class StudentManageController {
         Map<String, Object> msg = studentManageService.getStudentDetail(sno);
         return new JSONResult<>(msg);
     }
+    @RequestMapping("/removeStudent")
+    @ResponseBody
+    JSONResult<String> removeStudent(String sno){
+        String s = studentManageService.removeStudent(sno);
+        return new JSONResult<>(s);
+    }
+
 
 }

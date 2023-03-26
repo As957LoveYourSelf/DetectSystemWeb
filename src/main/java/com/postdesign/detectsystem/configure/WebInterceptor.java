@@ -29,18 +29,18 @@ public class WebInterceptor implements HandlerInterceptor {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
         String methodName = method.getName();
-//        logger.info("拦截到了方法"+methodName+",在该方法执行之前执行");
+        logger.info("拦截到了方法"+methodName+",在该方法执行之前执行");
         // 返回true才会继续执行，返回false则取消当前请求
         // Token
         String token = request.getHeader("Authorization");
         Object o = service.get(token);
         if (o != null){
-//            logger.info("获取到Token: "+token);
+            logger.info("获取到Token: "+token);
             service.update(token);
             return true;
         }
         try{
-//            logger.info("Token验证失败");
+            logger.info("Token验证失败");
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");
             PrintWriter out;

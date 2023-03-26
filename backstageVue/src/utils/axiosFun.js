@@ -1,6 +1,6 @@
 import axios from 'axios';
 axios.interceptors.request.use((config)=>{
-  console.log("进入请求拦截器")
+  // console.log("进入请求拦截器")
     // console.log(localStorage.getItem('userToken'))
     // console.log(localStorage.getItem('userInfo'))
     return config
@@ -9,7 +9,7 @@ axios.interceptors.request.use((config)=>{
 })
 
 axios.interceptors.response.use((config)=>{
-  console.log("响应拦截器")
+  // console.log("响应拦截器")
   // console.log(config.data)
   if(config.data === "token verify fail"){
       console.log("token verify fail")

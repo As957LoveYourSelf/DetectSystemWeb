@@ -59,4 +59,9 @@ public class LoginController {
         }
         return new JSONResult<>(msgMap);
     }
+
+    @RequestMapping("/loginout")
+    public void loginOut(String uid){
+        loginService.loginout(uid);
+    }
 }

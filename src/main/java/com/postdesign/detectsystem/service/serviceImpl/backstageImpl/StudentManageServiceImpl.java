@@ -81,6 +81,17 @@ public class StudentManageServiceImpl implements StudentManageService {
         return null;
     }
 
+    @Override
+    public String removeStudent(String sno) {
+        try {
+            studentMapper.deleteById(sno);
+            return "success";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "error";
+        }
+    }
+
     /**
      * 包装学生信息
      *  <el-table-column prop="class" label="所属班级" />

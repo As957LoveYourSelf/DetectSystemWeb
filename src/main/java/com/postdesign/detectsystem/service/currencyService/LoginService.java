@@ -11,4 +11,6 @@ import java.util.Map;
 public interface LoginService{
     Map<String, Object> login(String uname, String password);
     Map<String, Object> loginByID(String id, String password);
+
+    void loginout(String uid);
 }

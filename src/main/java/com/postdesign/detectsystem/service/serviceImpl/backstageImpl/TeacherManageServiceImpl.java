@@ -104,9 +104,9 @@ public class TeacherManageServiceImpl implements TeacherManageService {
         QueryWrapper<TeachMajorCourse> teachCourseQueryWrapper = new QueryWrapper<>();
         QueryWrapper<TeachPublicCourse> teachPublicCourseQueryWrapper = new QueryWrapper<>();
         QueryWrapper<TeachCls> teachClsQueryWrapper = new QueryWrapper<>();
-        teachCourseQueryWrapper.eq("tno", tno);
+        teachCourseQueryWrapper.select("DISTINCT *").eq("tno", tno);
         teachClsQueryWrapper.eq("tno",tno);
-        teachPublicCourseQueryWrapper.eq("tno", tno);
+        teachPublicCourseQueryWrapper.select("DISTINCT *").eq("tno", tno);
 
         List<TeachPublicCourse> teachPublicCourses = teacherPublicCourseMapper.selectList(teachPublicCourseQueryWrapper);
         List<TeachMajorCourse> teachMajorCours = teachMajorCourseMapper.selectList(teachCourseQueryWrapper);
@@ -153,27 +153,12 @@ public class TeacherManageServiceImpl implements TeacherManageService {
             for (Teacher t:teachers){
                 QueryWrapper<TeachMajorCourse> teachCourseQueryWrapper = new QueryWrapper<>();
                 teachCourseQueryWrapper.eq("tno",t.getTno());
-                List<TeachMajorCourse> teachMajorCours = teachMajorCourseMapper.selectList(teachCourseQueryWrapper);
-                StringBuilder courses = new StringBuilder();
-                for (TeachMajorCourse tc: teachMajorCours){
-                    MajorCourse majorCourse = majorCourseMapper.selectById(tc.getCno());
-                    courses.append(majorCourse.getCname()).append(" ");
-                }
-
-                QueryWrapper<TeachPublicCourse> teachPublicCourseQueryWrapper = new QueryWrapper<>();
-                teachPublicCourseQueryWrapper.eq("tno",t.getTno());
-                List<TeachPublicCourse> teachPublicCourses = teacherPublicCourseMapper.selectList(teachPublicCourseQueryWrapper);
-                for (TeachPublicCourse tc: teachPublicCourses){
-                    PublicCourse publicCourse = publicCourseMapper.selectById(tc.getCpno());
-                    courses.append(publicCourse.getCname()).append(" ");
-                }
 
                 Map<String, Object> msg = new HashMap<>();
                 msg.put("tno", t.getTno());
                 msg.put("title", t.getTitle());
                 msg.put("tname", t.getTname());
                 msg.put("college", t.getCollege());
-                msg.put("teachCourse", courses.toString());
                 info.add(msg);
             }
             return info;

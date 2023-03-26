@@ -1,6 +1,6 @@
 package com.postdesign.detectsystem.service.androidService;
 
-import com.postdesign.detectsystem.entity.User;
+
 
 import java.util.Map;
 

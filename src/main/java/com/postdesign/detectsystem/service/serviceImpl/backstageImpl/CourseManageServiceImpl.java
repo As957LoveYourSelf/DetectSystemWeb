@@ -141,21 +141,17 @@ public class CourseManageServiceImpl implements CourseManageService {
                 majorCourseQueryWrapper.eq("college", college);
                 publicCourseQueryWrapper.eq("college", college);
                 return getCourses(majorCourseQueryWrapper, publicCourseQueryWrapper);
-            } else if (college.equals("") && !major.equals("") && grade == null) {
-                majorCourseQueryWrapper.eq("major", major);
-                publicCourseQueryWrapper.eq("major", major);
-                return getCourses(majorCourseQueryWrapper, publicCourseQueryWrapper);
             } else if (college.equals("") && major.equals("")) {
                 majorCourseQueryWrapper.eq("grade", grade);
                 publicCourseQueryWrapper.eq("grade", grade);
                 return getCourses(majorCourseQueryWrapper, publicCourseQueryWrapper);
             } else if (!college.equals("") && !major.equals("") && grade == null) {
                 majorCourseQueryWrapper.eq("major", major).eq("college", college);
-                publicCourseQueryWrapper.eq("major", major).eq("college", college);
+                publicCourseQueryWrapper.eq("college", college);
                 return getCourses(majorCourseQueryWrapper, publicCourseQueryWrapper);
             } else {
                 majorCourseQueryWrapper.eq("major", major).eq("college", college).eq("grade",grade);
-                publicCourseQueryWrapper.eq("major", major).eq("college", college).eq("grade", grade);
+                publicCourseQueryWrapper.eq("college", college).eq("grade",grade);
                 return getCourses(majorCourseQueryWrapper, publicCourseQueryWrapper);
             }
         }
@@ -165,17 +161,17 @@ public class CourseManageServiceImpl implements CourseManageService {
             }else if(!college.equals("") && major.equals("") && grade == null){
                 publicCourseQueryWrapper.eq("college", college);
                 return getPublicCourses(publicCourseQueryWrapper);
-            } else if (college.equals("") && !major.equals("") && grade == null) {
-                publicCourseQueryWrapper.eq("major", major);
+            } else if (!college.equals("") && major.equals("")) {
+                publicCourseQueryWrapper.eq("college", college).eq("grade", grade);
                 return getPublicCourses(publicCourseQueryWrapper);
-            } else if (college.equals("") && major.equals("")) {
+            }else if (college.equals("") && major.equals("")) {
                 publicCourseQueryWrapper.eq("grade", grade);
                 return getPublicCourses(publicCourseQueryWrapper);
-            } else if (!college.equals("") && !major.equals("") && grade == null) {
-                publicCourseQueryWrapper.eq("major", major).eq("college", college);
+            } else if (!college.equals("") && grade == null) {
+                publicCourseQueryWrapper.eq("college", college);
                 return getPublicCourses(publicCourseQueryWrapper);
             } else {
-                publicCourseQueryWrapper.eq("major", major).eq("college", college).eq("grade", grade);
+                publicCourseQueryWrapper.eq("college", college).eq("grade", grade);
                 return getPublicCourses(publicCourseQueryWrapper);
             }
         } else if (type.equals("major")) {
@@ -184,13 +180,13 @@ public class CourseManageServiceImpl implements CourseManageService {
             }else if(!college.equals("") && major.equals("") && grade == null){
                 majorCourseQueryWrapper.eq("college", college);
                 return getMajorCourses(majorCourseQueryWrapper);
-            } else if (college.equals("") && !major.equals("") && grade == null) {
-                majorCourseQueryWrapper.eq("major", major);
+            } else if(!college.equals("") && major.equals("")){
+                majorCourseQueryWrapper.eq("college", college).eq("grade", grade);
                 return getMajorCourses(majorCourseQueryWrapper);
-            } else if (college.equals("") && major.equals("")) {
+            }else if (college.equals("") && major.equals("")) {
                 majorCourseQueryWrapper.eq("grade", grade);
                 return getMajorCourses(majorCourseQueryWrapper);
-            } else if (!college.equals("") && !major.equals("") && grade == null) {
+            } else if (!college.equals("") && grade == null) {
                 majorCourseQueryWrapper.eq("major", major).eq("college", college);
                 return getMajorCourses(majorCourseQueryWrapper);
             } else {
@@ -334,6 +330,7 @@ public class CourseManageServiceImpl implements CourseManageService {
             map.put("cname", mc.getCname());
             map.put("major", mc.getMajor());
             map.put("college", mc.getCollege());
+            map.put("grade",mc.getGrade());
             map.put("type", "专业课");
             info.add(map);
         }
@@ -349,6 +346,7 @@ public class CourseManageServiceImpl implements CourseManageService {
             map.put("cname", pc.getCname());
             map.put("major", "无");
             map.put("college", pc.getCollege());
+            map.put("grade", pc.getGrade());
             map.put("type", "公共课");
             info.add(map);
         }
@@ -365,6 +363,7 @@ public class CourseManageServiceImpl implements CourseManageService {
             map.put("cname", mc.getCname());
             map.put("college", mc.getCollege());
             map.put("major", mc.getMajor());
+            map.put("grade", mc.getGrade());
             map.put("type", "专业课");
             info.add(map);
         }
@@ -374,6 +373,7 @@ public class CourseManageServiceImpl implements CourseManageService {
             map.put("cname", pc.getCname());
             map.put("major", "无");
             map.put("college", pc.getCollege());
+            map.put("grade", pc.getGrade());
             map.put("type", "公共课");
             info.add(map);
         }

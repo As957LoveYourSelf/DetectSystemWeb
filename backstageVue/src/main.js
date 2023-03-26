@@ -13,6 +13,26 @@ router.beforeEach((to, from, next) => {
     if (to.matched.length !== 0) {
         if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
             if (sessionStorage.getItem("userInfo") != null) { // 通过vuex state获取当前的user是否存在
+                //路由缓存
+                //从cacheList中的任何一个页面返回，当前页面缓存
+                const cacheList = to.meta.cacheList
+                // console.log(cacheList)
+                if (cacheList) {
+                    if (cacheList.indexOf(from.name) > -1) {
+                        // console.log(from.name)
+                        // console.log(to.name)
+                        to.meta.keepAlive = true
+                    } else {
+                        //如果没有纳进cacheList缓存需求，就不缓存
+                        if (from.name) {
+                            to.meta.keepAlive = false
+                        }
+                        // 导航跳转需要缓存处理
+                        if (from.meta.cacheList) {
+                            to.meta.keepAlive = true
+                        }
+                    }
+                }
                 next();
             } else {
                 next({
@@ -42,24 +62,6 @@ router.beforeEach((to, from, next) => {
             query: { redirect: to.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由
         })
     }
-    //路由缓存
-    //从cacheList中的任何一个页面返回，当前页面缓存
-    // const cacheList = to.meta.cacheList
-    // if (cacheList) {
-    //     if (cacheList.indexOf(from.name) > -1) {
-    //         to.meta.keepAlive = true
-    //     } else {
-    //         //如果没有纳进cacheList缓存需求，就不缓存
-    //         if (from.name) {
-    //             to.meta.keepAlive = false
-    //         }
-    //         // 导航跳转需要缓存处理
-    //         if (from.meta.cacheList) {
-    //             to.meta.keepAlive = true
-    //         }
-    //     }
-    // }
-    // next()
 })
 
 

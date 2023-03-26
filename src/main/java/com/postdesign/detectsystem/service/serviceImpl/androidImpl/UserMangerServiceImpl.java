@@ -65,7 +65,8 @@ public class UserMangerServiceImpl implements UserMangerService {
 
     @Override
     public boolean changeConfirm(String uid, String code) {
-        return redisService.get(uid).equals(code);
+        //TODO:将其存入Redis中，uid作key，code作value
+        return redisService.get(uid) != null && redisService.get(uid).equals(code);
     }
 
 

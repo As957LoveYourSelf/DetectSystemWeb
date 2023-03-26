@@ -24,7 +24,9 @@ const router = createRouter({
       name: 'Home',
       component: () => import('../views/HomeView.vue'),
       meta: {
-        requireAuth: true
+        requireAuth: true,
+        keepAlive: true,
+        cacheList:["CourseDetail","ClassDetail","TeacherDetail","StudentDetail","Teacher","Student","Class","Classroom","Course","SupImg","StyTran"]
       },
     },
     {
@@ -33,7 +35,8 @@ const router = createRouter({
       component:() => import('../views/StudentManageView.vue'),
       meta: {
         requireAuth: true,
-        keepAlive:true
+        keepAlive:true,
+        cacheList:["CourseDetail","ClassDetail","TeacherDetail","StudentDetail","Home","Teacher","Class","Classroom","Course","SupImg","StyTran"]
       },
     },
     {
@@ -42,7 +45,8 @@ const router = createRouter({
       component:() => import('../views/TeacherManageView.vue'),
       meta: {
         requireAuth: true,
-        keepAlive:true
+        keepAlive:true,
+        cacheList:["CourseDetail","ClassDetail","TeacherDetail","StudentDetail","Home","Student","Class","Classroom","Course","SupImg","StyTran"]
       },
     },
     {
@@ -51,7 +55,8 @@ const router = createRouter({
       component:() => import('../views/ClassManageView.vue'),
       meta: {
         requireAuth: true,
-        keepAlive:true
+        keepAlive:true,
+        cacheList:["CourseDetail","ClassDetail","TeacherDetail","StudentDetail","Home","Teacher","Student","Classroom","Course","SupImg","StyTran"]
       },
     },
     {
@@ -60,7 +65,8 @@ const router = createRouter({
       component:() => import('../views/ClassroomManageView.vue'),
       meta: {
         requireAuth: true,
-        keepAlive:true
+        keepAlive:true,
+        cacheList:["CourseDetail","ClassDetail","TeacherDetail","StudentDetail","Home","Teacher","Class","Student","Course","SupImg","StyTran"]
       },
     },
     {
@@ -69,7 +75,8 @@ const router = createRouter({
       component:() => import('../views/CourseManageView.vue'),
       meta: {
         requireAuth: true,
-        keepAlive:true
+        keepAlive:true,
+        cacheList:["CourseDetail","ClassDetail","TeacherDetail","StudentDetail","CourseDetail","Home","Teacher","Class","Classroom","Student","SupImg","StyTran"]
       },
     },
     {
@@ -78,26 +85,26 @@ const router = createRouter({
       component:() => import('../views/CourseDetailView.vue'),
       meta: {
         requireAuth: true,
-        keepAlive:true
       },
     },
-    {
-      path: '/test',
-      name: 'Test',
-      component:() => import('../views/TestView.vue'),
-      meta: {
-        requireAuth: true
-      },
-    },
-    {
-      path: '/todo',
-      name: 'ToDo',
-      component:() => import('../views/TODOView.vue'),
-      meta: {
-        requireAuth: true,
-        keepAlive:true
-      },
-    },
+    // {
+    //   path: '/test',
+    //   name: 'Test',
+    //   component:() => import('../views/TestView.vue'),
+    //   meta: {
+    //     requireAuth: true,
+    //     keepAlive:true,
+    //     cacheList:["Course","CourseDetail","ClassDetail","TeacherDetail","StudentDetail","CourseDetail","Home","Teacher","Class","Classroom","Student","SupImg","StyTran","Test"]
+    //   },
+    // },
+    // {
+    //   path: '/todo',
+    //   name: 'ToDo',
+    //   component:() => import('../views/TODOView.vue'),
+    //   meta: {
+    //     requireAuth: true,
+    //   },
+    // },
     {
       path: '/classdetail',
       name: 'ClassDetail',
@@ -123,43 +130,43 @@ const router = createRouter({
       },
     },
     {
-      path: '/course',
-      name: 'Course',
-      component:() => import('../views/CourseManageView.vue'),
-      meta: {
-        requireAuth: true
-      },
-    },
-    {
-      path: '/test/supImg',
+      path: '/supImg',
       name: 'SupImg',
       component:() => import('../views/SuperResolutionTestView.vue'),
       meta: {
-        requireAuth: true
+        requireAuth: true,
+        keepAlive:true,
+        cacheList:["Course","CourseDetail","ClassDetail","TeacherDetail","StudentDetail","CourseDetail","Home","Teacher","Class","Classroom","Student","StyTran","WordDis"]
       },
     },
     {
-      path: '/test/wordDis',
+      path: '/wordDis',
       name: 'WordDis',
       component:() => import('../views/WordDistinguishTestView.vue'),
       meta: {
-        requireAuth: true
+        requireAuth: true,
+        keepAlive:true,
+        cacheList:["Course","CourseDetail","ClassDetail","TeacherDetail","StudentDetail","CourseDetail","Home","Teacher","Class","Classroom","Student","SupImg","StyTran"]
       },
     },
     {
-      path: '/test/styTran',
+      path: '/styTran',
       name: 'StyTran',
       component:() => import('../views/StyleTransformTestView.vue'),
       meta: {
-        requireAuth: true
+        requireAuth: true,
+        keepAlive:true,
+        cacheList:["Course","CourseDetail","ClassDetail","TeacherDetail","StudentDetail","CourseDetail","Home","Teacher","Class","Classroom","Student","SupImg","WordDis"]
       },
     },
     {
-      path: '/test/styTran2',
+      path: '/styTran2',
       name: 'StyTran2',
       component:() => import('../views/AnyStyleTransformView.vue'),
       meta: {
-        requireAuth: true
+        requireAuth: true,
+        keepAlive:true,
+        cacheList:["Course","CourseDetail","ClassDetail","TeacherDetail","StudentDetail","CourseDetail","Home","Teacher","Class","Classroom","Student","SupImg","StyTran"]
       },
     }
   ]
