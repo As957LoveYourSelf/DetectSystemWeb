@@ -87,24 +87,6 @@ const router = createRouter({
         requireAuth: true,
       },
     },
-    // {
-    //   path: '/test',
-    //   name: 'Test',
-    //   component:() => import('../views/TestView.vue'),
-    //   meta: {
-    //     requireAuth: true,
-    //     keepAlive:true,
-    //     cacheList:["Course","CourseDetail","ClassDetail","TeacherDetail","StudentDetail","CourseDetail","Home","Teacher","Class","Classroom","Student","SupImg","StyTran","Test"]
-    //   },
-    // },
-    // {
-    //   path: '/todo',
-    //   name: 'ToDo',
-    //   component:() => import('../views/TODOView.vue'),
-    //   meta: {
-    //     requireAuth: true,
-    //   },
-    // },
     {
       path: '/classdetail',
       name: 'ClassDetail',
@@ -136,17 +118,7 @@ const router = createRouter({
       meta: {
         requireAuth: true,
         keepAlive:true,
-        cacheList:["Course","CourseDetail","ClassDetail","TeacherDetail","StudentDetail","CourseDetail","Home","Teacher","Class","Classroom","Student","StyTran","WordDis"]
-      },
-    },
-    {
-      path: '/wordDis',
-      name: 'WordDis',
-      component:() => import('../views/WordDistinguishTestView.vue'),
-      meta: {
-        requireAuth: true,
-        keepAlive:true,
-        cacheList:["Course","CourseDetail","ClassDetail","TeacherDetail","StudentDetail","CourseDetail","Home","Teacher","Class","Classroom","Student","SupImg","StyTran"]
+        cacheList:["Course","CourseDetail","ClassDetail","TeacherDetail","StudentDetail","CourseDetail","Home","Teacher","Class","Classroom","Student","StyTran"]
       },
     },
     {
@@ -156,7 +128,7 @@ const router = createRouter({
       meta: {
         requireAuth: true,
         keepAlive:true,
-        cacheList:["Course","CourseDetail","ClassDetail","TeacherDetail","StudentDetail","CourseDetail","Home","Teacher","Class","Classroom","Student","SupImg","WordDis"]
+        cacheList:["Course","CourseDetail","ClassDetail","TeacherDetail","StudentDetail","CourseDetail","Home","Teacher","Class","Classroom","Student","SupImg"]
       },
     },
     {
@@ -167,6 +139,16 @@ const router = createRouter({
         requireAuth: true,
         keepAlive:true,
         cacheList:["Course","CourseDetail","ClassDetail","TeacherDetail","StudentDetail","CourseDetail","Home","Teacher","Class","Classroom","Student","SupImg","StyTran"]
+      },
+    },
+    {
+      path:'/webview',
+      name:'WebView',
+      component:() => import('../views/WebView.vue'),
+      meta: {
+        requireAuth:false,
+        keepAlive:false,
+        fromApp:true
       },
     }
   ]

@@ -1,5 +1,6 @@
 package com.postdesign.detectsystem.service.serviceImpl.algorithmImpl;
 
+import ai.djl.Device;
 import ai.djl.MalformedModelException;
 import ai.djl.inference.Predictor;
 import ai.djl.modality.cv.Image;

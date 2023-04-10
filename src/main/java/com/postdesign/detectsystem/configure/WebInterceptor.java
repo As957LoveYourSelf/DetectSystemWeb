@@ -1,18 +1,13 @@
 package com.postdesign.detectsystem.configure;
 
-import com.alibaba.fastjson.JSONObject;
 import com.postdesign.detectsystem.service.currencyService.RedisService;
-import com.postdesign.detectsystem.utils.JSONResult;
-import com.postdesign.detectsystem.utils.TokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
@@ -33,6 +28,14 @@ public class WebInterceptor implements HandlerInterceptor {
         // 返回true才会继续执行，返回false则取消当前请求
         // Token
         String token = request.getHeader("Authorization");
+        if (token == null){
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json; charset=utf-8");
+            PrintWriter out;
+            out = response.getWriter();
+            out.write("Authorization is null");
+            return false;
+        }
         Object o = service.get(token);
         if (o != null){
             logger.info("获取到Token: "+token);

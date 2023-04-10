@@ -36,7 +36,19 @@ const loginreq = (method, url, params) => {
         params: params
     }).then(res => res.data);
 };
-
+// 用户管理请求
+const userManage = (method, url, params) => {
+    return axios({
+        method: method,
+        url: url,
+        headers: {
+            'Content-Type': 'application/json;charset:utf-8;',
+            // 'Bearer ' +
+            'Authorization': sessionStorage.getItem('userToken')
+        },
+        params: params
+    }).then(res => res.data);
+};
 //  班级管理数据请求
 const getClassData = (method, url, params) => {
     return axios({
@@ -118,5 +130,6 @@ export {
     getTeacherData,
     getClassroomData,
     getCourseData,
-    algorithmServer
+    algorithmServer,
+    userManage
 }

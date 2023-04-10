@@ -22,7 +22,7 @@ public class CourseManageServiceImpl implements CourseManageService {
     @Autowired(required = false)
     TeachMajorCourseMapper teachMajorCourseMapper;
     @Autowired(required = false)
-    TeacherPublicCourseMapper teacherPublicCourseMapper;
+    TeachPublicCourseMapper teachPublicCourseMapper;
     @Autowired(required = false)
     MajorCourseAddressMapper majorCourseAddressMapper;
     @Autowired(required = false)
@@ -314,7 +314,7 @@ public class CourseManageServiceImpl implements CourseManageService {
     private List<TeachPublicCourse> getTeachPublicCourse(String tno){
         QueryWrapper<TeachPublicCourse> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("tno", tno);
-        return teacherPublicCourseMapper.selectList(queryWrapper);
+        return teachPublicCourseMapper.selectList(queryWrapper);
     }
 
     private MajorCourse getMajorCourse(Integer cno){

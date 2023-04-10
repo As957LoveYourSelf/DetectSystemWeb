@@ -33,4 +33,6 @@ public class User {
     private String utype;
     private String sex;
     private String introduce;
+    private byte sign;
+    private Integer addfacecount;
 }

@@ -37,4 +37,11 @@ public class TeacherManageController {
         return new JSONResult<>(teacherDetail);
     }
 
+    @RequestMapping("/removeTeacher")
+    @ResponseBody
+    JSONResult<String> removeTeacher(String tno){
+        String s = teacherManageService.removeTeacher(tno);
+        return new JSONResult<>(s);
+    }
+
 }

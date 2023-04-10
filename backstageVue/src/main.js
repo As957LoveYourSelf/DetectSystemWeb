@@ -41,7 +41,9 @@ router.beforeEach((to, from, next) => {
                 })
             }
         } else {
-            if (sessionStorage.getItem("userInfo") != null) { // 判断是否登录
+            if (to.meta.fromApp){
+                next()
+            }else if (sessionStorage.getItem("userInfo") != null) { // 判断是否登录
                 if (to.path !== "/" && to.path !== "/login") { //判断是否要跳到登录界面
                     next();
                 } else {

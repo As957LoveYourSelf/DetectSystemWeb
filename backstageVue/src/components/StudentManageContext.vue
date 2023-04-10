@@ -33,9 +33,10 @@
         <el-table-column prop="sno" label="学号"/>
         <el-table-column prop="major" label="专业"/>
         <el-table-column prop="college" label="学院" />
-        <el-table-column prop="operation" label="操作" >
+        <el-table-column prop="operation" width="280" label="操作" >
           <template #default="scope">
-            <el-button @click="" type="danger" plain>移除</el-button>
+            <el-button @click="removeStudent(scope.row.sno)" type="danger" plain>移除</el-button>
+            <el-button @click="resetpsd(scope.row.sno)" type="warning" plain>重置密码</el-button>
             <el-button type="success" @click="getDetail(scope.row.sno)" plain>查看</el-button>
           </template>
         </el-table-column>
@@ -57,12 +58,13 @@
 </template>
 
 <script>
-import {selectStudent} from "../utils/studentManage";
+import {removeStudent, selectStudent} from "../utils/studentManage";
 import {useRouter} from "vue-router";
 import {
   Delete,
   Search,
 } from '@element-plus/icons-vue'
+import {resetPsd} from "../utils/user";
 export default {
   data(){
     return{
@@ -87,7 +89,40 @@ export default {
       this.changePage.currentPage = val
     },
     removeStudent(sno){
-
+      const postData = {sno:sno}
+      removeStudent(postData).then(res =>{
+        if (res.data === 'success'){
+          this.$message({
+            type:'success',
+            message:'已删除用户'+sno
+          })
+        }else {
+          this.$message({
+            type:'error',
+            message:'用户'+sno+'删除失败'
+          })
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    resetpsd(sno){
+      const postData = {uid:sno}
+      resetPsd(postData).then(res =>{
+        if (res.data === "success"){
+          this.$message({
+            type:'success',
+            message:'已重置用户'+sno+'的密码'
+          })
+        }else {
+          this.$message({
+            type:'error',
+            message:'重置失败'
+          })
+        }
+      }).catch(err => {
+        console.log(err)
+      })
     },
     // 搜索函数
     searchfn() {
@@ -100,13 +135,22 @@ export default {
       // console.log(this.searchData)
       selectStudent(this.searchData).then(res => {
         // console.log(res.data)
-        this.tableData = res.data
-        this.changePage.total = this.tableData.length
-        loading.close()
-        this.$message({
-          type:'success',
-          message:'查询成功'
-        })
+        if (res.data != null){
+          this.tableData = res.data
+          this.changePage.currentPage = 1
+          this.changePage.total = this.tableData.length
+          loading.close()
+          this.$message({
+            type:'success',
+            message:'查询成功'
+          })
+        }else {
+          loading.close()
+          this.$message({
+            type:'warning',
+            message:'查找不到您要的数据'
+          })
+        }
       }).catch(err => {
         console.log(err)
         loading.close()

@@ -7,6 +7,7 @@ import com.postdesign.detectsystem.service.androidService.UserMangerService;
 import com.postdesign.detectsystem.service.currencyService.RedisService;
 import com.postdesign.detectsystem.utils.CodeUtil;
 import com.postdesign.detectsystem.utils.MailUtil;
+import com.postdesign.detectsystem.utils.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +55,7 @@ public class UserMangerServiceImpl implements UserMangerService {
                 // 发送确认信息至邮箱，通过验证即修改密码
                 boolean b = postCheckContext2Email(user);
                 if (b){
+                    redisService.set(uid+"NEWPSD", newPassword);
                     info.put("status", "identifyEmail");
                 }else {
                     info.put("status", "postEmailError");
@@ -65,8 +67,29 @@ public class UserMangerServiceImpl implements UserMangerService {
 
     @Override
     public boolean changeConfirm(String uid, String code) {
-        //TODO:将其存入Redis中，uid作key，code作value
-        return redisService.get(uid) != null && redisService.get(uid).equals(code);
+        if (redisService.get(uid) != null && redisService.get(uid).equals(code)){
+            String newpsd = (String) redisService.get(uid+"NEWPSD");
+            User user = userMapper.selectById(uid);
+            user.setPassword(newpsd);
+            userMapper.updateById(user);
+            redisService.delete(uid+"NEWPSD");
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String resetPsd(String uid) {
+        try {
+            User user = userMapper.selectById(uid);
+            String s = Md5Util.encodeByMd5("123456");
+            user.setPassword(s);
+            userMapper.updateById(user);
+            return "success";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "fail";
+        }
     }
 
 
@@ -80,7 +103,7 @@ public class UserMangerServiceImpl implements UserMangerService {
         CodeUtil codeUtil = new CodeUtil();
         String code = codeUtil.generateCode();
         redisService.set(user.getUid(), code);
-        String text = "<p>你好!"+user.getUname()+"</p><p>请点击<a href='http://localhost:8066/userManagePage/psdConfirm?uid="+user.getUid()+"&code="+code+"'>完成密码修改确认</a></p>";
+        String text = "<p>你好!"+user.getUname()+"</p><p>请点击<a href='http://192.168.0.4:8066/userManagePage/psdConfirm?uid="+user.getUid()+"&code="+code+"'>完成密码修改确认</a></p>";
         return MailUtil.sendMail(user.getEmail(), text, "密码修改确认");
     }
 }

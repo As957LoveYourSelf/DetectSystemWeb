@@ -103,11 +103,12 @@ export default {
             this.tableData = []
             loading.close()
             this.$message({
-              type:'error',
-              message:'无数据'
+              type:'warning',
+              message:'查找不到您要的数据'
             })
           }else {
             this.tableData = res.data
+            this.changePage.currentPage = 1
             this.changePage.total = this.tableData.length
             loading.close()
             this.$message({
@@ -116,6 +117,7 @@ export default {
             })
           }
         }).catch(err => {
+          console.log(err)
           loading.close()
           this.$message({
             type:'error',

@@ -23,6 +23,7 @@
         />
       </el-select>
       <el-radio-group v-model="OrderSelect" class="ml-8" >
+        <el-radio-button label="2" border>所有</el-radio-button>
         <el-radio-button label="0" border>未预约</el-radio-button>
         <el-radio-button label="1" border>已预约</el-radio-button>
       </el-radio-group>
@@ -38,21 +39,59 @@
           stripe border>
         <el-table-column prop="building" label="所属教学楼" />
         <el-table-column prop="roomNo" label="课室编号"/>
-        <el-table-column prop="isOrder" label="是否被预约" >
+        <el-table-column prop="isOrder" label="是否有预约申请" >
           <template #default="scope">
             <el-tag
-                :type="scope.row.isOrder === 'NO' ? '' : 'success'"
+                :type="scope.row.isOrder === 'NO' ? 'danger' : 'success'"
                 disable-transitions
             >{{ scope.row.isOrder }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="operation" label="操作" >
           <template #default="scope">
-            <el-button type="success" @click="order(scope.row.roomNo)" :disabled="scope.row.isOrder === 'YES'" plain>预约</el-button>
-            <el-button type="danger" @click="deorder(scope.row.roomNo)" :disabled="scope.row.isOrder === 'NO'" plain>取消预约申请</el-button>
+            <el-button type="success" @click="openOrderDialog(scope.row.roomNo)" plain>预约</el-button>
+            <el-button type="primary" @click="getDetail(scope.row.roomNo)" plain>查看预约信息</el-button>
           </template>
         </el-table-column>
       </el-table>
+
+      <!-- 预约对话框 -->
+      <el-dialog v-model="orderDialog" title="填写预约信息" width="350px">
+        <el-form :model="orderData">
+          <!-- 学号 -->
+          <el-form-item label="预约用户id" label-width="100px">
+            <el-input v-model="orderData.uid" autocomplete="off" />
+          </el-form-item>
+          <!-- 日期 -->
+          <el-form-item label="日期" label-width="100px">
+            <el-date-picker
+                v-model="orderData.time"
+                type="date"
+                placeholder="请选择日期"
+            />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="orderDialog=false">取消</el-button>
+            <el-button type="primary" @click="order">确认预约</el-button>
+          </span>
+        </template>
+      </el-dialog>
+      <!-- 查看预约信息对话框 -->
+      <el-dialog v-model="detailDialog" title="预约信息">
+        <el-table :data="detailInfo">
+          <el-table-column property="clsNo" label="预约课室名称"/>
+          <el-table-column property="time" label="使用时间"/>
+          <el-table-column property="uno" label="预约人" />
+          <el-table-column prop="operation" label="操作" >
+            <template #default="scope">
+              <el-button type="danger" @click="deorder(scope.row.clsNo, scope.row.uno)" plain>取消预约</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-dialog>
+
     </div>
     <!-- 分页栏 -->
     <div style="padding: 10px">
@@ -75,18 +114,25 @@ import {
   Search,
 } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import {getBuildingFloorSelector, getBuildingSelector, orderClassroom,deorderClassroom,getClassroomInfo} from "../utils/classroomManage";
+import {
+  getBuildingFloorSelector,
+  getBuildingSelector,
+  orderClassroom,
+  deorderClassroom,
+  getClassroomInfo,
+  getOrderDetail
+} from "../utils/classroomManage";
 export default {
   data(){
     return{
-      OrderSelect:"0",
+      OrderSelect:"2",
       postData:{
         buildingName:'',
         isOrder:'',
         floor:''
       },
       selectorData:{buildingName:''},
-      orderData:{clsNo:''},
+      orderData:{clsNo:'',time:'',uid:''},
       changePage:{
         currentPage:1, //默认当前页面为1
         pageSize:14,
@@ -100,12 +146,28 @@ export default {
       tableData:[],
       Delete:Delete,
       Search:Search,
+      orderDialog:false,
+      detailDialog:false,
+      detailInfo:[]
     }
   },
   methods:{
     //这里是获取当前页数
     handleCurrentChange(val){
       this.changePage.currentPage = val
+    },
+    //查看预约详情
+    getDetail(csno){
+      getOrderDetail({clsNo:csno}).then(res => {
+        this.detailInfo = res.data
+        this.detailDialog = true
+      }).catch(err =>{
+        console.log(err)
+      })
+    },
+    openOrderDialog(clsno){
+      this.orderDialog = true
+      this.orderData.clsNo = clsno
     },
     // 查看课室使用详情
     searchFn(){
@@ -119,6 +181,7 @@ export default {
       console.log(this.postData)
       getClassroomInfo(this.postData).then(res => {
         this.tableData = res.data
+        this.changePage.currentPage = 1
         this.changePage.total = this.tableData.length
         // console.log(res.data)
         loading.close()
@@ -131,7 +194,7 @@ export default {
         loading.close()
         this.$message({
           type:'error',
-          message:'查询成功'
+          message:'查询失败'
         })
       })
     },
@@ -141,24 +204,31 @@ export default {
       this.classroom_floor = null
     },
     //预约
-    order(no){
-      this.orderData.clsNo = no
+    order(){
+      // 判断是否符合输入条件
       orderClassroom(this.orderData).then(res => {
         if (res.data === 'success'){
           ElMessageBox.alert('预约成功', '消息', {
             confirmButtonText: 'OK'
           })
-        }else {
-
+        }
+        if (res.data === 'userNotFound'){
+          ElMessageBox.alert('该用户不存在', '消息', {
+            confirmButtonText: 'OK'
+          })
+        }
+        if (res.data === 'fail'){
+          ElMessageBox.alert('预约失败', '消息', {
+            confirmButtonText: 'OK'
+          })
         }
       }).catch(err =>{
         console.log(err)
       })
     },
-    //预约申请
-    deorder(no){
-      this.orderData.clsNo = no
-      deorderClassroom(this.orderData).then(res => {
+    //取消预约
+    deorder(no, uno){
+      deorderClassroom({clsNo:no,uid:uno}).then(res => {
         if (res.data === 'success'){
           ElMessageBox.alert('已退回预约申请', '消息', {
             confirmButtonText: 'OK'

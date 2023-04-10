@@ -29,7 +29,7 @@ public class TeacherManageServiceImpl implements TeacherManageService {
     TeachMajorCourseMapper teachMajorCourseMapper;
 
     @Autowired(required = false)
-    TeacherPublicCourseMapper teacherPublicCourseMapper;
+    TeachPublicCourseMapper teachPublicCourseMapper;
 
     @Autowired(required = false)
     MajorCourseMapper majorCourseMapper;
@@ -108,7 +108,7 @@ public class TeacherManageServiceImpl implements TeacherManageService {
         teachClsQueryWrapper.eq("tno",tno);
         teachPublicCourseQueryWrapper.select("DISTINCT *").eq("tno", tno);
 
-        List<TeachPublicCourse> teachPublicCourses = teacherPublicCourseMapper.selectList(teachPublicCourseQueryWrapper);
+        List<TeachPublicCourse> teachPublicCourses = teachPublicCourseMapper.selectList(teachPublicCourseQueryWrapper);
         List<TeachMajorCourse> teachMajorCours = teachMajorCourseMapper.selectList(teachCourseQueryWrapper);
         List<TeachCls> teachCls = teachClsMapper.selectList(teachClsQueryWrapper);
 
@@ -136,6 +136,17 @@ public class TeacherManageServiceImpl implements TeacherManageService {
         data.put("introduce", user.getIntroduce());
         data.put("sex", user.getSex());
         return data;
+    }
+
+    @Override
+    public String removeTeacher(String tno) {
+        try {
+            userMapper.deleteById(tno);
+            return "success";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "error";
+        }
     }
 
     /**

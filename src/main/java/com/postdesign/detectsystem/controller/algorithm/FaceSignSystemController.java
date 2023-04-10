@@ -32,17 +32,26 @@ public class FaceSignSystemController {
 
     @RequestMapping("/faceSign")
     @ResponseBody
-    public JSONResult<Map<String, String>> faceSign(@RequestBody Map<String, Object> request) throws ModelNotFoundException, MalformedModelException, IOException {
+    public JSONResult<Map<String, Object>> faceSign(@RequestBody Map<String, Object> request) throws ModelNotFoundException, MalformedModelException, IOException {
         String classname = (String) request.get("classname");
+        String course = (String) request.get("course");
+        String tid = (String) request.get("tid");
         byte[] face = Base64.getDecoder().decode((String)request.get("face"));
-        Map<String, String> response = faceSignSystemService.signFace(classname, face);
+        Map<String, Object> response = faceSignSystemService.signFace(classname, course,tid,face);
         return new JSONResult<>(response);
     }
 
     @RequestMapping("/getSignClasses")
     @ResponseBody
-    public JSONResult<List<String>> getSignClasses(String uid){
-        List<String> signClasses = faceSignSystemService.getSignClasses(uid);
+    public JSONResult<Map<String, Object>> getSignClasses(String uid){
+        Map<String, Object> signClasses = faceSignSystemService.getSignClasses(uid);
         return new JSONResult<>(signClasses);
+    }
+
+    @RequestMapping("/getSignDetail")
+    @ResponseBody
+    public JSONResult<Map<String, Byte>> getSignDetail(String classname){
+        Map<String, Byte> signDetail = faceSignSystemService.getSignDetail(classname);
+        return new JSONResult<>(signDetail);
     }
 }

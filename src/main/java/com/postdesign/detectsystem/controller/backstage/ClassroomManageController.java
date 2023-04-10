@@ -44,16 +44,23 @@ public class ClassroomManageController {
     // TODO: 添加用户id，以确认是哪个用户预定了教室
     @RequestMapping("/orderClassroom")
     @ResponseBody
-    JSONResult<String> orderClassroom(String clsNo){
-        String order = classroomManageService.order(clsNo);
+    JSONResult<String> orderClassroom(String uid, String time, String clsNo){
+        String order = classroomManageService.order(uid, clsNo,time);
         return new JSONResult<>(order);
     }
 
     @RequestMapping("/deorderClassroom")
     @ResponseBody
-    JSONResult<String> deorderClassroom(String clsNo){
-        String deorder = classroomManageService.deorder(clsNo);
+    JSONResult<String> deorderClassroom(String uid, String clsNo){
+        String deorder = classroomManageService.deorder(uid,clsNo);
         return new JSONResult<>(deorder);
+    }
+
+    @RequestMapping("/getOrderDetail")
+    @ResponseBody
+    JSONResult<List<Map<String, Object>>> getOrderDetail(String clsNo){
+        List<Map<String, Object>> orderDetail = classroomManageService.getOrderDetail(clsNo);
+        return new JSONResult<>(orderDetail);
     }
 
 }

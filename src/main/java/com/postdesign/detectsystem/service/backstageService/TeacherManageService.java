@@ -9,4 +9,6 @@ public interface TeacherManageService {
     List<Map<String, Object>> select(String tno, String tname, String collage);
     Map<String, Object> getTeacherDetail(String tno);
 
+    String removeTeacher(String tno);
+
 }

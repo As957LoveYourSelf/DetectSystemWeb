@@ -53,11 +53,6 @@
             <el-icon><Shop /></el-icon>
             <span>教室管理</span>
           </el-menu-item>
-<!--          <el-menu-item index="/todo">-->
-<!--            <el-icon><Box /></el-icon>-->
-<!--            <span>待处理请求</span>-->
-<!--          </el-menu-item>-->
-          <!-- -->
           <el-sub-menu>
             <template #title>
               <el-icon><Setting/></el-icon>
@@ -70,10 +65,10 @@
               <el-menu-item index="/styTran">单一风格转化</el-menu-item>
             </el-menu-item-group>
 <!--            <el-menu-item-group>-->
-<!--              <el-menu-item index="/test/styTran2">任意风格转化</el-menu-item>-->
+<!--              <el-menu-item index="/">任意风格转化</el-menu-item>-->
 <!--            </el-menu-item-group>-->
 <!--            <el-menu-item-group>-->
-<!--              <el-menu-item index="/test/wordDis">文字识别</el-menu-item>-->
+<!--              <el-menu-item index="/">文字识别</el-menu-item>-->
 <!--            </el-menu-item-group>-->
           </el-sub-menu>
         </el-menu>

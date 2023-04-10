@@ -17,16 +17,25 @@ import java.util.Map;
 public class CourseManageController {
     @Autowired
     CourseManageService courseManageService;
-    @RequestMapping("/addmajorcourse")
+    @RequestMapping("/import")
     @ResponseBody
-    JSONResult<String> addMajorCourseInfo(MajorCourse majorCourse){
-        return courseManageService.importMajorCourseInfo(majorCourse);
-    }
-
-    @RequestMapping("/addpubliccourse")
-    @ResponseBody
-    JSONResult<String> addMajorCourseInfo(PublicCourse publicCourse){
-        return courseManageService.importPublicCourseInfo(publicCourse);
+    JSONResult<String> addCourseInfo(String college,Integer grade,String major,String cname,String ctype){
+        if (ctype.equals("major")){
+            MajorCourse majorCourse = new MajorCourse();
+            majorCourse.setMajor(major);
+            majorCourse.setCname(cname);
+            majorCourse.setCollege(college);
+            majorCourse.setGrade(grade);
+            return courseManageService.importMajorCourseInfo(majorCourse);
+        }
+        if (ctype.equals("public")){
+            PublicCourse publicCourse = new PublicCourse();
+            publicCourse.setCname(cname);
+            publicCourse.setGrade(grade);
+            publicCourse.setCollege(college);
+            return courseManageService.importPublicCourseInfo(publicCourse);
+        }
+        return new JSONResult<>("fail");
     }
 
     @RequestMapping("/getGradeSelector")
