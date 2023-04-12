@@ -92,6 +92,19 @@ public class UserMangerServiceImpl implements UserMangerService {
         }
     }
 
+    @Override
+    public String resetFaceImport(String uid) {
+        try {
+            User user = userMapper.selectById(uid);
+            user.setAddfacecount(0);
+            userMapper.updateById(user);
+            return "success";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "fail";
+        }
+    }
+
 
     private User selectByuid(String uid){
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();

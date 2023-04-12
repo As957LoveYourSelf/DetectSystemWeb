@@ -15,4 +15,6 @@ public interface FaceSignSystemService{
     Map<String, Object> getSignClasses(String tid);
     void setFacesToRedis(String classname);
     Map<String, Byte> getSignDetail(String classname);
+    String setSign(String uid, byte state);
+    String endSign(String classname);
 }

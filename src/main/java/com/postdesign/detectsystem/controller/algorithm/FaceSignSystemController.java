@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.util.Base64;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -54,4 +53,19 @@ public class FaceSignSystemController {
         Map<String, Byte> signDetail = faceSignSystemService.getSignDetail(classname);
         return new JSONResult<>(signDetail);
     }
+
+    @RequestMapping("/setSign")
+    @ResponseBody
+    public JSONResult<String> setSign(String uid, Number state){
+        String s = faceSignSystemService.setSign(uid, state.byteValue());
+        return new JSONResult<>(s);
+    }
+
+    @RequestMapping("/endSign")
+    @ResponseBody
+    public JSONResult<String> endSign(String classname){
+        String s = faceSignSystemService.endSign(classname);
+        return new JSONResult<>(s);
+    }
+
 }

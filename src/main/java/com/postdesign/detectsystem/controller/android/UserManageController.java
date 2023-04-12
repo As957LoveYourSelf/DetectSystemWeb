@@ -55,4 +55,11 @@ public class UserManageController {
         String s = userMangerService.resetPsd(uid);
         return new JSONResult<>(s);
     }
+
+    @RequestMapping("/resetFaceImport")
+    @ResponseBody
+    public JSONResult<String> resetFaceImport(String uid){
+        String s = userMangerService.resetFaceImport(uid);
+        return new JSONResult<>(s);
+    }
 }

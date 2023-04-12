@@ -46,6 +46,7 @@
           <template #default="scope">
             <el-button @click="removeTeacher" type="danger" plain>移除</el-button>
             <el-button @click="resetpsd(scope.row.tno)" type="warning" plain>重置密码</el-button>
+            <el-button @click="resetFI(scope.row.sno)" type="warning" plain>重置人脸导入次数</el-button>
             <el-button type="success" @click="getDetail(scope.row.tno)" plain>查看</el-button>
           </template>
         </el-table-column>
@@ -76,6 +77,7 @@ import {
   searchTeacherInfo,
 } from "../utils/teacherManage";
 import {useRouter} from 'vue-router'
+import {resetFI} from "../utils/user";
 export default {
   data(){
     return{
@@ -125,6 +127,24 @@ export default {
           this.$message({
             type:'success',
             message:'已重置用户'+tno+'的密码'
+          })
+        }else {
+          this.$message({
+            type:'error',
+            message:'重置失败'
+          })
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    resetFI(sno){
+      const postData = {uid:sno}
+      resetFI(postData).then(res =>{
+        if (res.data === "success"){
+          this.$message({
+            type:'success',
+            message:'已重置用户'+sno+'的人脸录入次数'
           })
         }else {
           this.$message({

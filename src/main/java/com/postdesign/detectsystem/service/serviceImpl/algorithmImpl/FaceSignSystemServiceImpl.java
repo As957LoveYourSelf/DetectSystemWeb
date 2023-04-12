@@ -68,6 +68,8 @@ public class FaceSignSystemServiceImpl implements FaceSignSystemService {
     public String importFace(String uid, byte[] face) {
         User user = userMapper.selectById(uid);
         if (user.getAddfacecount() < 2){
+            user.setAddfacecount(user.getAddfacecount()+1);
+            userMapper.updateById(user);
             Faces faces = new Faces();
             faces.setFaceImg(face);
             faces.setUid(uid);
@@ -176,6 +178,20 @@ public class FaceSignSystemServiceImpl implements FaceSignSystemService {
             map.put(s.getSno()+"\t"+s.getSname(), userMapper.selectById(s.getSno()).getSign());
         }
         return map;
+    }
+
+    @Override
+    public String setSign(String uid, byte state) {
+        User user = userMapper.selectById(uid);
+        user.setSign(state);
+        userMapper.updateById(user);
+        return "success";
+    }
+
+    @Override
+    public String endSign(String classname) {
+        resetSignState(classname);
+        return "success";
     }
 
     private Map<String, Object> getBastInfo(String uid){

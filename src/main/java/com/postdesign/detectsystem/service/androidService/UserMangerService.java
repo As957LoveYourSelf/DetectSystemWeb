@@ -9,4 +9,5 @@ public interface UserMangerService {
     Map<String, Object> changePassword(String uid, String newPassword);
     boolean changeConfirm(String uid, String code);
     String resetPsd(String uid);
+    String resetFaceImport(String uid);
 }

@@ -5,7 +5,6 @@ import com.postdesign.detectsystem.service.currencyService.LoginService;
 import com.postdesign.detectsystem.service.currencyService.RedisService;
 import com.postdesign.detectsystem.utils.JSONResult;
 import com.postdesign.detectsystem.utils.Md5Util;
-import com.postdesign.detectsystem.utils.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,7 +60,9 @@ public class LoginController {
     }
 
     @RequestMapping("/loginout")
-    public void loginOut(String uid){
+    @ResponseBody
+    public JSONResult<Object> loginOut(String uid){
         loginService.loginout(uid);
+        return new JSONResult<>(null);
     }
 }
