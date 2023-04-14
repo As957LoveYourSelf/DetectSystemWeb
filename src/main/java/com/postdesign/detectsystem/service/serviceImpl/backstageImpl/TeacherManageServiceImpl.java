@@ -130,9 +130,9 @@ public class TeacherManageServiceImpl implements TeacherManageService {
         data.put("age", user.getUage().intValue());
         data.put("classes", classes.toString());
         data.put("courses", courses.toString());
-        data.put("email", user.getEmail());
+        data.put("email", user.getEmail() == null?"":user.getEmail());
         data.put("no", teacher.getTno());
-        data.put("phone", user.getUphone());
+        data.put("phone", user.getUphone()== null?"":user.getUphone());
         data.put("introduce", user.getIntroduce());
         data.put("sex", user.getSex());
         return data;
@@ -147,6 +147,23 @@ public class TeacherManageServiceImpl implements TeacherManageService {
             e.printStackTrace();
             return "error";
         }
+    }
+
+    @Override
+    public String addTeacher(String uno, String uname, String sex, String college, String title, String leadclass) {
+        if (teacherMapper.selectById(uno) != null){
+            return "exist";
+        }
+        Teacher teacher = new Teacher();
+        teacher.setTno(uno);
+        teacher.setTname(uname);
+        teacher.setCollege(college);
+        teacher.setTitle(title);
+        teacher.setLeadclass(leadclass);
+        teacher.setSex(sex);
+        teacherMapper.insert(teacher);
+        return "success";
+
     }
 
     /**

@@ -2,7 +2,7 @@
   <div style="flex: 1;">
     <div style="padding: 10px">
       <!-- 搜索框 -->
-      <el-select @change="getMajor(false)" class="w-300" size="large" v-model="college" placeholder="请选择学院">
+      <el-select @change="getMajor(false)" class="w-200" size="large" v-model="college" placeholder="请选择学院">
         <el-option
             v-for="item in college_ops"
             :key="item"
@@ -11,7 +11,7 @@
             :disabled=false
         />
       </el-select>
-      <el-select class="w-300 ml-8" size="large" v-model="major" placeholder="请选择专业">
+      <el-select class="w-200 ml-8" size="large" v-model="major" placeholder="请选择专业">
         <el-option
             v-for="item in major_ops"
             :key="item"
@@ -20,7 +20,7 @@
             :disabled=false
         />
       </el-select>
-      <el-select class="w-300 ml-8" size="large" v-model="grade" placeholder="请选择年级">
+      <el-select class="w-180 ml-8" size="large" v-model="grade" placeholder="请选择年级">
         <el-option
             v-for="item in grade_ops"
             :key="item"
@@ -31,7 +31,7 @@
       </el-select>
       <el-button class=" ml-8" type="success" :icon="Search" @click="searchfn" round>搜索</el-button>
       <el-button class="ml-8" type="warning" :icon="Refresh" @click="reset" round>重置</el-button>
-      <el-button class="ml-8" type="success" :icon="CirclePlus" @click="dialogFormVisible = true" round>添加课程</el-button>
+      <el-button class="ml-8" type="primary" :icon="CirclePlus" @click="dialogFormVisible = true" round>添加课程</el-button>
       <!-- 添加课程对话框 -->
       <el-dialog v-model="dialogFormVisible" title="添加课程" width="350px">
         <el-form :model="addCourseData">
@@ -79,12 +79,12 @@
           </el-form-item>
         </el-form>
         <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="add">
-          提交
-        </el-button>
-      </span>
+          <span class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取消</el-button>
+            <el-button type="primary" @click="add">
+              提交
+            </el-button>
+          </span>
         </template>
       </el-dialog>
       <div class="mb-2 flex items-center text-sm">
@@ -163,7 +163,6 @@ export default {
       major_ops:[],
       college_ops:[],
       grade_ops:[],
-
       addCourseData:{college:null,grade:null, major:null,cname:null,ctype:null},
       major_ops1:[],
 

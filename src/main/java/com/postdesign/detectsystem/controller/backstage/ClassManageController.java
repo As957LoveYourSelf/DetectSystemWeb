@@ -50,4 +50,32 @@ public class ClassManageController {
         Map<String, Object> classInfo = classMangerService.getClassDetail(className);
         return new JSONResult<>(classInfo);
     }
+
+    @ResponseBody
+    @RequestMapping("/getClasses")
+    JSONResult<List<String>> getClasses(String college, String major, Integer grade){
+        List<String> classes = classMangerService.getClasses(college, major, grade);
+        return new JSONResult<>(classes);
+    }
+
+    @ResponseBody
+    @RequestMapping("/addClass")
+    JSONResult<String> addClass(String classname, String college, Integer grade, String major, String headmaster){
+        String s = classMangerService.addClass(classname, college, grade, major, headmaster);
+        return new JSONResult<>(s);
+    }
+
+    @ResponseBody
+    @RequestMapping("/getClassNo")
+    JSONResult<Integer> getClassNo(String college, String major, Integer grade){
+        Integer classNo = classMangerService.getClassNo(college, major, grade);
+        return new JSONResult<>(classNo);
+    }
+
+    @ResponseBody
+    @RequestMapping("/deleteClass")
+    JSONResult<String> deleteClass(String classname){
+
+        return new JSONResult<>();
+    }
 }

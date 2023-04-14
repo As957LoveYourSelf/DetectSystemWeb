@@ -29,13 +29,13 @@
           <el-tag size="large">{{info.courses == null?'无': info.courses}}</el-tag>
         </el-descriptions-item>
         <el-descriptions-item label="邮箱" :span="2">
-          <el-tag size="large">{{info.email == null?'无': info.email}}</el-tag>
+          <el-tag size="large">{{info.email == ""?'无': info.email}}</el-tag>
         </el-descriptions-item>
         <el-descriptions-item label="教工号" :span="2">
           <el-tag size="large">{{info.no == null?'无': info.no}}</el-tag>
         </el-descriptions-item>
         <el-descriptions-item label="电话">
-          <el-tag size="large">{{info.phone == null?'无': info.phone}}</el-tag>
+          <el-tag size="large">{{info.phone == ""?'无': info.phone}}</el-tag>
         </el-descriptions-item>
       </div>
     </el-descriptions>

@@ -51,7 +51,7 @@
           </el-menu-item>
           <el-menu-item index="/classroom">
             <el-icon><Shop /></el-icon>
-            <span>教室管理</span>
+            <span>教室预约管理</span>
           </el-menu-item>
           <el-sub-menu>
             <template #title>

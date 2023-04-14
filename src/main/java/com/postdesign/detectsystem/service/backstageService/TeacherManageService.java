@@ -10,5 +10,6 @@ public interface TeacherManageService {
     Map<String, Object> getTeacherDetail(String tno);
 
     String removeTeacher(String tno);
+    String addTeacher(String uno, String uname, String sex, String college, String title, String leadclass);
 
 }

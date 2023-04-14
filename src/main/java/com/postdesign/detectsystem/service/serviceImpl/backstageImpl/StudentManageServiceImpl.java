@@ -92,6 +92,24 @@ public class StudentManageServiceImpl implements StudentManageService {
         }
     }
 
+    @Override
+    public String addStudent(String sex, String uno, String uname, String college, Integer grade, String major, String classname) {
+        Student student = new Student();
+        student.setCollege(college);
+        student.setSex(sex);
+        student.setGrade(grade);
+        student.setSno(uno);
+        student.setSname(uname);
+        student.setMajor(major);
+        student.setCls(classname);
+        if (studentMapper.selectById(uno) != null){
+            return "exist";
+        }else {
+            studentMapper.insert(student);
+            return "success";
+        }
+    }
+
     /**
      * 包装学生信息
      *  <el-table-column prop="class" label="所属班级" />

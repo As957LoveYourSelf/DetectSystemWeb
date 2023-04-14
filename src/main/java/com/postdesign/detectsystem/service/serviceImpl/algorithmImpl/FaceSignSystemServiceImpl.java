@@ -83,9 +83,9 @@ public class FaceSignSystemServiceImpl implements FaceSignSystemService {
 
     @Override
     public Map<String, Object> signFace(String classname, String course, String tid, byte[] face) throws IOException, ModelNotFoundException, MalformedModelException {
-        // 确保返回重新识别时不会重复写入数据
         if (redisService.get(classname) != null){
-            redisService.update(classname);
+            redisService.delete(classname);
+            setFacesToRedis(classname);
         }else {
             setFacesToRedis(classname);
         }

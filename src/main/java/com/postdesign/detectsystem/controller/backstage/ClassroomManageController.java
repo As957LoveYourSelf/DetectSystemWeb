@@ -63,4 +63,17 @@ public class ClassroomManageController {
         return new JSONResult<>(orderDetail);
     }
 
+    @RequestMapping("/addClassroom")
+    @ResponseBody
+    JSONResult<String> addClassroom(String bname, String clsno){
+
+        return new JSONResult<>();
+    }
+    @RequestMapping("/deleteClassroom")
+    @ResponseBody
+    JSONResult<String> deleteClassroom(String clsno){
+
+        return new JSONResult<>();
+    }
+
 }

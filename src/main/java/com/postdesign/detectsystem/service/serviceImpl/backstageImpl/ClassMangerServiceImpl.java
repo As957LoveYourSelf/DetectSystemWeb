@@ -135,8 +135,62 @@ public class ClassMangerServiceImpl implements ClassMangerService {
         return null;
     }
 
-    private List<Map<String, Object>> getClassInfoByQueryWrapper(QueryWrapper<Cls> clumnQueryWrapper) {
+    @Override
+    public List<String> getClasses(String college, String major, Integer grade) {
+        QueryWrapper<Cls> queryWrapper = new QueryWrapper<>();
+        List<String> list = new ArrayList<>();
+        if (college != null && !major.equals("") && grade != null){
+            queryWrapper.eq("college", college).eq("major", major).eq("grade", grade);
+        } else if (college == null && !major.equals("") && grade != null) {
+            queryWrapper.eq("major", major).eq("grade", grade);
+        } else if (college != null && major.equals("") && grade != null) {
+            queryWrapper.eq("college", college).eq("grade", grade);
+        } else if (college != null && major.equals("")) {
+            queryWrapper.eq("college", college).eq("major", major);
+        } else if (college != null) {
+            queryWrapper.eq("college", college);
+        } else if (!major.equals("")) {
+            queryWrapper.eq("major", major);
+        }else if (grade != null){
+            queryWrapper.eq("grade", grade);
+        }else {
+            List<Cls> cls = classMapper.selectList(null);
+            for (Cls s: cls){
+                list.add(s.getClassName());
+            }
+            return list;
+        }
+        List<Cls> cls = classMapper.selectList(queryWrapper);
+        for (Cls s: cls){
+            list.add(s.getClassName());
+        }
+        return list;
+    }
 
+    @Override
+    public String addClass(String classname, String college, Integer grade, String major, String headmaster) {
+        if (classMapper.selectById(classname) != null){
+            return "exist";
+        }
+        Cls cls = new Cls();
+        cls.setClassName(classname);
+        cls.setCollege(college);
+        cls.setGrade(grade);
+        cls.setMajor(major);
+        cls.setHeadmaster(headmaster);
+        classMapper.insert(cls);
+        return "success";
+    }
+
+    @Override
+    public Integer getClassNo(String college, String major, Integer grade) {
+        QueryWrapper<Cls> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("college", college).eq("grade", grade).eq("major", major);
+        List<Cls> cls = classMapper.selectList(queryWrapper);
+        return cls.size()+1;
+    }
+
+    private List<Map<String, Object>> getClassInfoByQueryWrapper(QueryWrapper<Cls> clumnQueryWrapper) {
         List<Cls> clsList = classMapper.selectList(clumnQueryWrapper);
         if (!clsList.isEmpty()){
             List<Map<String, Object>> infoList = new ArrayList<>();

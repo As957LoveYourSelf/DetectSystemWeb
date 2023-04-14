@@ -44,4 +44,11 @@ public class TeacherManageController {
         return new JSONResult<>(s);
     }
 
+    @RequestMapping("/addTeacher")
+    @ResponseBody
+    JSONResult<String> addTeacher(String uno, String uname, String sex, String college, String title){
+        String s = teacherManageService.addTeacher(uno, uname, sex, college, title, null);
+        return new JSONResult<>(s);
+    }
+
 }

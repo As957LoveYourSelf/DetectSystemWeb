@@ -37,5 +37,10 @@ public class StudentManageController {
         return new JSONResult<>(s);
     }
 
-
+    @RequestMapping("/addStudent")
+    @ResponseBody
+    JSONResult<String> addStudent(String sex,String uno,String uname, String college, Integer grade,String major,String classname){
+        String s = studentManageService.addStudent(sex, uno, uname, college, grade, major, classname);
+        return new JSONResult<>(s);
+    }
 }

@@ -30,7 +30,51 @@
       <!-- 按钮 -->
       <el-button class="ml-8" type="success" :icon="Search" @click="searchfn" round>搜索</el-button>
       <el-button class="ml-8" type="warning" :icon="Delete" @click="reset" round>重置</el-button>
+      <el-button class="ml-8" type="primary" :icon="CirclePlus" @click="dialogFormVisible = true" round>添加</el-button>
     </div>
+    <!-- 添加教师对话框 -->
+    <el-dialog v-model="dialogFormVisible" title="添加教师信息" width="380px">
+      <el-form :model="addTeaData" :rules="rules" ref="form">
+        <el-form-item prop="uname" label="教师名称" label-width="120px">
+          <el-input type="text" v-model="addTeaData.uname" autocomplete="off" clearable="true" />
+        </el-form-item>
+        <el-form-item prop="uno" label="教师工号" label-width="120px">
+          <el-input v-model="addTeaData.uno" autocomplete="off" clearable="true" />
+        </el-form-item>
+        <el-form-item label-width="50">
+          <el-radio-group v-model="addTeaData.title">
+            <el-radio  label="讲师" size="large">讲师</el-radio>
+            <el-radio label="教授" size="large">教授</el-radio>
+            <el-radio label="副教授" size="large">副教授</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item prop="college" label="教师所在学院" label-width="120px">
+          <el-select size="large" v-model="addTeaData.college" placeholder="请选择学院">
+            <el-option
+                v-for="item in college_ops"
+                :key="item"
+                :value="item"
+                :label="item"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label-width="50">
+          <el-radio-group v-model="addTeaData.sex">
+            <el-radio  label="男" size="large">男</el-radio>
+            <el-radio label="女" size="large">女</el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogFormVisible = false" type="danger">取消</el-button>
+            <el-button @click="resetDialog" type="warning">重置</el-button>
+            <el-button type="primary" @click="add">
+              提交
+            </el-button>
+          </span>
+      </template>
+    </el-dialog>
     <!-- 信息栏 -->
     <div style="min-height:87%; padding: 10px ">
       <el-table
@@ -42,11 +86,11 @@
         <el-table-column prop="title" label="职位" /> <!-- title -->
         <el-table-column prop="tname" label="教师姓名"/> <!-- tname -->
         <el-table-column prop="college" label="所属学院" /> <!-- college -->
-        <el-table-column prop="operation" label="操作" >
+        <el-table-column prop="operation" label="操作" width="430">
           <template #default="scope">
             <el-button @click="removeTeacher" type="danger" plain>移除</el-button>
             <el-button @click="resetpsd(scope.row.tno)" type="warning" plain>重置密码</el-button>
-            <el-button @click="resetFI(scope.row.sno)" type="warning" plain>重置人脸导入次数</el-button>
+            <el-button @click="resetFI(scope.row.sno)" type="primary" plain>重置人脸导入次数</el-button>
             <el-button type="success" @click="getDetail(scope.row.tno)" plain>查看</el-button>
           </template>
         </el-table-column>
@@ -71,29 +115,40 @@
 import {
   Delete,
   Search,
+  CirclePlus
 } from '@element-plus/icons-vue'
 import {
+  addTeacher,
   getCollegeSelector, removeTeacher,
   searchTeacherInfo,
 } from "../utils/teacherManage";
 import {useRouter} from 'vue-router'
-import {resetFI} from "../utils/user";
+import {resetFI, resetPsd} from "../utils/user";
 export default {
   data(){
     return{
+      dialogFormVisible:false,
       unoInput:'',
       unameInput:'',
       tableData:[],
       college:'',
       college_ops:[],
+      addTeaData:{uno:null, uname:null, sex:"男", college:null, title:"讲师"},
       changePage:{
         currentPage:1, //默认当前页面为1
         pageSize:15,
         total: 0, //总共有多少数据
         pageSizes: [8, 15]
       },
+      rules:{
+        uname:{ required: true, message: '请输入名称', trigger: 'blur' },
+        uno:{ required: true, message: '请输入学号', trigger: 'blur' },
+        college:{ required: true, message: '请选择学院', trigger: 'blur' },
+        title:{ required: true, message: '请选择职称', trigger: 'blur' },
+      },
       Delete:Delete,
       Search:Search,
+      CirclePlus:CirclePlus,
       router:useRouter()
     }
   },
@@ -118,6 +173,25 @@ export default {
         }
       }).catch(err =>{
         console.log(err)
+      })
+    },
+    add(){
+      this.$refs.form.validate(valid => {
+        if (valid){
+          addTeacher(this.addTeaData).then(res => {
+            if (res.data == "success"){
+              this.$message({
+                type:'success',
+                message:'添加成功'
+              })
+            }else if (res.data == "exist"){
+              this.$message({
+                type:'error',
+                message:'用户已存在！'
+              })
+            }
+          })
+        }
       })
     },
     resetpsd(tno){
@@ -155,6 +229,10 @@ export default {
       }).catch(err => {
         console.log(err)
       })
+    },
+    resetDialog(){
+      this.addTeaData = {uno:null, uname:null, sex:"男", college:null, title:"讲师"}
+
     },
     // 查询函数
     searchfn() {
