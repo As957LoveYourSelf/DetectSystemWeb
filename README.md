@@ -14,7 +14,7 @@
 
 人脸识别系统用到的开源模型为`SCRFD`+`CosFace`。其中，`SCRFD`参考了大佬**nihui**的`NCNN`手机端部署。
 
-此外，通过部署超分辨率模型`ESRGAN`、风格转化`AnimalGANv2`、图像上色`siggraph`，实现了AI小工具的应用落地，可以在APP中进行使用
+此外，通过部署超分辨率模型`ESRGAN`、风格转化`AnimalGANv2`、图像上色`coloraltion`，实现了AI小工具的应用落地，可以在APP中进行使用
 ## 一些系统文件介绍
 
 在`src/main/mysql_sqlfile`文件夹中，存储了系统的数据库文件，可以直接搭配`navicat`使用
